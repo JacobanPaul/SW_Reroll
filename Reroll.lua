@@ -2,7 +2,7 @@ Settings:setCompareDimension(true, 1280)
 Settings:setScriptDimension(true, 1280) 
 Settings:set("MinSimilarity", 0.7)
 setImagePath(scriptPath() .. "images")
-resetDone = 1
+resetDone = 0
 gameGuardianInit = 0
 needGGexec = 0
 
@@ -208,6 +208,14 @@ function dialogsFSX()
     local h = t:getH()
     local Area = Region(x,y,w,h)
     click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    if image.COMPS_region:exists(image.COMPS, 0) then 
+	local t = image.COMPS_region:getLastMatch()
+    local x = t:getX()
+    local y = t:getY()
+    local w = t:getW()
+    local h = t:getH()
+    local Area = Region(x,y+ 90,w,h-20)
+    click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) end
     end
 end
 
@@ -232,7 +240,7 @@ function tutF()
     local h = t:getH()
     local Area = Region(x,y+ 90,w,h-20)
     click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	if image.COMPS_region:exists(image.COMPS, 0) then break end
+
     end
 end
 
