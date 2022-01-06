@@ -6,7 +6,7 @@ resetDone = 0
 gameGuardianInit = 0
 needGGexec = 0
 setHighlightTextStyle(0xb0140030, 0xf9ffffff, 13)
-infoText = Region(1000, 10, 260, 80)
+infoText = Region(550, 5, 260, 80)
 gameGuardian = {
 	gameGuardianFileLocation_region = Region(250, 150, 200, 100),
 	gameGuardianFileLocation = Pattern("gameGuardianFileLocation.png"):similar(0.90),
