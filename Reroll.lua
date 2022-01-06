@@ -72,9 +72,9 @@ image = {
 	NObtnINBOX_region = Region(723, 415, 55, 43),
 	OKAfterPowerUpMob_region = Region(994, 562, 67, 41),
 	OKnewArea_region = Region(611, 602, 59, 41),
-	Enemy_region = Region(323, 0, 668, 172),
-	EnemyX = Pattern("EnemyLv1.png"):similar(0.80),
-	EnemyY = Pattern("EnemyLv2.png"):similar(0.80),
+	Enemy_region = Region(323, 0, 768, 300),
+	EnemyX = Pattern("enemyLv1.png"):similar(0.80),
+	EnemyY = Pattern("enemyLv2.png"):similar(0.80),
 	RestartBattlePOPUP_region = Region(411, 503, 93, 39),
 	RewardsOK_region = Region(400, 300, 500, 300),
 	RewardsOK = Pattern("Speedx1.png"):similar(0.80),
@@ -213,7 +213,7 @@ function dialogsFSX()
     local y = t:getY()
     local w = t:getW()
     local h = t:getH()
-    local Area = Region(x,y,w,h)
+    local Area = Region(x+50,y,w,h)
     click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     
     end
