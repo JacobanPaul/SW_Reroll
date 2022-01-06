@@ -1,4 +1,7 @@
 # SW_Reroll
+Selling this product will result in LEGAL PROSECUTION
+
+
 
 License
 The source code must be made public whenever a distribution of the software is made.
