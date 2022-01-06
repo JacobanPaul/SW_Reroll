@@ -232,6 +232,7 @@ function tutF()
     local h = t:getH()
     local Area = Region(x,y+ 90,w,h-20)
     click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	if image.COMPS_region:exists(image.COMPS, 0) then break end
     end
 end
 
