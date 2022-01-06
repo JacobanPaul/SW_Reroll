@@ -215,14 +215,7 @@ function dialogsFSX()
     local h = t:getH()
     local Area = Region(x,y,w,h)
     click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    if image.COMPS_region:exists(image.COMPS, 0) then 
-	local t = image.COMPS_region:getLastMatch()
-    local x = t:getX()
-    local y = t:getY()
-    local w = t:getW()
-    local h = t:getH()
-    local Area = Region(x,y+ 90,w,h-20)
-    click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) end
+    
     end
 end
 
@@ -235,10 +228,19 @@ function dialogsFDX()
     local h = t:getH()
     local Area = Region(x,y,w,h)
     click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    if image.COMPS_region:exists(image.COMPS, 0) then 
+	local t = image.COMPS_region:getLastMatch()
+    local x = t:getX()
+    local y = t:getY()
+    local w = t:getW()
+    local h = t:getH()
+    local Area = Region(x,y+ 90,w,h-20)
+    click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) end
     end
 end
 
 function tutF()
+
 	while image.COMPS_region:exists(image.COMPS, 2) do
 	local t = image.COMPS_region:getLastMatch()
     local x = t:getX()
