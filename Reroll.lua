@@ -5,7 +5,8 @@ setImagePath(scriptPath() .. "images")
 resetDone = 0
 gameGuardianInit = 0
 needGGexec = 0
-
+setHighlightTextStyle(0xb0140030, 0xf9ffffff, 13)
+infoText = Region(1000, 10, 260, 80)
 gameGuardian = {
 	gameGuardianFileLocation_region = Region(250, 150, 200, 100),
 	gameGuardianFileLocation = Pattern("gameGuardianFileLocation.png"):similar(0.90),
@@ -49,7 +50,7 @@ image = {
 	Close_region = Region(595, 570, 85, 42),
 	Close = Pattern("Close.png"):similar(0.90),
 	COMPS_region = Region(9, 8, 1253, 697),
-	COMPS = Pattern("Arrow.png"):similar(0.90),
+	COMPS = Pattern("Arrow.png"):similar(0.80),
 	DialSkipDX_region = Region(1208, 543, 24, 24),
 	DialSkipDX = Pattern("DialSkipDX.png"):similar(0.80),
 	DialSkipSX_region = Region(44, 544, 26, 24),
@@ -91,12 +92,18 @@ image = {
 	XbtnADs_region = Region(600, 1, 800, 500),
 	XbtnADs  = Pattern("XbtnADs.png"):similar(0.90),
 	YesINBOX_region = Region(489, 413, 72, 45),
-	RewadsOK2_region = Region(611, 563, 56, 39),
+	RewadsOK2_region = Region(400, 300, 500, 300),
 	RewadsOK2 = Pattern("RewadsOK2.png"):similar(0.90),
-	Xrewads_region = Region(870, 174, 40, 40),
+	Xrewads_region = Region(400, 10, 800, 500),
 	Xrewads = Pattern("Xrewads.png"):similar(0.90),
 }
 
+function showInfo(text)
+    infoText:highlightOff() 
+    _defaultText ="What Im Doing:  " .. tostring(imAt) 
+    _text = _defaultText .. "\n".. "______________" .. "\n" .. text
+   infoText:highlight(_text)
+end
 
 function resetF()
 	if resetDone == 0 then
@@ -298,6 +305,7 @@ function gameGuardianF()
 end
 
 function WhereIAm()
+
 	if reset.Profile_region:exists(reset.Profile, 0) then end
 		usePreviousSnap(true)
     if image.COMPS_region:exists(image.COMPS, 0) then
@@ -363,8 +371,9 @@ function WhereIAm()
 end
 
 function start()
-	local imAt = WhereIAm()
+	 imAt = WhereIAm()
 	--toast(imAt)
+	showInfo("t.me/swscripts")
 	if imAt == "needReset" then 
         resetF()
     elseif imAt == "imputName" then
