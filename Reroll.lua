@@ -95,6 +95,8 @@ image = {
 	EnterNameOK  = Pattern("EnterNameOK.png"):similar(0.90),
 	EnterNameScr_region = Region(250, 76, 59, 48),
 	EnterNameScr = Pattern("EnterNameScr.png"):similar(0.90),
+	enterNameScr2_region = Region(250, 269, 64, 44),
+	enterNameScr2 = Pattern("enterNameScr2.png"):similar(0.90),
 	fairyMob_region = Region(30, 473, 83, 36),
 	GreenArrowTUT_region = Region(588, 366, 69, 76),
 	hellhoundMob_region = Region(139, 477, 81, 27),
@@ -534,7 +536,7 @@ function WhereIAm()
     elseif reset.Profile_region:exists(reset.Profile, 0) and needReset == true then
     	usePreviousSnap(false) 
     	return "needReset"
-    elseif image.EnterNameScr_region:exists(image.EnterNameScr, 0) then
+    elseif image.enterNameScr2_region:exists(image.enterNameScr2, 0) then
     	usePreviousSnap(false) 
     	return "imputName"
     elseif image.AfterSummOK_region:exists(image.AfterSummOK, 0) then
