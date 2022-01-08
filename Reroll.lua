@@ -50,21 +50,21 @@ faimon = {
 
 map = {
 	garenForest_region = Region(258, 374, 113, 71),
-	garenForest = Pattern("garenForest.png"):similar(0.98),
+	garenForest = Pattern("garenForest.png"):similar(0.97),
 	mtSiz_region = Region(478, 272, 104, 70),
-	mtSiz = Pattern("mtSiz.png"):similar(0.98),
+	mtSiz = Pattern("mtSiz.png"):similar(0.97),
 	kabirRuins_region = Region(596, 317, 101, 64),
-	kabirRuins = Pattern("kabirRuins.png"):similar(0.98),
+	kabirRuins = Pattern("kabirRuins.png"):similar(0.97),
 	mtWhite_region = Region(737, 96, 113, 72),
-	mtWhite = Pattern("mtWhite.png"):similar(0.98),
+	mtWhite = Pattern("mtWhite.png"):similar(0.97),
 	telainForest_region = Region(565, 216, 105, 66),
-	telainForest = Pattern("telainForest.png"):similar(0.98),
+	telainForest = Pattern("telainForest.png"):similar(0.97),
 	tamorDesert_region = Region(460, 621, 109, 68),
-	tamorDesert = Pattern("tamorDesert.png"):similar(0.98),
+	tamorDesert = Pattern("tamorDesert.png"):similar(0.97),
 	vrofagusRuins_region = Region(497, 580, 104, 70),
-	vrofagusRuins = Pattern("vrofagusRuins.png"):similar(0.98),
+	vrofagusRuins = Pattern("vrofagusRuins.png"):similar(0.97),
 	faimonVolcano_region = Region(425, 393, 111, 70),
-	faimonVolcano = Pattern("faimonVolcano.png"):similar(0.98),
+	faimonVolcano = Pattern("faimonVolcano.png"):similar(0.97),
 	mapS_region = Region(230, 75, 900, 630),
 }
 
@@ -345,9 +345,8 @@ function mapF()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     end
-    
+    scrollRight = 0 
 	while image.mapScreen_region:exists(image.mapScreen) do
-		scrollRight = 0 -- TODO logic
 		usePreviousSnap(true)
 		if map.mapS_region:exists(map.garenForest,1) then
 			local t = map.mapS_region:getLastMatch()
@@ -429,16 +428,39 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	else local  swipRandx1 = math.random(620,640) 
+    	elseif scrollRight <= 4 then
+    		 local  swipRandx1 = math.random(620,640) 
          	 local  swipRandy1 = math.random(400,420) 
              local  swipRandx2 = math.random(900,920) 
              local  swipRandy2 = math.random(390,400)
              swipe(Location(swipRandx2, swipRandy2),  Location(swipRandx1, swipRandy1), 2)
+             scrollRight = scrollRight + 1
              usePreviousSnap(false)
              wait(2) 
+         elseif scrollRight >= 5 then
+             local  swipRandx1 = math.random(420,440) 
+         	 local  swipRandy1 = math.random(400,420) 
+             local  swipRandx2 = math.random(900,920) 
+             local  swipRandy2 = math.random(390,400)
+             swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2) 
+             wait(2)
+             local  swipRandx1 = math.random(420,440) 
+         	 local  swipRandy1 = math.random(400,420) 
+             local  swipRandx2 = math.random(900,920) 
+             local  swipRandy2 = math.random(390,400)
+             swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
+             wait(2)
+             local  swipRandx1 = math.random(420,440) 
+         	 local  swipRandy1 = math.random(400,420) 
+             local  swipRandx2 = math.random(900,920) 
+             local  swipRandy2 = math.random(390,400)
+             swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
+             wait(2)
+             scrollRight = 0
+
     	end 
     end 
-    wait(0.2)
+    wait(2)
 end
 
 function selectMobsF()
@@ -525,7 +547,9 @@ function faimonBossF()
 end
 
 function WhereIAm()
-	--wait(0.5)
+	if powerSaving == true then
+	wait(2)
+	end
 	--infoText:highlightOff()
 	if reset.Profile_region:exists(reset.Profile, 0) then end
 		usePreviousSnap(true)
@@ -604,9 +628,9 @@ function WhereIAm()
     elseif not image.SelectMobsScr_region:exists(image.SelectMobsScr, 0) and not faimon.faimonBoss_region:exists(faimon.faimonBoss, 0) and image.StartBattle_region:exists(image.StartBattle, 0) then
     	usePreviousSnap(false) 
     	return "startBattle"
-   --[[ elseif image.YesINBOX_region:exists(image.YesINBOX, 0) then
+    elseif image.YesINBOX_region:exists(image.YesINBOX, 0) then
     	usePreviousSnap(false) 
-    	return "inboxYes"]]
+    	return "inboxYes"
     elseif faimon.faimonBoss_region:exists(faimon.faimonBoss, 0) then
     	usePreviousSnap(false) 
     	return "faimonBossStage"
@@ -903,7 +927,7 @@ function RerollDialog()
     addCheckBox("needReset", "⚡ Start With Reseting", false)
     newRow() 
     addTextView("     ")
-    addCheckBox("powerSaving", "⚡ Power Saving Mode (coming soon)", false)
+    addCheckBox("powerSaving", "⚡ Power Saving Mode ", false)
     newRow() 
     addTextView("     ")
     addCheckBox("powerOff", "⚡ Power Off Everything After N. Times (coming soon):    ", false)
