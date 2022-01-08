@@ -49,21 +49,14 @@ faimon = {
 }
 
 map = {
-	garenForest_region = Region(258, 374, 113, 71),
+	hydeniRuins = Pattern("hydeniRuins.png"):similar(0.97),
 	garenForest = Pattern("garenForest.png"):similar(0.97),
-	mtSiz_region = Region(478, 272, 104, 70),
 	mtSiz = Pattern("mtSiz.png"):similar(0.97),
-	kabirRuins_region = Region(596, 317, 101, 64),
 	kabirRuins = Pattern("kabirRuins.png"):similar(0.97),
-	mtWhite_region = Region(737, 96, 113, 72),
 	mtWhite = Pattern("mtWhite.png"):similar(0.97),
-	telainForest_region = Region(565, 216, 105, 66),
 	telainForest = Pattern("telainForest.png"):similar(0.97),
-	tamorDesert_region = Region(460, 621, 109, 68),
 	tamorDesert = Pattern("tamorDesert.png"):similar(0.97),
-	vrofagusRuins_region = Region(497, 580, 104, 70),
 	vrofagusRuins = Pattern("vrofagusRuins.png"):similar(0.97),
-	faimonVolcano_region = Region(425, 393, 111, 70),
 	faimonVolcano = Pattern("faimonVolcano.png"):similar(0.97),
 	mapS_region = Region(230, 75, 900, 630),
 }
@@ -90,7 +83,7 @@ image = {
 	DialSkipSX = Pattern("DialSkipSX.png"):similar(0.80),
 	--ElliaSkipDX_region = Region(1133, 557, 70, 14),
 	EnterNameDONE_region = Region(1058, 13, 61, 33),
-	EnterNameDONE = Pattern("EnterNameDone.png"):similar(0.90),
+	EnterNameDONE = Pattern("EnterNameDONE.png"):similar(0.90),
 	EnterNameOK_region = Region(875, 182, 61, 40),
 	EnterNameOK  = Pattern("EnterNameOK.png"):similar(0.90),
 	EnterNameScr_region = Region(250, 76, 59, 48),
@@ -398,6 +391,16 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
+    	elseif map.mapS_region:exists(map.hydeniRuins,1) then
+			local t = map.mapS_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    		usePreviousSnap(false)
+    		break
     	elseif map.mapS_region:exists(map.tamorDesert,1) then
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
@@ -454,6 +457,7 @@ function mapF()
          	 local  swipRandy1 = math.random(400,420) 
              local  swipRandx2 = math.random(900,920) 
              local  swipRandy2 = math.random(390,400)
+             usePreviousSnap(false)
              swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
              wait(2)
              scrollRight = 0
