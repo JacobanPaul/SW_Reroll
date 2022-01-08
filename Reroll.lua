@@ -110,12 +110,12 @@ image = {
 	OKAfterPowerUpMob_region = Region(994, 562, 67, 41),
 	OKnewArea_region = Region(611, 602, 59, 41),
 	Enemy_region = Region(323, 0, 768, 300),
-	enemyArrow = Pattern("enemyArrow.png"):similar(0.9),
-	enemyArrow1 = Pattern("enemyArrow1.png"):similar(0.9),
-	enemyArrow2 = Pattern("enemyArrow2.png"):similar(0.9),
-	enemyArrow3 = Pattern("enemyArrow3.png"):similar(0.9),
-	EnemyX = Pattern("enemyLv1.png"):similar(0.9),
-	EnemyY = Pattern("enemyLv2.png"):similar(0.9),
+	enemyArrow = Pattern("enemyArrow.png"):similar(0.8),
+	enemyArrow1 = Pattern("enemyArrow1.png"):similar(0.8),
+	enemyArrow2 = Pattern("enemyArrow2.png"):similar(0.8),
+	enemyArrow3 = Pattern("enemyArrow3.png"):similar(0.8),
+	EnemyX = Pattern("enemyLv1.png"):similar(0.85),
+	EnemyY = Pattern("enemyLv2.png"):similar(0.85),
 	RestartBattlePOPUP_region = Region(411, 503, 93, 39),
 	RewardsOK_region = Region(400, 300, 500, 300),
 	RewardsOK = Pattern("Speedx1.png"):similar(0.80),
@@ -265,6 +265,7 @@ function nameF()
     local Area = Region(x,y,w,h)
     click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     end
+    dialogVarTut = 0
 end
 
 function dialogsFSX()
@@ -437,6 +438,7 @@ function mapF()
              wait(2) 
     	end 
     end 
+    wait(0.2)
 end
 
 function selectMobsF()
@@ -521,6 +523,7 @@ function faimonBossF()
 end
 
 function WhereIAm()
+	wait(0.5)
 	--infoText:highlightOff()
 	if reset.Profile_region:exists(reset.Profile, 0) then end
 		usePreviousSnap(true)
@@ -826,7 +829,9 @@ function start()
 ----------------------------------------------------------------------------------------------------------------------
     elseif imAt == "chilling nothing to do" then
     	--infoText:highlightOff()
+
     	if image.Close_region:exists(image.Close, 0) then
+    	usePreviousSnap(true)
     	local t = image.Close_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -834,6 +839,7 @@ function start()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
     	elseif image.XbtnADs_region:exists(image.XbtnADs, 0) then
     	local t = image.XbtnADs_region:getLastMatch()
     	local x = t:getX()
@@ -842,8 +848,8 @@ function start()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    	else click(Location(math.random(490, 510),math.random(0, 2))) click(Location(math.random(490, 510),math.random(0, 2))) click(Location(math.random(490, 510),math.random(0, 2)))  end
-    	if image.COMPS_region:exists(image.YesINBOX, 0) then
+    	usePreviousSnap(false)
+    	elseif image.COMPS_region:exists(image.YesINBOX, 0) then
     	local t = image.COMPS_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -851,8 +857,8 @@ function start()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-        end
-        if image.COMPS_region:exists(image.NObtnINBOX, 0) then
+    	usePreviousSnap(false)
+        elseif image.COMPS_region:exists(image.NObtnINBOX, 0) then
     	local t = image.COMPS_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -860,6 +866,9 @@ function start()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
+    	else click(Location(math.random(800, 810),math.random(0, 1))) 
+    			usePreviousSnap(false)
         end
     end
 
