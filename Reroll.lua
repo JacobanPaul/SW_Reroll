@@ -277,7 +277,7 @@ function dialogsFSX()
     local h = t:getH()
     local Area = Region(x+50,y,w,h)
     click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    click(Location(math.random(490, 510),math.random(0, 2))) click(Location(math.random(490, 510),math.random(0, 2))) click(Location(math.random(490, 510),math.random(0, 2)))
+    click(Location(math.random(490, 510),math.random(719, 720))) click(Location(math.random(490, 510),math.random(719, 720))) click(Location(math.random(490, 510),math.random(719, 720)))
     end
 end
 
@@ -290,7 +290,7 @@ function dialogsFDX()
     local h = t:getH()
     local Area = Region(x,y,w,h)
     click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
-    click(Location(math.random(490, 510),math.random(0, 2))) click(Location(math.random(490, 510),math.random(0, 2))) click(Location(math.random(490, 510),math.random(0, 2)))
+    click(Location(math.random(490, 510),math.random(719, 720))) click(Location(math.random(490, 510),math.random(719, 720))) click(Location(math.random(490, 510),math.random(719, 720)))
     if dialogVarTut == 0  then
     if image.COMPS_region:exists(image.COMPS, 0) then 
 	local t = image.COMPS_region:getLastMatch()
@@ -451,7 +451,9 @@ function selectMobsF()
     		local h = t:getH()
     		local Area = Region(x+20,y+20,w,h)
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
-
+    	end
+    	if image.COMPS_region:exists(image.COMPS, 0) then
+    		tutF()
     	end
     end
 end
@@ -523,7 +525,7 @@ function faimonBossF()
 end
 
 function WhereIAm()
-	wait(0.5)
+	--wait(0.5)
 	--infoText:highlightOff()
 	if reset.Profile_region:exists(reset.Profile, 0) then end
 		usePreviousSnap(true)
@@ -829,9 +831,9 @@ function start()
 ----------------------------------------------------------------------------------------------------------------------
     elseif imAt == "chilling nothing to do" then
     	--infoText:highlightOff()
-
-    	if image.Close_region:exists(image.Close, 0) then
+    	if image.Close_region:exists(image.Close, 0) then end
     	usePreviousSnap(true)
+    	if image.Close_region:exists(image.Close, 0) then
     	local t = image.Close_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
