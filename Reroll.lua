@@ -8,6 +8,35 @@ needGGexec = 0
 dialogVarTut = 1
 setHighlightTextStyle(0xb0140030, 0xf9ffffff, 13)
 infoText = Region(150, 5, 220, 150)
+faiBs = 0
+collectedLD = 0
+
+summoning = {
+	starMobs_region = Region(868, 180, 316, 54),
+	collectSummPlatform_region = Region(332, 594, 83, 34),
+	collectSummPlatform = Pattern("collectSummPlatform.png"):similar(0.90),
+	goToSummPlatform_region = Region(504, 495, 49, 39),
+	goToSummPlatform = Pattern("goToSummPlatform.png"):similar(0.90),
+	summPlatform_region = Region(39, 510, 32, 40),
+	summPlatform = Pattern("summPlatform.png"):similar(0.90),
+	inboxLoot_region = Region(38, 382, 67, 36),
+	inboxLoot = Pattern("inboxLoot.png"):similar(0.90),
+	finalSummon_region = Region(288, 606, 144, 34),
+	finalSummon = Pattern("finalSummon.png"):similar(0.90),
+	LDscrollMaiusc_region = Region(762, 152, 96, 84),
+	LDscrollMaiusc = Pattern("LDscrollMaiusc.png"):similar(0.90),
+	LDscroll_region = Region(758, 226, 56, 53),
+	LDscroll = Pattern("LDscroll.png"):similar(0.90),
+	lootRegion = Region(737, 197, 88, 457),
+}
+
+
+
+
+			
+
+
+
 gameGuardian = {
 	gameGuardianFileLocation_region = Region(250, 150, 200, 100),
 	gameGuardianFileLocation = Pattern("gameGuardianFileLocation.png"):similar(0.90),
@@ -15,7 +44,7 @@ gameGuardian = {
 	gameGuardianSearchIcon = Pattern("gameGuardianSearchIcon.png"):similar(0.90),
 	gameGuardianExecScript_region = Region(1238, 128, 24, 26),
 	gameGuardianExecScript = Pattern("gameGuardianExecScript.png"):similar(0.90),
-	gameGuardianExecuteInitScript_region = Region(878, 550, 100, 30),
+	gameGuardianExecuteInitScript_region = Region(850, 50, 150, 550),
 	gameGuardianExecuteInitScript = Pattern("gameGuardianExecuteInitScript.png"):similar(0.90),
 	gameGuardianIcon_region = Region(0, 514, 95, 153),
 	gameGuardianIcon = Pattern("gameGuardianIcon.png"):similar(0.90),
@@ -49,23 +78,25 @@ faimon = {
 }
 
 map = {
-	hydeniRuins = Pattern("hydeniRuins.png"):similar(0.97),
-	garenForest = Pattern("garenForest.png"):similar(0.97),
-	mtSiz = Pattern("mtSiz.png"):similar(0.97),
-	kabirRuins = Pattern("kabirRuins.png"):similar(0.97),
-	mtWhite = Pattern("mtWhite.png"):similar(0.97),
-	telainForest = Pattern("telainForest.png"):similar(0.97),
-	tamorDesert = Pattern("tamorDesert.png"):similar(0.97),
-	vrofagusRuins = Pattern("vrofagusRuins.png"):similar(0.97),
-	faimonVolcano = Pattern("faimonVolcano.png"):similar(0.97),
+	hydeniRuins = Pattern("hydeniRuins.png"):similar(0.85),
+	garenForest = Pattern("garenForest.png"):similar(0.85),
+	mtSiz = Pattern("mtSiz.png"):similar(0.85),
+	kabirRuins = Pattern("kabirRuins.png"):similar(0.85),
+	mtWhite = Pattern("mtWhite.png"):similar(0.85),
+	telainForest = Pattern("telainForest.png"):similar(0.85),
+	tamorDesert = Pattern("tamorDesert.png"):similar(0.85),
+	vrofagusRuins = Pattern("vrofagusRuins.png"):similar(0.85),
+	faimonVolcano = Pattern("faimonVolcano.png"):similar(0.85),
 	mapS_region = Region(230, 75, 900, 630),
 }
 
 
 
 image = {
+	challX_region = Region(1214, 0, 61, 46),
+	challX = Pattern("challX.png"):similar(0.90),
 	skipSumm_region = Region(1088, 652, 127, 48),
-	skipSumm = Pattern("skipSumm.png"):similar(0.98),
+	skipSumm = Pattern("skipSumm.png"):similar(0.90),
 	AfterSummOK_region = Region(993, 561, 63, 39),
 	AfterSummOK = Pattern("AfterSummOK.png"):similar(0.90),
 	--Arrows_region = Region(210, 13, 917, 107),
@@ -95,7 +126,7 @@ image = {
 	hellhoundMob_region = Region(139, 477, 81, 27),
 	Mob_region = Region(18, 437, 28, 27),
 	Mob = Pattern("Mob.png"):similar(0.70),
-	MobRegion_region = Region(12, 436, 862, 32),
+	MobRegion_region = Region(12, 436, 300, 32),
 	NextStage_region = Region(757, 387, 82, 18),
 	NextStage = Pattern("NextStage.png"):similar(0.90),
 	NObtnINBOX_region = Region(723, 415, 55, 43),
@@ -136,7 +167,7 @@ image = {
 	Xrewads = Pattern("Xrewads.png"):similar(0.90),
 	OKbtnAutoBattle_region = Region(605, 414, 66, 43),
 	OKbtnAutoBattle = Pattern("OKbtnAutoBattle.png"):similar(0.90),
-	collectInbox_region = Region(986, 235, 105, 42),
+	collectInbox_region = Region(986, 235, 105, 450),
 	collectInbox = Pattern("collectInbox.png"):similar(0.90),
 	newIconMap_region = Region(9, 8, 1253, 697),
 	newIconMap = Pattern("newIconMap.png"):similar(0.90),
@@ -144,8 +175,163 @@ image = {
 	battleBTNisland = Pattern("battleBTNisland.png"):similar(0.90),
 	mapScreen_region = Region(37, 16, 27, 30),
     mapScreen = Pattern("mapScreen.png"):similar(0.90),
+    later_region = Region(697, 479, 99, 46),
+    later = Pattern("mapScreen.png"):similar(0.90),
 }
 
+function summonLDF()
+	if summoning.summPlatform_region:exists(summoning.summPlatform, 5) then
+	 	local t = summoning.summPlatform_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    end
+    if summoning.collectSummPlatform_region:exists(summoning.collectSummPlatform, 5) then
+	 	local t = summoning.collectSummPlatform_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    end
+    if summoning.goToSummPlatform_region:exists(summoning.goToSummPlatform, 5) then
+	 	local t = summoning.goToSummPlatform_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	wait(2)
+    	local  swipRandx1 = math.random(1000,1010) 
+		local  swipRandy1 = math.random(200,210)
+		local  swipRandx2 = math.random(1000,1010) 
+		local  swipRandy2 = math.random(550,560)
+		swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
+		wait(2)
+    end
+    if summoning.LDscrollMaiusc_region:exists(summoning.LDscrollMaiusc, 5) then
+	 	local t = summoning.LDscrollMaiusc_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    end
+    if summoning.finalSummon_region:exists(summoning.finalSummon_region, 5) then
+	 	local t = summoning.finalSummon_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    end
+	if image.AfterSummOK_region:exists(image.AfterSummOK, 5) then
+	starsMob = numberOCR(summoning.starMobs_region, "star")
+	if starsMob == 111 then 
+	toast("3 Star Mob Better Luck Next Time")
+	needReset = true 
+	faiBs = 0
+	collectedLD = 0
+	elseif starsMob == 1111 then toast("4 Star Mob SO CLOSE")
+	needReset = true
+	faiBs = 0
+	collectedLD = 0 
+	elseif starsMob == 11111 then toast("5 Star Mob NO FUCKING WAY GZ")
+		scriptExit("5 Star Mob NO FUCKING WAY GZ") 
+	elseif starsMob == nil then toast("Something is wrong")
+		scriptExit("Something is wrong")
+	end
+    end
+end
+
+function summoningF()
+	if summoning.inboxLoot_region:exists(summoning.inboxLoot, 5) then
+	 	local t = summoning.inboxLoot_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    end
+    scrollBottom = 0
+    while image.collectInbox_region:exists(image.collectInbox, 5) do
+    if summoning.lootRegion:exists(summoning.LDscroll, 5) then
+	 	local t = summoning.inboxLoot_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x+250,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	break
+    elseif scrollBottom <= 8 then 
+     		 local  swipRandx1 = math.random(620,640) 
+         	 local  swipRandy1 = math.random(250,260)
+             local  swipRandx2 = math.random(620,640) 
+             local  swipRandy2 = math.random(450,460)
+             swipe(Location(swipRandx2, swipRandy2),  Location(swipRandx1, swipRandy1), 2)
+             scrollBottom = scrollBottom + 1
+    elseif scrollBottom >= 9 then 
+    	scrollBottom = 0
+    	break
+    end
+    end
+end
+
+function colorExists(obj, time)
+    local delay = 0.1
+    time = time or 1
+    local timer = Timer()
+    local r, g, b
+    obj.diff = obj.diff or { 0, 0, 0 }
+
+
+    if not obj.color or not obj.location or not is_table(obj.color) or not is_table(obj.diff) then
+        print_r(obj) scriptExit("colorExists: Obj bad format")
+    end
+
+
+    while not is_timeout(timer, time) do
+
+        r, g, b = getColor(obj.location)
+
+        if math.abs(obj.color[1] - r) <= obj.diff[1] then
+            if math.abs(obj.color[2] - g) <= obj.diff[2] then
+                if math.abs(obj.color[3] - b) <= obj.diff[3] then
+                    return true
+                end
+            end
+        end
+        r, g, b = nil, nil, nil
+    end
+    return false
+end
+
+function colorExistsRegion(table_obj, time, range)
+    local reg = get_values(table_obj.region)
+    local obj = {}
+    obj.color = table_obj.color
+    range = range or 1
+
+    for x = reg.x, reg.x + reg.w, range do
+        for y = reg.y, reg.y + reg.h, range do
+            obj.location = Location(x, y)
+            if colorExists(obj, time) then
+                Region(x-4,y-4,8,8):highlight(3)
+                return true
+            end
+        end
+    end
+return false
+end
 
 function showInfo(text)
     infoText:highlightOff() 
@@ -312,11 +498,156 @@ function tutF()
 end
 
 function createScript()
-	local script = io.open("/sdcard/jpaulRerollv4.lua")
-	if script~=nil then io.close(script) else  local script = io.open("/sdcard/jpaulRerollv4.lua", "a+")
-	script:write("gg.setVisible(false)firstRun=0;function getAccID()gg.searchNumber('10602;1065353216;1502;1507::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local a=gg.getResults(gg.getResultsCount())memInit=a[1].address-0xFFFFFF;memFin=a[1].address+0xFFFFFF;t={}t[1]={}t[1].address=a[1].address-addOfss;t[1].flags=gg.TYPE_DWORD;t=gg.getValues(t)AccID=t[1].value end;function skillChanger()gg.searchNumber(AccID..';10602;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local a=gg.getResults(gg.getResultsCount())if a~=nil then for b,c in ipairs(a)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=103006;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=12315;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=7813;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';10101;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local d=gg.getResults(gg.getResultsCount())if d~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=103006;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=12315;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=7813;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';15203;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local d=gg.getResults(gg.getResultsCount())if d~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=10616;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=12813;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=6262;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';20904;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local d=gg.getResults(gg.getResultsCount())if a~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=10616;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=12813;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=6262;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';19801;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local d=gg.getResults(gg.getResultsCount())if a~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=103006;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=12315;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=7813;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.setVisible(false)firstRun=1 end;startTime=os.time()function start()currentTime=os.time()diffTime=os.difftime(currentTime,startTime)if diffTime<=300 and firstRun==0 then skillChanger()gg.sleep(60000)elseif diffTime<=300 and firstRun==1 then gg.sleep(60000)elseif diffTime>=300 then firstRun=0;startTime=os.time()end end;function init()gg.setVisible(false)getAccID()while true do start()end end;local e=gg.getTargetInfo()if e==nil then print('Cant retrieve information about the process')else if e.x64 then addOfss=0x8;fstSkOfss=0x1C;sndSkOfss=0x2C;trdSkOfss=0x3C;fthSkOfss=0x4C;fstSkPROfss=0x24;sndSkPROfss=0x34;trdSkPROfss=0x44;fthSkPROfss=0x54 else addOfss=0x4;fstSkOfss=0x10;sndSkOfss=0x18;trdSkOfss=0x20;fthSkOfss=0x28;fstSkPROfss=0x14;sndSkPROfss=0x1C;trdSkPROfss=0x24;fthSkPROfss=0x2C end end;init()")
+	local script = io.open("/sdcard/jpaulRerollv7.lua")
+	if script~=nil then io.close(script) else  local script = io.open("/sdcard/jpaulRerollv7.lua", "a+")
+	script:write("gg.setVisible(false)firstRun=0;function getAccID()gg.searchNumber('10602;1065353216;1502;1507::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local a=gg.getResults(gg.getResultsCount())memInit=a[1].address-0xFFFFFF;memFin=a[1].address+0xFFFFFF;t={}t[1]={}t[1].address=a[1].address-addOfss;t[1].flags=gg.TYPE_DWORD;t=gg.getValues(t)AccID=t[1].value end;function skillChanger()gg.searchNumber(AccID..';10602;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local a=gg.getResults(gg.getResultsCount())if a~=nil then for b,c in ipairs(a)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=100505;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=10915;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=2062;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';10101;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local d=gg.getResults(gg.getResultsCount())if d~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=103006;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=10915;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=7813;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';15203;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local d=gg.getResults(gg.getResultsCount())if d~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=100505;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=10915;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=2062;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';20904;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local d=gg.getResults(gg.getResultsCount())if a~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=10616;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=12813;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=6262;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';19801;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local d=gg.getResults(gg.getResultsCount())if a~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=103006;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=12315;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=7813;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.setVisible(false)firstRun=1 end;startTime=os.time()function start()currentTime=os.time()diffTime=os.difftime(currentTime,startTime)if diffTime<=300 and firstRun==0 then skillChanger()gg.sleep(60000)elseif diffTime<=300 and firstRun==1 then gg.sleep(60000)elseif diffTime>=300 then firstRun=0;startTime=os.time()end end;function init()gg.setVisible(false)getAccID()while true do start()end end;local e=gg.getTargetInfo()if e==nil then print('Cant retrieve information about the process')else if e.x64 then addOfss=0x8;fstSkOfss=0x1C;sndSkOfss=0x2C;trdSkOfss=0x3C;fthSkOfss=0x4C;fstSkPROfss=0x24;sndSkPROfss=0x34;trdSkPROfss=0x44;fthSkPROfss=0x54 else addOfss=0x4;fstSkOfss=0x10;sndSkOfss=0x18;trdSkOfss=0x20;fthSkOfss=0x28;fstSkPROfss=0x14;sndSkPROfss=0x1C;trdSkPROfss=0x24;fthSkPROfss=0x2C end end;init()")
 	io.close(script)
     end
+end
+
+function mtWhitePix()
+			local t = map.mapS_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+    		local pixel = Location(x+13,y+(h/1.5))
+    		usePreviousSnap(false)
+    		local r, g, b = getColor(pixel,1)
+    		if r >= 150 then 
+    			return true
+    		elseif r <= 150 then 
+    			return false
+    		end
+end
+function garenForestPix()
+			local t = map.mapS_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+    		local pixel = Location(x+10,y+(h/1.2))
+    		usePreviousSnap(false)
+    		local r, g, b = getColor(pixel,1)
+    		if r >= 150 then 
+    			return true
+    		elseif r <= 150 then 
+    			return false
+    		end
+end
+function mtSizPix()
+			local t = map.mapS_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+    		local pixel = Location(x+13,y+(h/1.2))
+    		usePreviousSnap(false)
+    		local r, g, b = getColor(pixel,1)
+    		if r >= 150 then 
+    			return true
+    		elseif r <= 150 then 
+    			return false
+    		end
+end
+function kabirRuinsPix()
+			local t = map.mapS_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+    		local pixel = Location(x+12,y+(h/1.2))
+    		usePreviousSnap(false)
+    		local r, g, b = getColor(pixel,1)
+    		if r >= 150 then 
+    			return true
+    		elseif r <= 150 then 
+    			return false
+    		end
+end
+function telainForestPix()
+			local t = map.mapS_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+    		local pixel = Location(x+12,y+(h/1.2))
+    		usePreviousSnap(false)
+    		local r, g, b = getColor(pixel,1)
+    		if r >= 150 then 
+    			return true
+    		elseif r <= 150 then 
+    			return false
+    		end
+end
+function hydeniRuinsPix()
+			local t = map.mapS_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+    		local pixel = Location(x+10,y+(h/1.2))
+    		usePreviousSnap(false)
+    		local r, g, b = getColor(pixel,1)
+    		if r >= 150 then 
+    			return true
+    		elseif r <= 150 then 
+    			return false
+    		end
+end
+function tamorDesertPix()
+			local t = map.mapS_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+    		local pixel = Location(x+12,y+(h/1.2))
+    		usePreviousSnap(false)
+    		local r, g, b = getColor(pixel,1)
+    		if r >= 150 then 
+    			return true
+    		elseif r <= 150 then 
+    			return false
+    		end
+end
+function vrofagusRuinsPix()
+			local t = map.mapS_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+     		local pixel = Location(x+12,y+(h/1.2))
+    		usePreviousSnap(false)
+    		local r, g, b = getColor(pixel,1)
+    		if r >= 150 then 
+    			return true
+    		elseif r <= 150 then 
+    			return false
+    		end
+end
+function faimonVolcanoPix()
+			local t = map.mapS_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+    		local pixel = Location(x+12,y+(h/1.2))
+    		usePreviousSnap(false)
+    		local r, g, b = getColor(pixel,1)
+    		if r >= 150 then 
+    			return true
+    		elseif r <= 150 then 
+    			return false
+    		end
 end
 
 function mapF()
@@ -341,7 +672,7 @@ function mapF()
     scrollRight = 0 
 	while image.mapScreen_region:exists(image.mapScreen) do
 		usePreviousSnap(true)
-		if map.mapS_region:exists(map.garenForest,1) then
+		if map.mapS_region:exists(map.garenForest,1) and not garenForestPix() then
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -351,7 +682,7 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.mtSiz,1) then
+    	elseif map.mapS_region:exists(map.mtSiz,1) and not mtSizPix() then
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -361,7 +692,7 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.kabirRuins,1) then
+    	elseif map.mapS_region:exists(map.kabirRuins,1) and not kabirRuinsPix() then
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -371,7 +702,7 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.mtWhite,1) then
+    	elseif map.mapS_region:exists(map.mtWhite,1) and not mtWhitePix() then
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -381,7 +712,7 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.telainForest,1) then
+    	elseif map.mapS_region:exists(map.telainForest,1) and not telainForestPix() then
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -391,7 +722,7 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.hydeniRuins,1) then
+    	elseif map.mapS_region:exists(map.hydeniRuins,1) and not hydeniRuinsPix() then
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -401,7 +732,7 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.tamorDesert,1) then
+    	elseif map.mapS_region:exists(map.tamorDesert,1) and not tamorDesertPix() then
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -411,7 +742,7 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.vrofagusRuins,1) then
+    	elseif map.mapS_region:exists(map.vrofagusRuins,1) and not vrofagusRuinsPix() then
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -421,7 +752,7 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.faimonVolcano,1) then
+    	elseif map.mapS_region:exists(map.faimonVolcano,1) and not faimonVolcanoPix() then
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -514,7 +845,7 @@ function gameGuardianF()
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     end
     if gameGuardian.gameGuardianFileLocation_region:exists(gameGuardian.gameGuardianFileLocation, 10) then
-		local scriptLocation = ("/sdcard/jpaulRerollv4.lua")
+		local scriptLocation = ("/sdcard/jpaulRerollv7.lua")
 		type(scriptLocation)
     end
     if gameGuardian.gameGuardianExecuteInitScript_region:exists(gameGuardian.gameGuardianExecuteInitScript, 10) then
@@ -531,6 +862,7 @@ end
 
 function faimonBossF()
 	if faimon.durandHelp_region:exists(faimon.durandHelp) then
+		faiBs = 1
 			local t = faimon.durandHelp_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -550,9 +882,11 @@ function faimonBossF()
     end
 end
 
+
+
 function WhereIAm()
 	if powerSaving == true then
-	wait(2)
+	wait(customDelay)
 	end
 	--infoText:highlightOff()
 	if reset.Profile_region:exists(reset.Profile, 0) then end
@@ -825,6 +1159,7 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     elseif imAt == "goToMap" then
+    	if faiBs == 0 then
     	local t = image.battleBTNisland_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -833,6 +1168,11 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	wait(1)
+    	elseif collectedLD == 0 then
+    	 summoningF() 
+    	elseif collectedLD == 1 then
+    	 summonLDF() 
+    	end
     elseif imAt == "mapScreenScr" then
     	mapF()
     elseif imAt == "battleMap" then
@@ -856,7 +1196,7 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
 
-----------------------------------------------------------------------------------------------------------------------
+     ---------------------------------------------------------------------------------------------------------------------
     elseif imAt == "chilling nothing to do" then
     	--infoText:highlightOff()
     	if image.Close_region:exists(image.Close, 0) then end
@@ -897,11 +1237,28 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
+    	elseif image.challX_region:exists(image.challX, 0) then
+    	local t = image.challX_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
+        elseif image.later_region:exists(image.later, 0) then
+    	local t = image.later_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
     	else click(Location(math.random(800, 810),math.random(0, 1))) 
     			usePreviousSnap(false)
         end
     end
-
 end
 
 function RunEverything()
@@ -915,10 +1272,10 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n")
+    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 1")
     addSeparator() 
     newRow( )
-    addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
+    addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
     newRow()
     addTextView("     ")addRadioGroup("rgIndex", 1)   
     addRadioButton(" ☄ Random Name Generator", 1) 
@@ -932,6 +1289,7 @@ function RerollDialog()
     newRow() 
     addTextView("     ")
     addCheckBox("powerSaving", "⚡ Power Saving Mode ", false)
+    addEditNumber("customDelay", 2)
     newRow() 
     addTextView("     ")
     addCheckBox("powerOff", "⚡ Power Off Everything After N. Times (coming soon):    ", false)
@@ -949,20 +1307,19 @@ function RerollDialog()
     end
 end 
 
+
 function debug()
-	if faimon.durandHelp_region:exists(faimon.durandHelp) then
-		local t = faimon.durandHelp_region:getLastMatch()
-    		local x = t:getX()
-    		local y = t:getY()
-    		local w = t:getW()
-    		local h = t:getH()
-    		local Area = Region(x,y-40,w,h)
-    		--click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    		Area:highlight(16)
+	while true do
     end
+end
+
+function debugT()
+	
 end
 RunEverything() 
 --debug()
+
+
 
 
 
