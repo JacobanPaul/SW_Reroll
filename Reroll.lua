@@ -962,15 +962,15 @@ function WhereIAm()
     elseif image.NextStage_region:exists(image.NextStage, 0) then
     	usePreviousSnap(false) 
     	return "nextStage"
+    elseif faimon.faimonBoss_region:exists(faimon.faimonBoss, 0) then
+    	usePreviousSnap(false) 
+    	return "faimonBossStage"
     elseif not image.SelectMobsScr_region:exists(image.SelectMobsScr, 0) and not faimon.faimonBoss_region:exists(faimon.faimonBoss, 0) and image.StartBattle_region:exists(image.StartBattle, 0) then
     	usePreviousSnap(false) 
     	return "startBattle"
     elseif image.YesINBOX_region:exists(image.YesINBOX, 0) then
     	usePreviousSnap(false) 
     	return "inboxYes"
-    elseif faimon.faimonBoss_region:exists(faimon.faimonBoss, 0) then
-    	usePreviousSnap(false) 
-    	return "faimonBossStage"
     elseif image.collectInbox_region:exists(image.collectInbox, 0) then
     	usePreviousSnap(false) 
     	return "inboxCollect"
@@ -1125,15 +1125,13 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     elseif imAt == "startBattle" then
-    	if not faimon.faimonBoss_region:exists(faimon.faimonBoss, 1) then
-    	local t = image.StartBattle_region:find(image.StartBattle)
+    	local t = image.StartBattle_region::getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
     	local w = t:getW()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    	end
     elseif imAt == "OKbtnAP" then
     	local t = image.OKbtnAutoBattle_region:getLastMatch()
     	local x = t:getX()
@@ -1269,7 +1267,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 5")
+    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 6")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
