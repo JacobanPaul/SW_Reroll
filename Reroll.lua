@@ -190,6 +190,7 @@ function summonLDF()
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     end
     if summoning.goToSummPlatform_region:exists(summoning.goToSummPlatform, 5) then
+    	wait(3)
 	 	local t = summoning.goToSummPlatform_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -1124,13 +1125,15 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     elseif imAt == "startBattle" then
-    	local t = image.StartBattle_region:getLastMatch()
+    	if not faimon.faimonBoss_region:exists(faimon.faimonBoss, 1) then
+    	local t = image.StartBattle_region:find(StartBattle)
     	local x = t:getX()
     	local y = t:getY()
     	local w = t:getW()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	end
     elseif imAt == "OKbtnAP" then
     	local t = image.OKbtnAutoBattle_region:getLastMatch()
     	local x = t:getX()
@@ -1266,7 +1269,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 3")
+    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 4")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
