@@ -6,10 +6,10 @@ setImagePath(scriptPath() .. "images")
 gameGuardianInit = 0
 needGGexec = 0
 dialogVarTut = 1
-setHighlightTextStyle(0xb0140030, 0xf9ffffff, 13)
-infoText = Region(150, 5, 220, 150)
 faiBs = 0
 collectedLD = 0
+setHighlightTextStyle(0xb0140030, 0xf9ffffff, 13)
+infoText = Region(150, 5, 220, 150)
 
 summoning = {
 	starMobs_region = Region(868, 180, 316, 54),
@@ -17,9 +17,9 @@ summoning = {
 	collectSummPlatform = Pattern("collectSummPlatform.png"):similar(0.90),
 	goToSummPlatform_region = Region(504, 495, 49, 39),
 	goToSummPlatform = Pattern("goToSummPlatform.png"):similar(0.90),
-	summPlatform_region = Region(39, 510, 32, 40),
+	summPlatform_region = Region(35, 400, 75, 140),
 	summPlatform = Pattern("summPlatform.png"):similar(0.90),
-	inboxLoot_region = Region(38, 382, 67, 36),
+	inboxLoot_region = Region(35, 360, 75, 70),
 	inboxLoot = Pattern("inboxLoot.png"):similar(0.90),
 	finalSummon_region = Region(288, 606, 144, 34),
 	finalSummon = Pattern("finalSummon.png"):similar(0.90),
@@ -29,13 +29,6 @@ summoning = {
 	LDscroll = Pattern("LDscroll.png"):similar(0.90),
 	lootRegion = Region(737, 197, 88, 457),
 }
-
-
-
-
-			
-
-
 
 gameGuardian = {
 	gameGuardianFileLocation_region = Region(250, 150, 200, 100),
@@ -89,8 +82,6 @@ map = {
 	faimonVolcano = Pattern("faimonVolcano.png"):similar(0.85),
 	mapS_region = Region(230, 75, 900, 630),
 }
-
-
 
 image = {
 	challX_region = Region(1214, 0, 61, 46),
@@ -223,7 +214,7 @@ function summonLDF()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     end
-    if summoning.finalSummon_region:exists(summoning.finalSummon_region, 5) then
+    if summoning.finalSummon_region:exists(summoning.finalSummon, 5) then
 	 	local t = summoning.finalSummon_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -232,7 +223,8 @@ function summonLDF()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     end
-	if image.AfterSummOK_region:exists(image.AfterSummOK, 5) then
+	if image.AfterSummOK_region:exists(image.AfterSummOK, 15) then
+		wait(2)
 	starsMob = numberOCR(summoning.starMobs_region, "star")
 	if starsMob == 111 then 
 	toast("3 Star Mob Better Luck Next Time")
@@ -260,17 +252,20 @@ function summoningF()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	toast("inboxLoot")
+    	wait(5)
     end
     scrollBottom = 0
     while image.collectInbox_region:exists(image.collectInbox, 5) do
     if summoning.lootRegion:exists(summoning.LDscroll, 5) then
-	 	local t = summoning.inboxLoot_region:getLastMatch()
+	 	local t = summoning.lootRegion:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
     	local w = t:getW()
     	local h = t:getH()
     	local Area = Region(x+250,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	collectedLD = 1
     	break
     elseif scrollBottom <= 8 then 
      		 local  swipRandx1 = math.random(620,640) 
@@ -484,7 +479,6 @@ function dialogsFDX()
 end
 
 function tutF()
-
 	while image.COMPS_region:exists(image.COMPS, 2) do
 	local t = image.COMPS_region:getLastMatch()
     local x = t:getX()
@@ -493,7 +487,6 @@ function tutF()
     local h = t:getH()
     local Area = Region(x+30,y+ 90,w-15,h-20)
     click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-
     end
 end
 
@@ -521,6 +514,7 @@ function mtWhitePix()
     			return false
     		end
 end
+
 function garenForestPix()
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
@@ -537,6 +531,7 @@ function garenForestPix()
     			return false
     		end
 end
+
 function mtSizPix()
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
@@ -553,6 +548,7 @@ function mtSizPix()
     			return false
     		end
 end
+
 function kabirRuinsPix()
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
@@ -569,6 +565,7 @@ function kabirRuinsPix()
     			return false
     		end
 end
+
 function telainForestPix()
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
@@ -585,6 +582,7 @@ function telainForestPix()
     			return false
     		end
 end
+
 function hydeniRuinsPix()
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
@@ -601,6 +599,7 @@ function hydeniRuinsPix()
     			return false
     		end
 end
+
 function tamorDesertPix()
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
@@ -617,6 +616,7 @@ function tamorDesertPix()
     			return false
     		end
 end
+
 function vrofagusRuinsPix()
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
@@ -633,6 +633,7 @@ function vrofagusRuinsPix()
     			return false
     		end
 end
+
 function faimonVolcanoPix()
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
@@ -763,7 +764,7 @@ function mapF()
     		usePreviousSnap(false)
     		break
     	elseif scrollRight <= 4 then
-    		 local  swipRandx1 = math.random(620,640) 
+    		 local  swipRandx1 = math.random(420,440) 
          	 local  swipRandy1 = math.random(400,420) 
              local  swipRandx2 = math.random(900,920) 
              local  swipRandy2 = math.random(390,400)
@@ -792,7 +793,6 @@ function mapF()
              swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
              wait(2)
              scrollRight = 0
-
     	end 
     end 
     wait(2)
@@ -881,8 +881,6 @@ function faimonBossF()
     	end
     end
 end
-
-
 
 function WhereIAm()
 	if powerSaving == true then
@@ -993,7 +991,6 @@ function WhereIAm()
     else usePreviousSnap(false)
     	 return "chilling nothing to do"
     end
-    
 end
 
 function start()
@@ -1195,8 +1192,7 @@ function start()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-
-     ---------------------------------------------------------------------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------
     elseif imAt == "chilling nothing to do" then
     	--infoText:highlightOff()
     	if image.Close_region:exists(image.Close, 0) then end
@@ -1268,11 +1264,9 @@ function RunEverything()
 	end
 end
 
-
-
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 1")
+    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 2")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
@@ -1307,7 +1301,6 @@ function RerollDialog()
     end
 end 
 
-
 function debug()
 	while true do
     end
@@ -1318,12 +1311,3 @@ function debugT()
 end
 RunEverything() 
 --debug()
-
-
-
-
-
-
-
-
-		
