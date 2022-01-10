@@ -17,7 +17,7 @@ summoning = {
 	collectSummPlatform = Pattern("collectSummPlatform.png"):similar(0.90),
 	goToSummPlatform_region = Region(504, 495, 49, 39),
 	goToSummPlatform = Pattern("goToSummPlatform.png"):similar(0.90),
-	summPlatform_region = Region(35, 400, 75, 140),
+	summPlatform_region = Region(35, 400, 75, 240),
 	summPlatform = Pattern("summPlatform.png"):similar(0.90),
 	inboxLoot_region = Region(35, 360, 75, 70),
 	inboxLoot = Pattern("inboxLoot.png"):similar(0.90),
@@ -1266,7 +1266,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 2")
+    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 3")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
