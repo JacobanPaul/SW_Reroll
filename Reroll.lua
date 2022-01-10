@@ -8,6 +8,15 @@ needGGexec = 0
 dialogVarTut = 1
 faiBs = 0
 collectedLD = 0
+garenForestChecked = 0
+mtSizChecked = 0
+kabirRuinsChecked = 0
+mtWhiteChecked = 0
+telainForestChecked = 0
+tamorDesertChecked = 0
+hydeniRuinsChecked = 0
+vrofagusRuinsChecked = 0
+faimonVolcanoChecked = 0
 setHighlightTextStyle(0xb0140030, 0xf9ffffff, 13)
 infoText = Region(150, 5, 220, 150)
 
@@ -232,10 +241,30 @@ function summonLDF()
 	needReset = true 
 	faiBs = 0
 	collectedLD = 0
+	needGGexec = 1 
+	garenForestChecked = 0
+	mtSizChecked = 0
+	kabirRuinsChecked = 0
+	mtWhiteChecked = 0
+	telainForestChecked = 0
+	tamorDesertChecked = 0
+	hydeniRuinsChecked = 0
+	vrofagusRuinsChecked = 0
+	faimonVolcanoChecked = 0
 	elseif starsMob == 1111 then toast("4 Star Mob SO CLOSE")
 	needReset = true
 	faiBs = 0
 	collectedLD = 0 
+	needGGexec = 1 
+	garenForestChecked = 0
+	mtSizChecked = 0
+	kabirRuinsChecked = 0
+	mtWhiteChecked = 0
+	telainForestChecked = 0
+	tamorDesertChecked = 0
+	hydeniRuinsChecked = 0
+	vrofagusRuinsChecked = 0
+	faimonVolcanoChecked = 0
 	elseif starsMob == 11111 then toast("5 Star Mob NO FUCKING WAY GZ")
 		scriptExit("5 Star Mob NO FUCKING WAY GZ") 
 	elseif starsMob == nil then toast("Something is wrong")
@@ -499,155 +528,19 @@ function createScript()
     end
 end
 
-function mtWhitePix()
+function chPx()
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
     		local w = t:getW()
     		local h = t:getH()
     		local Area = Region(x,y,w,h)
-    		local pixel = Location(x+13,y+(h/1.5))
+    		local pixel = Location(x+2,y+(h-2))
     		usePreviousSnap(false)
     		local r, g, b = getColor(pixel,1)
-    		if r >= 150 then 
+    		if r <= 150 then 
     			return true
-    		elseif r <= 150 then 
-    			return false
-    		end
-end
-
-function garenForestPix()
-			local t = map.mapS_region:getLastMatch()
-    		local x = t:getX()
-    		local y = t:getY()
-    		local w = t:getW()
-    		local h = t:getH()
-    		local Area = Region(x,y,w,h)
-    		local pixel = Location(x+10,y+(h/1.2))
-    		usePreviousSnap(false)
-    		local r, g, b = getColor(pixel,1)
-    		if r >= 150 then 
-    			return true
-    		elseif r <= 150 then 
-    			return false
-    		end
-end
-
-function mtSizPix()
-			local t = map.mapS_region:getLastMatch()
-    		local x = t:getX()
-    		local y = t:getY()
-    		local w = t:getW()
-    		local h = t:getH()
-    		local Area = Region(x,y,w,h)
-    		local pixel = Location(x+13,y+(h/1.2))
-    		usePreviousSnap(false)
-    		local r, g, b = getColor(pixel,1)
-    		if r >= 150 then 
-    			return true
-    		elseif r <= 150 then 
-    			return false
-    		end
-end
-
-function kabirRuinsPix()
-			local t = map.mapS_region:getLastMatch()
-    		local x = t:getX()
-    		local y = t:getY()
-    		local w = t:getW()
-    		local h = t:getH()
-    		local Area = Region(x,y,w,h)
-    		local pixel = Location(x+12,y+(h/1.2))
-    		usePreviousSnap(false)
-    		local r, g, b = getColor(pixel,1)
-    		if r >= 150 then 
-    			return true
-    		elseif r <= 150 then 
-    			return false
-    		end
-end
-
-function telainForestPix()
-			local t = map.mapS_region:getLastMatch()
-    		local x = t:getX()
-    		local y = t:getY()
-    		local w = t:getW()
-    		local h = t:getH()
-    		local Area = Region(x,y,w,h)
-    		local pixel = Location(x+12,y+(h/1.2))
-    		usePreviousSnap(false)
-    		local r, g, b = getColor(pixel,1)
-    		if r >= 150 then 
-    			return true
-    		elseif r <= 150 then 
-    			return false
-    		end
-end
-
-function hydeniRuinsPix()
-			local t = map.mapS_region:getLastMatch()
-    		local x = t:getX()
-    		local y = t:getY()
-    		local w = t:getW()
-    		local h = t:getH()
-    		local Area = Region(x,y,w,h)
-    		local pixel = Location(x+10,y+(h/1.2))
-    		usePreviousSnap(false)
-    		local r, g, b = getColor(pixel,1)
-    		if r >= 150 then 
-    			return true
-    		elseif r <= 150 then 
-    			return false
-    		end
-end
-
-function tamorDesertPix()
-			local t = map.mapS_region:getLastMatch()
-    		local x = t:getX()
-    		local y = t:getY()
-    		local w = t:getW()
-    		local h = t:getH()
-    		local Area = Region(x,y,w,h)
-    		local pixel = Location(x+12,y+(h/1.2))
-    		usePreviousSnap(false)
-    		local r, g, b = getColor(pixel,1)
-    		if r >= 150 then 
-    			return true
-    		elseif r <= 150 then 
-    			return false
-    		end
-end
-
-function vrofagusRuinsPix()
-			local t = map.mapS_region:getLastMatch()
-    		local x = t:getX()
-    		local y = t:getY()
-    		local w = t:getW()
-    		local h = t:getH()
-    		local Area = Region(x,y,w,h)
-     		local pixel = Location(x+12,y+(h/1.2))
-    		usePreviousSnap(false)
-    		local r, g, b = getColor(pixel,1)
-    		if r >= 150 then 
-    			return true
-    		elseif r <= 150 then 
-    			return false
-    		end
-end
-
-function faimonVolcanoPix()
-			local t = map.mapS_region:getLastMatch()
-    		local x = t:getX()
-    		local y = t:getY()
-    		local w = t:getW()
-    		local h = t:getH()
-    		local Area = Region(x,y,w,h)
-    		local pixel = Location(x+12,y+(h/1.2))
-    		usePreviousSnap(false)
-    		local r, g, b = getColor(pixel,1)
-    		if r >= 150 then 
-    			return true
-    		elseif r <= 150 then 
+    		elseif r >= 150 then
     			return false
     		end
 end
@@ -674,7 +567,10 @@ function mapF()
     scrollRight = 0 
 	while image.mapScreen_region:exists(image.mapScreen) do
 		usePreviousSnap(true)
-		if map.mapS_region:exists(map.garenForest,1) and not garenForestPix() then
+		if garenForestChecked == 0 and map.mapS_region:exists(map.garenForest,1) then
+			showInfo("checking garenForest")
+			if chPx() == true then
+			garenForestChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -684,7 +580,29 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.mtSiz,1) and not mtSizPix() then
+    	    elseif chPx() == false then
+    	    	garenForestChecked = 1
+    	    end
+    	elseif mtSizChecked == 0 and map.mapS_region:exists(map.mtSiz,1) then
+    		showInfo("checking mtSiz")
+			if chPx() == true then
+    		mtSizChecked = 1
+			local t = map.mapS_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    		usePreviousSnap(false)
+    		elseif chPx() == false then
+    	    	mtSizChecked = 1
+    	    end
+    		break
+    	elseif kabirRuinsChecked == 0 and map.mapS_region:exists(map.kabirRuins,1) then
+    		showInfo("checking kabirRuins")
+			if chPx() == true then
+    		kabirRuinsChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -694,7 +612,13 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.kabirRuins,1) and not kabirRuinsPix() then
+    		elseif chPx() == false then
+    	    	kabirRuinsChecked = 1
+    	    end
+    	elseif mtWhiteChecked == 0 and map.mapS_region:exists(map.mtWhite,1) then
+    		showInfo("checking mtWhite")
+			if chPx() == true then
+    		mtWhiteChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -704,7 +628,13 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.mtWhite,1) and not mtWhitePix() then
+    		elseif chPx() == false then
+    	    	mtWhiteChecked = 1
+    	    end
+    	elseif telainForestChecked == 0 and map.mapS_region:exists(map.telainForest,1) then
+    		showInfo("checking telainForest")
+			if chPx() == true then
+    		telainForestChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -714,7 +644,13 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.telainForest,1) and not telainForestPix() then
+    		elseif chPx() == false then
+    	    	telainForestChecked = 1
+    	    end
+    	elseif hydeniRuinsChecked == 0 and map.mapS_region:exists(map.hydeniRuins,1) then
+    		showInfo("checking hydeniRuins")
+			if chPx() == true then
+    		hydeniRuinsChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -724,7 +660,13 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.hydeniRuins,1) and not hydeniRuinsPix() then
+    		elseif chPx() == false then
+    	    	hydeniRuinsChecked = 1
+    	    end
+    	elseif tamorDesertChecked == 0 and  map.mapS_region:exists(map.tamorDesert,1) then
+    		showInfo("checking tamorDesert")
+			if chPx() == true then
+    		tamorDesertChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -734,7 +676,13 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.tamorDesert,1) and not tamorDesertPix() then
+    		elseif chPx() == false then
+    	    	tamorDesertChecked = 1
+    	    end
+    	elseif vrofagusRuinsChecked == 0 and map.mapS_region:exists(map.vrofagusRuins,1) then
+    		showInfo("checking vrofagusRuins")
+			if chPx() == true then
+    		vrofagusRuinsChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -744,7 +692,13 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.vrofagusRuins,1) and not vrofagusRuinsPix() then
+    		elseif chPx() == false then
+    	    	vrofagusRuinsChecked = 1
+    	    end
+    	elseif faimonVolcanoChecked == 0 and map.mapS_region:exists(map.faimonVolcano,1) then
+    		showInfo("checking faimonVolcano")
+			if chPx() == true then
+    		faimonVolcanoChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -754,16 +708,9 @@ function mapF()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		break
-    	elseif map.mapS_region:exists(map.faimonVolcano,1) and not faimonVolcanoPix() then
-			local t = map.mapS_region:getLastMatch()
-    		local x = t:getX()
-    		local y = t:getY()
-    		local w = t:getW()
-    		local h = t:getH()
-    		local Area = Region(x,y,w,h)
-    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    		usePreviousSnap(false)
-    		break
+    		elseif chPx() == false then
+    	    	faimonVolcanoChecked = 1
+    	    end
     	elseif scrollRight <= 4 then
     		 local  swipRandx1 = math.random(420,440) 
          	 local  swipRandy1 = math.random(400,420) 
@@ -800,6 +747,7 @@ function mapF()
 end
 
 function selectMobsF()
+	click(Location(52,466))
 	while image.SelectMobsScr_region:exists(image.SelectMobsScr) do
 		if image.MobRegion_region:exists(image.Mob) then 
     		local t = image.MobRegion_region:getLastMatch()
@@ -817,6 +765,7 @@ function selectMobsF()
 end
 
 function gameGuardianF()
+	needGGexec = 1 
 	createScript()
 	if gameGuardian.gameGuardianIcon_region:exists(gameGuardian.gameGuardianIcon, 10) then
 		local t = gameGuardian.gameGuardianIcon_region:getLastMatch()
@@ -858,7 +807,7 @@ function gameGuardianF()
     	local Area = Region(xl,yl,wl,hl)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     end
-    needGGexec = 1 
+    
 end
 
 function faimonBossF()
@@ -1017,7 +966,7 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
    		gameGuardianInit = gameGuardianInit + 1
-    	if gameGuardianInit >= 2 and needGGexec == 0 then gameGuardianF() end
+    	if needGGexec == 0 and gameGuardianInit >= 2  then gameGuardianF() end
  	elseif imAt == "enemyFound" then
  		local t = image.Enemy_region:getLastMatch()
     	local x = t:getX()
@@ -1125,6 +1074,9 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     elseif imAt == "startBattle" then
+    	if faimon.faimonBoss_region:exists(faimon.faimonBoss, 0.5) then
+    		faimonBossF() 
+    	elseif not faimon.faimonBoss_region:exists(faimon.faimonBoss, 0) and image.StartBattle_region:exists(image.StartBattle, 0) then
     	local t = image.StartBattle_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -1132,6 +1084,7 @@ function start()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    end
     elseif imAt == "OKbtnAP" then
     	local t = image.OKbtnAutoBattle_region:getLastMatch()
     	local x = t:getX()
@@ -1267,7 +1220,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 7")
+    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 9")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
@@ -1304,6 +1257,46 @@ end
 
 function debug()
 	while true do
+			local t = map.mapS_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+    		Area:highlight(5)
+    		local pixel = Location(x,y+(h-2))
+    		pixelR = Region(x,y+(h-2),2,2)
+    		pixelR:highlight(5)
+    		usePreviousSnap(false)
+    		local r, g, b = getColor(pixel,3)
+    		if r <= 150 then 
+    			toast("grey star")
+    			wait(2)
+    			toast(r.."  "..g.."  "..b)
+    			wait(2)
+    			toast(r.."  "..g.."  "..b)
+    			wait(2)
+    			toast(r.."  "..g.."  "..b)
+    			wait(2)
+    			toast(r.."  "..g.."  "..b)
+    			wait(2)
+    			return true
+    		elseif r >= 150 then
+    		toast("yellow star")
+    		wait(2)
+    		toast(r.."  "..g.."  "..b)
+    		wait(2)
+    		toast(r.."  "..g.."  "..b)
+    			wait(2)
+    			toast(r.."  "..g.."  "..b)
+    			wait(2)
+    			toast(r.."  "..g.."  "..b)
+    			wait(2)
+    			toast(r.."  "..g.."  "..b)
+    			wait(2) 
+    			return false
+    		end
+    		wait(5)
     end
 end
 
