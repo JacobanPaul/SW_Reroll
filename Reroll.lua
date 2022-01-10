@@ -1126,7 +1126,7 @@ function start()
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     elseif imAt == "startBattle" then
     	if not faimon.faimonBoss_region:exists(faimon.faimonBoss, 1) then
-    	local t = image.StartBattle_region:find(StartBattle)
+    	local t = image.StartBattle_region:find(image.StartBattle)
     	local x = t:getX()
     	local y = t:getY()
     	local w = t:getW()
@@ -1269,7 +1269,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 4")
+    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 5")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
