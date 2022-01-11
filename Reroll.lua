@@ -3,8 +3,10 @@ Settings:setScriptDimension(true, 1280)
 Settings:set("MinSimilarity", 0.7)
 setImagePath(scriptPath() .. "images")
 --needReset = 0
+resetsTotal = 0
+startTime = os.time()
 gameGuardianInit = 0
-needGGexec = 0
+ggAlreadyRunning = false
 dialogVarTut = 1
 faiBs = 0
 collectedLD = 0
@@ -18,7 +20,7 @@ hydeniRuinsChecked = 0
 vrofagusRuinsChecked = 0
 faimonVolcanoChecked = 0
 setHighlightTextStyle(0xb0140030, 0xf9ffffff, 13)
-infoText = Region(150, 5, 220, 150)
+infoText = Region(130, 5, 270, 270)
 
 summoning = {
 	starMobs_region = Region(868, 180, 316, 54),
@@ -178,6 +180,19 @@ image = {
     later_region = Region(697, 479, 99, 46),
     later = Pattern("mapScreen.png"):similar(0.90),
 }
+function SecondsToClock(seconds)
+  local seconds = tonumber(seconds)
+  if seconds <= 0 then
+    return "00:00:00";
+  elseif seconds == nil then
+  	return "00:00:00";
+  else
+    hours = string.format("%02.f", math.floor(seconds/3600));
+    mins = string.format("%02.f", math.floor(seconds/60 - (hours*60)));
+    secs = string.format("%02.f", math.floor(seconds - hours*3600 - mins *60));
+    return hours..":"..mins..":"..secs
+  end
+end
 
 function summonLDF()
 	if summoning.summPlatform_region:exists(summoning.summPlatform, 5) then
@@ -236,12 +251,13 @@ function summonLDF()
 	if image.AfterSummOK_region:exists(image.AfterSummOK, 15) then
 		wait(2)
 	starsMob = numberOCR(summoning.starMobs_region, "star")
+	wait(1)
 	if starsMob == 111 then 
 	toast("3 Star Mob Better Luck Next Time")
 	needReset = true 
 	faiBs = 0
 	collectedLD = 0
-	needGGexec = 1 
+	ggAlreadyRunning = true
 	garenForestChecked = 0
 	mtSizChecked = 0
 	kabirRuinsChecked = 0
@@ -255,7 +271,7 @@ function summonLDF()
 	needReset = true
 	faiBs = 0
 	collectedLD = 0 
-	needGGexec = 1 
+	ggAlreadyRunning = true
 	garenForestChecked = 0
 	mtSizChecked = 0
 	kabirRuinsChecked = 0
@@ -271,9 +287,16 @@ function summonLDF()
 		scriptExit("Something is wrong")
 	end
     end
+    currentResetingTime = os.time()
+    diffTimeReseting = os.difftime(currentResetingTime, startResetingTime )
+    minResetingTime = SecondsToClock(diffTimeReseting)
+    resetsTotal = resetsTotal + 1
 end
 
 function summoningF()
+	wait(2)
+	trashCheck()
+	wait(0.5)
 	if summoning.inboxLoot_region:exists(summoning.inboxLoot, 5) then
 	 	local t = summoning.inboxLoot_region:getLastMatch()
     	local x = t:getX()
@@ -282,8 +305,7 @@ function summoningF()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    	toast("inboxLoot")
-    	wait(5)
+    	wait(2)
     end
     scrollBottom = 0
     while image.collectInbox_region:exists(image.collectInbox, 5) do
@@ -360,12 +382,13 @@ end
 
 function showInfo(text)
     infoText:highlightOff() 
-    _defaultText ="What Im Doing  " .. "\n".. "\n".. tostring(imAt) 
+    _defaultText ="\n".."What Im Doing  " .. "\n".. "\n".. tostring(imAt) .. "\n".. "\n" .."Time Passed From The Start: ".. "\n"..tostring(minFromBeg).."\n".."Last Reset Clearing Time ".. "\n"..tostring(minResetingTime).."\n".."How Many Resets: "..tostring(resetsTotal)
     _text = _defaultText .. "\n".. "______________" .. "\n".. "Reroll made by JPaul" .. "\n" .. text
    infoText:highlight(_text)
 end
 
 function resetF()
+	startResetingTime = os.time()
 	if needReset == true then
 	if reset.Profile_region:exists(reset.Profile) then 
     local t = reset.Profile_region:getLastMatch()
@@ -521,9 +544,9 @@ function tutF()
 end
 
 function createScript()
-	local script = io.open("/sdcard/jpaulRerollv7.lua")
-	if script~=nil then io.close(script) else  local script = io.open("/sdcard/jpaulRerollv7.lua", "a+")
-	script:write("gg.setVisible(false)firstRun=0;function getAccID()gg.searchNumber('10602;1065353216;1502;1507::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local a=gg.getResults(gg.getResultsCount())memInit=a[1].address-0xFFFFFF;memFin=a[1].address+0xFFFFFF;t={}t[1]={}t[1].address=a[1].address-addOfss;t[1].flags=gg.TYPE_DWORD;t=gg.getValues(t)AccID=t[1].value end;function skillChanger()gg.searchNumber(AccID..';10602;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local a=gg.getResults(gg.getResultsCount())if a~=nil then for b,c in ipairs(a)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=100505;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=10915;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=2062;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';10101;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local d=gg.getResults(gg.getResultsCount())if d~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=103006;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=10915;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=7813;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';15203;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local d=gg.getResults(gg.getResultsCount())if d~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=100505;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=10915;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=2062;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';20904;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local d=gg.getResults(gg.getResultsCount())if a~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=10616;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=12813;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=6262;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';19801;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local d=gg.getResults(gg.getResultsCount())if a~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=103006;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=12315;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=7813;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.setVisible(false)firstRun=1 end;startTime=os.time()function start()currentTime=os.time()diffTime=os.difftime(currentTime,startTime)if diffTime<=300 and firstRun==0 then skillChanger()gg.sleep(60000)elseif diffTime<=300 and firstRun==1 then gg.sleep(60000)elseif diffTime>=300 then firstRun=0;startTime=os.time()end end;function init()gg.setVisible(false)getAccID()while true do start()end end;local e=gg.getTargetInfo()if e==nil then print('Cant retrieve information about the process')else if e.x64 then addOfss=0x8;fstSkOfss=0x1C;sndSkOfss=0x2C;trdSkOfss=0x3C;fthSkOfss=0x4C;fstSkPROfss=0x24;sndSkPROfss=0x34;trdSkPROfss=0x44;fthSkPROfss=0x54 else addOfss=0x4;fstSkOfss=0x10;sndSkOfss=0x18;trdSkOfss=0x20;fthSkOfss=0x28;fstSkPROfss=0x14;sndSkPROfss=0x1C;trdSkPROfss=0x24;fthSkPROfss=0x2C end end;init()")
+	local script = io.open("/sdcard/jpaulRerollv11.lua")
+	if script~=nil then io.close(script) else  local script = io.open("/sdcard/jpaulRerollv11.lua", "a+")
+	script:write("gg.setVisible(false)firstRun=0;function getAccID()gg.searchNumber('10602;1065353216;1502;1507::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local a=gg.getResults(gg.getResultsCount())memInit=a[1].address-0xFFFFFF;memFin=a[1].address+0xFFFFFF;t={}t[1]={}t[1].address=a[1].address-addOfss;t[1].flags=gg.TYPE_DWORD;t=gg.getValues(t)AccID=t[1].value;gg.sleep(500)end;function skillChanger()gg.searchNumber(AccID..';10602;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)gg.sleep(500)local a=gg.getResults(gg.getResultsCount())gg.sleep(500)if a~=nil then for b,c in ipairs(a)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=100505;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=10915;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=2062;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.sleep(500)gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';10101;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)gg.sleep(500)local d=gg.getResults(gg.getResultsCount())gg.sleep(500)if d~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=103006;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=10915;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=2062;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.sleep(500)gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';15203;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)gg.sleep(500)local d=gg.getResults(gg.getResultsCount())gg.sleep(500)if d~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=103006;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=10915;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=7813;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.sleep(500)gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.setVisible(false)firstRun=1 end;startTime=os.time()function start()currentTime=os.time()diffTime=os.difftime(currentTime,startTime)if diffTime<=60 and firstRun==0 then skillChanger()gg.sleep(31000)elseif diffTime<=60 and firstRun==1 then gg.sleep(31000)elseif diffTime>=60 then firstRun=0;startTime=os.time()end end;function init()gg.setVisible(false)getAccID()while true do start()end end;local e=gg.getTargetInfo()if e==nil then print('Cant retrieve information about the process')else if e.x64 then addOfss=0x8;fstSkOfss=0x1C;sndSkOfss=0x2C;trdSkOfss=0x3C;fthSkOfss=0x4C;fstSkPROfss=0x24;sndSkPROfss=0x34;trdSkPROfss=0x44;fthSkPROfss=0x54 else addOfss=0x4;fstSkOfss=0x10;sndSkOfss=0x18;trdSkOfss=0x20;fthSkOfss=0x28;fstSkPROfss=0x14;sndSkPROfss=0x1C;trdSkPROfss=0x24;fthSkPROfss=0x2C end end;init()")
 	io.close(script)
     end
 end
@@ -747,7 +770,9 @@ function mapF()
 end
 
 function selectMobsF()
+	wait(1)
 	click(Location(52,466))
+	wait(0.5)
 	while image.SelectMobsScr_region:exists(image.SelectMobsScr) do
 		if image.MobRegion_region:exists(image.Mob) then 
     		local t = image.MobRegion_region:getLastMatch()
@@ -765,7 +790,7 @@ function selectMobsF()
 end
 
 function gameGuardianF()
-	needGGexec = 1 
+	ggAlreadyRunning = true 
 	createScript()
 	if gameGuardian.gameGuardianIcon_region:exists(gameGuardian.gameGuardianIcon, 10) then
 		local t = gameGuardian.gameGuardianIcon_region:getLastMatch()
@@ -795,7 +820,7 @@ function gameGuardianF()
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     end
     if gameGuardian.gameGuardianFileLocation_region:exists(gameGuardian.gameGuardianFileLocation, 10) then
-		local scriptLocation = ("/sdcard/jpaulRerollv7.lua")
+		local scriptLocation = ("/sdcard/jpaulRerollv11.lua")
 		type(scriptLocation)
     end
     if gameGuardian.gameGuardianExecuteInitScript_region:exists(gameGuardian.gameGuardianExecuteInitScript, 10) then
@@ -830,6 +855,66 @@ function faimonBossF()
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	end
     end
+end
+
+function trashCheck()
+	if image.Close_region:exists(image.Close, 0) then
+    	local t = image.Close_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
+    	elseif image.XbtnADs_region:exists(image.XbtnADs, 0) then
+    	local t = image.XbtnADs_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
+    	elseif image.COMPS_region:exists(image.YesINBOX, 0) then
+    	local t = image.COMPS_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
+        elseif image.COMPS_region:exists(image.NObtnINBOX, 0) then
+    	local t = image.COMPS_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
+    	elseif image.challX_region:exists(image.challX, 0) then
+    	local t = image.challX_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
+        elseif image.later_region:exists(image.later, 0) then
+    	local t = image.later_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
+    	else click(Location(math.random(800, 810),math.random(0, 1))) 
+    			usePreviousSnap(false)
+        end
 end
 
 function WhereIAm()
@@ -914,6 +999,9 @@ function WhereIAm()
     elseif faimon.faimonBoss_region:exists(faimon.faimonBoss, 0) then
     	usePreviousSnap(false) 
     	return "faimonBossStage"
+	elseif image.SelectMobsScr_region:exists(image.SelectMobsScr, 0) then
+    	usePreviousSnap(false) 
+    	return "selectMobs"
     elseif not image.SelectMobsScr_region:exists(image.SelectMobsScr, 0) and not faimon.faimonBoss_region:exists(faimon.faimonBoss, 0) and image.StartBattle_region:exists(image.StartBattle, 0) then
     	usePreviousSnap(false) 
     	return "startBattle"
@@ -932,9 +1020,6 @@ function WhereIAm()
     elseif image.mapScreen_region:exists(image.mapScreen, 0) then
     	usePreviousSnap(false) 
     	return "mapScreenScr"
-    elseif image.SelectMobsScr_region:exists(image.SelectMobsScr, 0) then
-    	usePreviousSnap(false) 
-    	return "selectMobs"
     elseif image.skipSumm_region:exists(image.skipSumm, 0) then
     	usePreviousSnap(false) 
     	return "skipSummons"
@@ -945,8 +1030,13 @@ end
 
 function start()
 	 imAt = WhereIAm()
+	 currentTime = os.time()
+	 diffTimeFromBeg = os.difftime(currentTime, startTime )
+	 minFromBeg = SecondsToClock(diffTimeFromBeg)
 	--toast(imAt)
+	if showInfoM == true then
 	showInfo("t.me/swscripts")
+	end
 	if imAt == "needReset" then 
         resetF()
     elseif imAt == "imputName" then
@@ -966,7 +1056,7 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
    		gameGuardianInit = gameGuardianInit + 1
-    	if needGGexec == 0 and gameGuardianInit >= 2  then gameGuardianF() end
+    	if ggAlreadyRunning == false and gameGuardianInit >= 2  then gameGuardianF() end
  	elseif imAt == "enemyFound" then
  		local t = image.Enemy_region:getLastMatch()
     	local x = t:getX()
@@ -1074,8 +1164,11 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     elseif imAt == "startBattle" then
+
     	if faimon.faimonBoss_region:exists(faimon.faimonBoss, 0.5) then
     		faimonBossF() 
+    	elseif image.SelectMobsScr_region:exists(image.SelectMobsScr, 0) then
+    		selectMobsF() 
     	elseif not faimon.faimonBoss_region:exists(faimon.faimonBoss, 0) and image.StartBattle_region:exists(image.StartBattle, 0) then
     	local t = image.StartBattle_region:getLastMatch()
     	local x = t:getX()
@@ -1220,7 +1313,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 9")
+    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 12.5")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
@@ -1233,11 +1326,14 @@ function RerollDialog()
     addEditText("customName", "Insert Custom Name") 
     newRow() 
     addTextView("     ")
-    addCheckBox("needReset", "⚡ Start With Reseting", false)
+    addCheckBox("needReset", "⚡ Start With Reseting                         ", false) 
+    addCheckBox("showInfoM", "⚡ Show Informations On Screen", true)
     newRow() 
     addTextView("     ")
     addCheckBox("powerSaving", "⚡ Power Saving Mode ", false)
-    addEditNumber("customDelay", 2)
+    addEditNumber("customDelay", 0.8) 
+    addTextView("              ")
+    addCheckBox("ggAlreadyRunning", "⚡ GG Script Already Executed ", false)
     newRow() 
     addTextView("     ")
     addCheckBox("powerOff", "⚡ Power Off Everything After N. Times (coming soon):    ", false)
@@ -1305,3 +1401,4 @@ function debugT()
 end
 RunEverything() 
 --debug()
+
