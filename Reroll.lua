@@ -5,7 +5,10 @@ setImagePath(scriptPath() .. "images")
 --needReset = 0
 resetsTotal = 0
 startTime = os.time()
+fairySelected = 0
+lapisSelected = 0
 gameGuardianInit = 0
+unselectedMobsReturn = false
 ggAlreadyRunning = false
 dialogVarTut = 1
 faiBs = 0
@@ -19,6 +22,7 @@ tamorDesertChecked = 0
 hydeniRuinsChecked = 0
 vrofagusRuinsChecked = 0
 faimonVolcanoChecked = 0
+minResetingTime = tostring("00:00:00")
 setHighlightTextStyle(0xb0140030, 0xf9ffffff, 13)
 infoText = Region(130, 5, 270, 270)
 
@@ -56,7 +60,7 @@ gameGuardian = {
 
 reset = {
 	Profile_region = Region(87, 94, 52, 15),
-	Profile = Pattern("Profile.png"):similar(0.90),
+	Profile = Pattern("Profile.png"):similar(0.7),
 	Settings_region = Region(573, 55, 130, 20),
 	Settings = Pattern("Settings.png"):similar(0.90),
 	Options_region = Region(577, 118, 23, 33),
@@ -95,6 +99,26 @@ map = {
 }
 
 image = {
+	mtSizBoss_region = Region(858, 225, 198, 55),
+	mtSizBoss = Pattern("mtSizBoss.png"):similar(0.90),
+	Lapis = Pattern("Lapis.png"):similar(0.80),
+	selectedMob = Pattern("selectedMob.png"):similar(0.85),
+	miniElf_region = Region(755, 317, 62, 56),
+	miniElf = Pattern("miniElf.png"):similar(0.90),
+	selectedMobsTr_region = Region(9, 419, 586, 75),
+	selectedMobsTr = Pattern("selectedMobsTr.png"):similar(0.90),
+	goBack_region = Region(1173, 635, 75, 60),
+	goBack = Pattern("goBack.png"):similar(0.90),
+	miniLapis_region = Region(755, 219, 61, 59),
+	miniLapis = Pattern("miniLapis.png"):similar(0.90),
+	revive_region = Region(510, 451, 49, 41),
+	revive = Pattern("revive.png"):similar(0.90),
+	fairy_region = Region(14, 492, 54, 60),
+	fairy = Pattern("fairy.png"):similar(0.90),
+	slotForReps_region = Region(245, 328, 153, 72),
+	slotForReps = Pattern("slotForReps.png"):similar(0.7),
+	friendsReps_region = Region(176, 552, 120, 61),
+	friendsReps = Pattern("friendsReps.png"):similar(0.7),
 	challX_region = Region(1214, 0, 61, 46),
 	challX = Pattern("challX.png"):similar(0.90),
 	skipSumm_region = Region(1088, 652, 127, 48),
@@ -117,6 +141,8 @@ image = {
 	--ElliaSkipDX_region = Region(1133, 557, 70, 14),
 	EnterNameDONE_region = Region(1058, 13, 61, 33),
 	EnterNameDONE = Pattern("EnterNameDONE.png"):similar(0.90),
+	imputNameBlueStack_region = Region(990, 0, 180, 95),
+	imputNameBlueStack = Pattern("imputNameBlueStack.png"):similar(0.90),
 	EnterNameOK_region = Region(875, 182, 61, 40),
 	EnterNameOK  = Pattern("EnterNameOK.png"):similar(0.90),
 	EnterNameScr_region = Region(250, 76, 59, 48),
@@ -169,6 +195,8 @@ image = {
 	Xrewads = Pattern("Xrewads.png"):similar(0.90),
 	OKbtnAutoBattle_region = Region(605, 414, 66, 43),
 	OKbtnAutoBattle = Pattern("OKbtnAutoBattle.png"):similar(0.90),
+	okBTN_region = Region(607, 448, 67, 53),
+	okBTN  = Pattern("okBTN.png"):similar(0.90),
 	collectInbox_region = Region(986, 235, 105, 450),
 	collectInbox = Pattern("collectInbox.png"):similar(0.90),
 	newIconMap_region = Region(9, 8, 1253, 697),
@@ -180,6 +208,7 @@ image = {
     later_region = Region(697, 479, 99, 46),
     later = Pattern("mapScreen.png"):similar(0.90),
 }
+
 function SecondsToClock(seconds)
   local seconds = tonumber(seconds)
   if seconds <= 0 then
@@ -213,7 +242,7 @@ function summonLDF()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     end
-    if summoning.goToSummPlatform_region:exists(summoning.goToSummPlatform, 5) then
+    if summoning.goToSummPlatform_region:exists(summoning.goToSummPlatform, 10) then
     	wait(3)
 	 	local t = summoning.goToSummPlatform_region:getLastMatch()
     	local x = t:getX()
@@ -238,6 +267,21 @@ function summonLDF()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    elseif not summoning.LDscrollMaiusc_region:exists(summoning.LDscrollMaiusc, 5) then
+    	local  swipRandx1 = math.random(1000,1010) 
+		local  swipRandy1 = math.random(200,210)
+		local  swipRandx2 = math.random(1000,1010) 
+		local  swipRandy2 = math.random(550,560)
+		swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
+		wait(2)
+		if summoning.LDscrollMaiusc_region:exists(summoning.LDscrollMaiusc, 5) then
+	 	local t = summoning.LDscrollMaiusc_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) end
     end
     if summoning.finalSummon_region:exists(summoning.finalSummon, 5) then
 	 	local t = summoning.finalSummon_region:getLastMatch()
@@ -267,6 +311,8 @@ function summonLDF()
 	hydeniRuinsChecked = 0
 	vrofagusRuinsChecked = 0
 	faimonVolcanoChecked = 0
+	fairySelected = 0
+	lapisSelected = 0
 	elseif starsMob == 1111 then toast("4 Star Mob SO CLOSE")
 	needReset = true
 	faiBs = 0
@@ -281,6 +327,8 @@ function summonLDF()
 	hydeniRuinsChecked = 0
 	vrofagusRuinsChecked = 0
 	faimonVolcanoChecked = 0
+	fairySelected = 0
+	lapisSelected = 0
 	elseif starsMob == 11111 then toast("5 Star Mob NO FUCKING WAY GZ")
 		scriptExit("5 Star Mob NO FUCKING WAY GZ") 
 	elseif starsMob == nil then toast("Something is wrong")
@@ -288,8 +336,10 @@ function summonLDF()
 	end
     end
     currentResetingTime = os.time()
+    if startResetingTime ~= nil then
     diffTimeReseting = os.difftime(currentResetingTime, startResetingTime )
     minResetingTime = SecondsToClock(diffTimeReseting)
+	elseif startResetingTime == nil then minResetingTime = tostring("00:00:00") end
     resetsTotal = resetsTotal + 1
 end
 
@@ -318,6 +368,7 @@ function summoningF()
     	local Area = Region(x+250,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	collectedLD = 1
+    	wait(2)
     	break
     elseif scrollBottom <= 8 then 
      		 local  swipRandx1 = math.random(620,640) 
@@ -327,6 +378,15 @@ function summoningF()
              swipe(Location(swipRandx2, swipRandy2),  Location(swipRandx1, swipRandy1), 2)
              scrollBottom = scrollBottom + 1
     elseif scrollBottom >= 9 then 
+    	local  swipRandx1 = math.random(620,640) 
+        local  swipRandy1 = math.random(250,260)
+        local  swipRandx2 = math.random(620,640) 
+        local  swipRandy2 = math.random(450,460)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
     	scrollBottom = 0
     	break
     end
@@ -382,13 +442,13 @@ end
 
 function showInfo(text)
     infoText:highlightOff() 
-    _defaultText ="\n".."What Im Doing  " .. "\n".. "\n".. tostring(imAt) .. "\n".. "\n" .."Time Passed From The Start: ".. "\n"..tostring(minFromBeg).."\n".."Last Reset Clearing Time ".. "\n"..tostring(minResetingTime).."\n".."How Many Resets: "..tostring(resetsTotal)
+    _defaultText ="\n".."What Im Doing  " .. "\n".. "\n".. tostring(imAt) .. "\n".. "\n" .."Time Passed From The Start ".. "\n"..tostring(minFromBeg).."\n".."Last Reset Clearing Time ".. "\n"..tostring(minResetingTime).."\n".."How Many Resets: "..tostring(resetsTotal)
     _text = _defaultText .. "\n".. "______________" .. "\n".. "Reroll made by JPaul" .. "\n" .. text
    infoText:highlight(_text)
 end
 
 function resetF()
-	startResetingTime = os.time()
+	
 	if needReset == true then
 	if reset.Profile_region:exists(reset.Profile) then 
     local t = reset.Profile_region:getLastMatch()
@@ -417,14 +477,25 @@ function resetF()
     local Area = Region(x,y,w,h)
     click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
 	end
-		if reset.Input_region:exists(reset.Input) then 
+	if reset.Input_region:exists(reset.Input) then 
     local t = reset.Input_region:getLastMatch()
     captchaNum = numberOCR(reset.Captcha_region, "num")
     local x = t:getCenter()
     click(Location(x))
 	end
-		if reset.Done_region:exists(reset.Done) then 
+	if reset.Done_region:exists(reset.Done) then 
     local t = reset.Done_region:getLastMatch()
+    local numString = ""..captchaNum..""
+    type(numString)
+    local x = t:getX()
+    local y = t:getY()
+    local w = t:getW()
+    local h = t:getH()
+    local Area = Region(x,y,w,h)
+    click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	end
+	if image.imputNameBlueStack_region:exists(image.imputNameBlueStack) then 
+    local t = image.imputNameBlueStack_region:getLastMatch()
     local numString = ""..captchaNum..""
     type(numString)
     local x = t:getX()
@@ -459,10 +530,12 @@ function resetF()
 end
 
 function nameF()
+	startResetingTime = os.time()
 	local upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	local lowerCase = "abcdefghijklmnopqrstuvwxyz"
 	local numbers = "0123456789"
-	local characterSet = upperCase .. lowerCase .. numbers
+	local specChar = "._-"
+	local characterSet = upperCase .. lowerCase .. numbers .. specChar
 	local keyLength = 14
 	local output = ""
 	for	i = 1, keyLength do
@@ -476,6 +549,15 @@ function nameF()
 	end
 	if image.EnterNameDONE_region:exists(image.EnterNameDONE) then
 	local t = image.EnterNameDONE_region:getLastMatch()
+    local x = t:getX()
+    local y = t:getY()
+    local w = t:getW()
+    local h = t:getH()
+    local Area = Region(x,y,w,h)
+    click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    end
+    if image.imputNameBlueStack_region:exists(image.imputNameBlueStack) then
+	local t = image.imputNameBlueStack_region:getLastMatch()
     local x = t:getX()
     local y = t:getY()
     local w = t:getW()
@@ -538,15 +620,15 @@ function tutF()
     local y = t:getY()
     local w = t:getW()
     local h = t:getH()
-    local Area = Region(x+30,y+ 90,w-15,h-20)
+    local Area = Region(x+30,y+ 90,w-25,h-20)
     click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     end
 end
 
 function createScript()
-	local script = io.open("/sdcard/jpaulRerollv11.lua")
-	if script~=nil then io.close(script) else  local script = io.open("/sdcard/jpaulRerollv11.lua", "a+")
-	script:write("gg.setVisible(false)firstRun=0;function getAccID()gg.searchNumber('10602;1065353216;1502;1507::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)local a=gg.getResults(gg.getResultsCount())memInit=a[1].address-0xFFFFFF;memFin=a[1].address+0xFFFFFF;t={}t[1]={}t[1].address=a[1].address-addOfss;t[1].flags=gg.TYPE_DWORD;t=gg.getValues(t)AccID=t[1].value;gg.sleep(500)end;function skillChanger()gg.searchNumber(AccID..';10602;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)gg.sleep(500)local a=gg.getResults(gg.getResultsCount())gg.sleep(500)if a~=nil then for b,c in ipairs(a)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=100505;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=10915;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=2062;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.sleep(500)gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';10101;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)gg.sleep(500)local d=gg.getResults(gg.getResultsCount())gg.sleep(500)if d~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=103006;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=10915;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=2062;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.sleep(500)gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.searchNumber(AccID..';15203;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,memFin,4)gg.sleep(500)local d=gg.getResults(gg.getResultsCount())gg.sleep(500)if d~=nil then for b,c in ipairs(d)do if c.value==1065353216 then local t={}for b=1,8 do t[b]={}t[b].flags=gg.TYPE_DWORD;t[b].freeze=true;t[b].freezeType=gg.FREEZE_NORMAL end;t[1].address=c.address+fstSkOfss;t[1].value=103006;t[2].address=c.address+fstSkPROfss;t[2].value=5;t[3].address=c.address+sndSkOfss;t[3].value=10915;t[4].address=c.address+sndSkPROfss;t[4].value=5;t[5].address=c.address+trdSkOfss;t[5].value=7813;t[6].address=c.address+trdSkPROfss;t[6].value=5;t[7].address=c.address+fthSkOfss;t[7].value=13618;t[8].address=c.address+fthSkPROfss;t[8].value=5;gg.sleep(500)gg.setValues(t)gg.addListItems(t)gg.clearResults()end end end;gg.setVisible(false)firstRun=1 end;startTime=os.time()function start()currentTime=os.time()diffTime=os.difftime(currentTime,startTime)if diffTime<=60 and firstRun==0 then skillChanger()gg.sleep(31000)elseif diffTime<=60 and firstRun==1 then gg.sleep(31000)elseif diffTime>=60 then firstRun=0;startTime=os.time()end end;function init()gg.setVisible(false)getAccID()while true do start()end end;local e=gg.getTargetInfo()if e==nil then print('Cant retrieve information about the process')else if e.x64 then addOfss=0x8;fstSkOfss=0x1C;sndSkOfss=0x2C;trdSkOfss=0x3C;fthSkOfss=0x4C;fstSkPROfss=0x24;sndSkPROfss=0x34;trdSkPROfss=0x44;fthSkPROfss=0x54 else addOfss=0x4;fstSkOfss=0x10;sndSkOfss=0x18;trdSkOfss=0x20;fthSkOfss=0x28;fstSkPROfss=0x14;sndSkPROfss=0x1C;trdSkPROfss=0x24;fthSkPROfss=0x2C end end;init()")
+	local script = io.open("/sdcard/jpaulRerollv14.lua")
+	if script~=nil then io.close(script) else  local script = io.open("/sdcard/jpaulRerollv14.lua", "a+")
+	script:write("gg.setVisible(false)firstRun=0;function getAccID()gg.searchNumber('10602;1065353216;1502;1507::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,-1)local a=gg.getResults(gg.getResultsCount())tacc={}tacc[1]={}tacc[1].address=a[1].address-addOfss;tacc[1].flags=gg.TYPE_DWORD;tacc=gg.getValues(tacc)AccID=tacc[1].value;gg.sleep(500)end;function skillChanger()gg.searchNumber(AccID..';10602;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,-1)gg.sleep(500)local b=gg.getResults(gg.getResultsCount())gg.sleep(500)for c,d in ipairs(b)do if d.value==1065353216 then local e={}for c=1,8 do e[c]={}e[c].flags=gg.TYPE_DWORD;e[c].freeze=true;e[c].freezeType=gg.FREEZE_NORMAL end;e[1].address=d.address+fstSkOfss;e[1].value=101412;e[2].address=d.address+fstSkPROfss;e[2].value=5;e[3].address=d.address+sndSkOfss;e[3].value=7813;e[4].address=d.address+sndSkPROfss;e[4].value=5;e[5].address=d.address+trdSkOfss;e[5].value=10515;e[6].address=d.address+trdSkPROfss;e[6].value=5;e[7].address=d.address+fthSkOfss;e[7].value=13633;e[8].address=d.address+fthSkPROfss;e[8].value=5;gg.sleep(500)gg.setValues(e)gg.addListItems(e)gg.clearResults()end end;gg.searchNumber(AccID..';10101;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,-1)gg.sleep(500)local f=gg.getResults(gg.getResultsCount())gg.sleep(500)for c,d in ipairs(f)do if d.value==1065353216 then local g={}for c=1,8 do g[c]={}g[c].flags=gg.TYPE_DWORD;g[c].freeze=true;g[c].freezeType=gg.FREEZE_NORMAL end;g[1].address=d.address+fstSkOfss;g[1].value=103006;g[2].address=d.address+fstSkPROfss;g[2].value=5;g[3].address=d.address+sndSkOfss;g[3].value=10915;g[4].address=d.address+sndSkPROfss;g[4].value=5;g[5].address=d.address+trdSkOfss;g[5].value=107026;g[6].address=d.address+trdSkPROfss;g[6].value=5;g[7].address=d.address+fthSkOfss;g[7].value=13618;g[8].address=d.address+fthSkPROfss;g[8].value=5;gg.sleep(500)gg.setValues(g)gg.addListItems(g)gg.clearResults()end end;gg.searchNumber(AccID..';15203;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,-1)gg.sleep(500)local h=gg.getResults(gg.getResultsCount())gg.sleep(500)for c,d in ipairs(h)do if d.value==1065353216 then local i={}for c=1,8 do i[c]={}i[c].flags=gg.TYPE_DWORD;i[c].freeze=true;i[c].freezeType=gg.FREEZE_NORMAL end;i[1].address=d.address+fstSkOfss;i[1].value=100505;i[2].address=d.address+fstSkPROfss;i[2].value=5;i[3].address=d.address+sndSkOfss;i[3].value=10915;i[4].address=d.address+sndSkPROfss;i[4].value=5;i[5].address=d.address+trdSkOfss;i[5].value=104205;i[6].address=d.address+trdSkPROfss;i[6].value=5;i[7].address=d.address+fthSkOfss;i[7].value=13618;i[8].address=d.address+fthSkPROfss;i[8].value=5;gg.sleep(500)gg.setValues(i)gg.addListItems(i)gg.clearResults()end end;gg.searchNumber(AccID..';19801;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,-1)gg.sleep(500)local f=gg.getResults(gg.getResultsCount())gg.sleep(500)for c,d in ipairs(f)do if d.value==1065353216 then local g={}for c=1,8 do g[c]={}g[c].flags=gg.TYPE_DWORD;g[c].freeze=true;g[c].freezeType=gg.FREEZE_NORMAL end;g[1].address=d.address+fstSkOfss;g[1].value=101412;g[2].address=d.address+fstSkPROfss;g[2].value=5;g[3].address=d.address+sndSkOfss;g[3].value=7813;g[4].address=d.address+sndSkPROfss;g[4].value=5;g[5].address=d.address+trdSkOfss;g[5].value=10515;g[6].address=d.address+trdSkPROfss;g[6].value=5;g[7].address=d.address+fthSkOfss;g[7].value=13633;g[8].address=d.address+fthSkPROfss;g[8].value=5;gg.sleep(500)gg.setValues(g)gg.addListItems(g)gg.clearResults()end end;gg.searchNumber(AccID..';20904;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,-1)gg.sleep(500)local f=gg.getResults(gg.getResultsCount())gg.sleep(500)for c,d in ipairs(f)do if d.value==1065353216 then local g={}for c=1,8 do g[c]={}g[c].flags=gg.TYPE_DWORD;g[c].freeze=true;g[c].freezeType=gg.FREEZE_NORMAL end;g[1].address=d.address+fstSkOfss;g[1].value=100505;g[2].address=d.address+fstSkPROfss;g[2].value=5;g[3].address=d.address+sndSkOfss;g[3].value=10915;g[4].address=d.address+sndSkPROfss;g[4].value=5;g[5].address=d.address+trdSkOfss;g[5].value=104205;g[6].address=d.address+trdSkPROfss;g[6].value=5;g[7].address=d.address+fthSkOfss;g[7].value=13618;g[8].address=d.address+fthSkPROfss;g[8].value=5;gg.sleep(500)gg.setValues(g)gg.addListItems(g)gg.clearResults()end end;gg.setVisible(false)firstRun=1 end;startTime=os.time()function start()currentTime=os.time()diffTime=os.difftime(currentTime,startTime)if diffTime<=60 and firstRun==0 then skillChanger()gg.sleep(31000)elseif diffTime<=60 and firstRun==1 then gg.sleep(31000)elseif diffTime>=60 then firstRun=0;startTime=os.time()end end;function init()gg.setVisible(false)getAccID()while true do start()end end;local j=gg.getTargetInfo()if j==nil then print('Cant retrieve information about the process')else if j.x64 then addOfss=0x8;fstSkOfss=0x1C;sndSkOfss=0x2C;trdSkOfss=0x3C;fthSkOfss=0x4C;fstSkPROfss=0x24;sndSkPROfss=0x34;trdSkPROfss=0x44;fthSkPROfss=0x54 else addOfss=0x4;fstSkOfss=0x10;sndSkOfss=0x18;trdSkOfss=0x20;fthSkOfss=0x28;fstSkPROfss=0x14;sndSkPROfss=0x1C;trdSkPROfss=0x24;fthSkPROfss=0x2C end end;init()")
 	io.close(script)
     end
 end
@@ -566,6 +648,132 @@ function chPx()
     		elseif r >= 150 then
     			return false
     		end
+end
+
+function collectElf()
+	if showInfoM == true then showInfo("collectElf") end
+	while not reset.Profile_region:exists(reset.Profile) do
+		trashCheck()
+		if image.goBack_region:exists(image.goBack) then
+    		local t = image.goBack_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	end
+	end
+	wait(2)
+	trashCheck()
+	wait(0.5)
+	if summoning.inboxLoot_region:exists(summoning.inboxLoot, 5) then
+	 	local t = summoning.inboxLoot_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	wait(2)
+    end
+    scrollBottom = 0
+    while image.collectInbox_region:exists(image.collectInbox, 5) do
+    if summoning.lootRegion:exists(image.miniElf, 5) then
+	 	local t = summoning.lootRegion:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x+250,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	elfCollected = true
+    	wait(2)
+    	break
+    elseif scrollBottom <= 8 then 
+     		 local  swipRandx1 = math.random(620,640) 
+         	 local  swipRandy1 = math.random(250,260)
+             local  swipRandx2 = math.random(620,640) 
+             local  swipRandy2 = math.random(450,460)
+             swipe(Location(swipRandx2, swipRandy2),  Location(swipRandx1, swipRandy1), 2)
+             scrollBottom = scrollBottom + 1
+    elseif scrollBottom >= 9 then 
+    	local  swipRandx1 = math.random(620,640) 
+        local  swipRandy1 = math.random(250,260)
+        local  swipRandx2 = math.random(620,640) 
+        local  swipRandy2 = math.random(450,460)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+    	scrollBottom = 0
+    	break
+    end
+    end
+end
+
+function collectLapis()
+	if showInfoM == true then showInfo("collectLapis") end
+	while not reset.Profile_region:exists(reset.Profile) do
+		trashCheck()
+		if image.goBack_region:exists(image.goBack) then
+    		local t = image.goBack_region:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x,y,w,h)
+    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	end
+	end
+	wait(2)
+	trashCheck()
+	wait(0.5)
+	if summoning.inboxLoot_region:exists(summoning.inboxLoot, 5) then
+	 	local t = summoning.inboxLoot_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	wait(2)
+    end
+    scrollBottom = 0
+    while image.collectInbox_region:exists(image.collectInbox, 5) do
+    if summoning.lootRegion:exists(image.miniLapis, 5) then
+	 	local t = summoning.lootRegion:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x+250,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	lapisCollected = true
+    	wait(2)
+    	break
+    elseif scrollBottom <= 8 then 
+     		 local  swipRandx1 = math.random(620,640) 
+         	 local  swipRandy1 = math.random(250,260)
+             local  swipRandx2 = math.random(620,640) 
+             local  swipRandy2 = math.random(450,460)
+             swipe(Location(swipRandx2, swipRandy2),  Location(swipRandx1, swipRandy1), 2)
+             scrollBottom = scrollBottom + 1
+    elseif scrollBottom >= 9 then 
+    	local  swipRandx1 = math.random(620,640) 
+        local  swipRandy1 = math.random(250,260)
+        local  swipRandx2 = math.random(620,640) 
+        local  swipRandy2 = math.random(450,460)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+        swipe(Location(swipRandx2, swipRandy1),  Location(swipRandx1, swipRandy2), 2)
+    	scrollBottom = 0
+    	break
+    end
+    end
 end
 
 function mapF()
@@ -591,9 +799,8 @@ function mapF()
 	while image.mapScreen_region:exists(image.mapScreen) do
 		usePreviousSnap(true)
 		if garenForestChecked == 0 and map.mapS_region:exists(map.garenForest,1) then
-			showInfo("checking garenForest")
+			if showInfoM == true then showInfo("checking garenForest") end
 			if chPx() == true then
-			garenForestChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -604,28 +811,66 @@ function mapF()
     		usePreviousSnap(false)
     		break
     	    elseif chPx() == false then
-    	    	garenForestChecked = 1
+    	    	if ggClearing == true and elfCollected == false then 
+					usePreviousSnap(false) 
+					garenForestChecked = 1
+					collectElf() 
+					break
+    	   		elseif ggClearing == true and elfCollected == true then
+    	   		 	usePreviousSnap(false) 
+    	   		 	garenForestChecked = 1 
+    	   		elseif frClearing == true then 
+    	   		 	usePreviousSnap(false) 
+    	   		 	garenForestChecked = 1 
+    	   		end
     	    end
     	elseif mtSizChecked == 0 and map.mapS_region:exists(map.mtSiz,1) then
-    		showInfo("checking mtSiz")
-			if chPx() == true then
-    		mtSizChecked = 1
-			local t = map.mapS_region:getLastMatch()
-    		local x = t:getX()
-    		local y = t:getY()
-    		local w = t:getW()
-    		local h = t:getH()
-    		local Area = Region(x,y,w,h)
-    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    		usePreviousSnap(false)
+    		if showInfoM == true then showInfo("checking mtSiz") end 
+			if chPx() == true then 
+				if ggClearing == true and elfCollected == false then 
+					usePreviousSnap(false) 
+					collectElf() 
+					break
+				elseif ggClearing == true and elfCollected == true then
+						local t = map.mapS_region:getLastMatch()
+    					local x = t:getX()
+    					local y = t:getY()
+    					local w = t:getW()
+    					local h = t:getH()
+    					local Area = Region(x,y,w,h)
+    					click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    					usePreviousSnap(false)
+    					break
+    			elseif frClearing == true then
+    				toast("frClearing")
+    					local t = map.mapS_region:getLastMatch()
+    					local x = t:getX()
+    					local y = t:getY()
+    					local w = t:getW()
+    					local h = t:getH()
+    					local Area = Region(x,y,w,h)
+    					click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    					usePreviousSnap(false)
+    					break 
+    			end
     		elseif chPx() == false then
-    	    	mtSizChecked = 1
+    			if ggClearing == true and lapisCollected == false then 
+					usePreviousSnap(false) 
+					mtSizChecked = 1
+					collectLapis() 
+					break
+    	   		elseif ggClearing == true and lapisCollected == true then
+    	   		 	usePreviousSnap(false) 
+    	   		 	mtSizChecked = 1 
+    	   		elseif frClearing == true then 
+    	   		 	usePreviousSnap(false) 
+    	   		 	mtSizChecked = 1 
+    	   		end
+    	    	
     	    end
-    		break
     	elseif kabirRuinsChecked == 0 and map.mapS_region:exists(map.kabirRuins,1) then
-    		showInfo("checking kabirRuins")
+    		if showInfoM == true then showInfo("checking kabirRuins") end
 			if chPx() == true then
-    		kabirRuinsChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -639,9 +884,8 @@ function mapF()
     	    	kabirRuinsChecked = 1
     	    end
     	elseif mtWhiteChecked == 0 and map.mapS_region:exists(map.mtWhite,1) then
-    		showInfo("checking mtWhite")
+    		if showInfoM == true then showInfo("checking mtWhite") end
 			if chPx() == true then
-    		mtWhiteChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -655,9 +899,8 @@ function mapF()
     	    	mtWhiteChecked = 1
     	    end
     	elseif telainForestChecked == 0 and map.mapS_region:exists(map.telainForest,1) then
-    		showInfo("checking telainForest")
+    		if showInfoM == true then showInfo("checking telainForest") end
 			if chPx() == true then
-    		telainForestChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -671,9 +914,8 @@ function mapF()
     	    	telainForestChecked = 1
     	    end
     	elseif hydeniRuinsChecked == 0 and map.mapS_region:exists(map.hydeniRuins,1) then
-    		showInfo("checking hydeniRuins")
+    		if showInfoM == true then showInfo("checking hydeniRuins") end
 			if chPx() == true then
-    		hydeniRuinsChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -687,9 +929,8 @@ function mapF()
     	    	hydeniRuinsChecked = 1
     	    end
     	elseif tamorDesertChecked == 0 and  map.mapS_region:exists(map.tamorDesert,1) then
-    		showInfo("checking tamorDesert")
+    		if showInfoM == true then showInfo("checking tamorDesert") end
 			if chPx() == true then
-    		tamorDesertChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -703,9 +944,8 @@ function mapF()
     	    	tamorDesertChecked = 1
     	    end
     	elseif vrofagusRuinsChecked == 0 and map.mapS_region:exists(map.vrofagusRuins,1) then
-    		showInfo("checking vrofagusRuins")
+    		if showInfoM == true then showInfo("checking vrofagusRuins") end
 			if chPx() == true then
-    		vrofagusRuinsChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -719,9 +959,8 @@ function mapF()
     	    	vrofagusRuinsChecked = 1
     	    end
     	elseif faimonVolcanoChecked == 0 and map.mapS_region:exists(map.faimonVolcano,1) then
-    		showInfo("checking faimonVolcano")
+    		if showInfoM == true then showInfo("checking faimonVolcano") end
 			if chPx() == true then
-    		faimonVolcanoChecked = 1
 			local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -764,28 +1003,136 @@ function mapF()
              swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
              wait(2)
              scrollRight = 0
+              trashCheck()
     	end 
     end 
     wait(2)
 end
 
 function selectMobsF()
-	wait(1)
-	click(Location(52,466))
-	wait(0.5)
-	while image.SelectMobsScr_region:exists(image.SelectMobsScr) do
-		if image.MobRegion_region:exists(image.Mob) then 
-    		local t = image.MobRegion_region:getLastMatch()
-    		local x = t:getX()
-    		local y = t:getY()
-    		local w = t:getW()
-    		local h = t:getH()
-    		local Area = Region(x+20,y+20,w,h)
-    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
-    	end
-    	if image.COMPS_region:exists(image.COMPS, 0) then
-    		tutF()
-    	end
+	if lapisCollected == false then
+		while image.SelectMobsScr_region:exists(image.SelectMobsScr) do
+			if fairySelected == 0 then
+			if image.fairy_region:exists(image.fairy) then
+				local t = image.fairy_region:getLastMatch()
+	    		local x = t:getX()
+	    		local y = t:getY()
+	    		local w = t:getW()
+	    		local h = t:getH()
+	    		local Area = Region(x+10,y,w,h-10)
+	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
+	    	fairySelected = 1
+	    	end
+	    	end
+			if image.MobRegion_region:exists(image.Mob) then 
+	    		local t = image.MobRegion_region:getLastMatch()
+	    		local x = t:getX()
+	    		local y = t:getY()
+	    		local w = t:getW()
+	    		local h = t:getH()
+	    		local Area = Region(x+20,y+20,w,h)
+	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
+	    	end
+	    	if image.COMPS_region:exists(image.COMPS, 0) then
+	    		tutF()
+	    	end
+	    end
+	elseif lapisCollected == true then
+		while image.SelectMobsScr_region:exists(image.SelectMobsScr) do
+			if lapisSelected == 0 then
+			if image.selectedMobsTr_region:exists(image.Lapis) then
+				local t = image.selectedMobsTr_region:getLastMatch()
+	    		local x = t:getX()
+	    		local y = t:getY()
+	    		local w = t:getW()
+	    		local h = t:getH()
+	    		local Area = Region(x+20,y+20,w-50,h)
+	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
+	    	lapisSelected = 1
+	    	end
+	    	end
+			if image.MobRegion_region:exists(image.Mob) then 
+	    		local t = image.MobRegion_region:getLastMatch()
+	    		local x = t:getX()
+	    		local y = t:getY()
+	    		local w = t:getW()
+	    		local h = t:getH()
+	    		local Area = Region(x+20,y+20,w,h)
+	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
+	    	end
+	    end
+	end
+end
+
+function mtSizBossF()
+	if image.friendsReps_region:exists(image.friendsReps) then
+    	local t = image.friendsReps_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x-15,y+15,w-10,h+15)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	if image.StartBattle_region:exists(image.StartBattle) then
+    	local t = image.StartBattle_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	end 
+    end
+end
+
+function unselectMobs()
+		while image.selectedMobsTr_region:exists(image.selectedMob) do
+			local t = image.selectedMobsTr_region:getLastMatch()
+	    		local x = t:getX()
+	    		local y = t:getY()
+	    		local w = t:getW()
+	    		local h = t:getH()
+	    		local Area = Region(x+15,y+30,w,h)
+	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
+	    		wait(1)
+	    end
+	    unselectedMobsReturn = true
+end  
+
+function selectFriendsRepsF()
+	if mtSizChecked == 1 then
+		if faimon.faimonBoss_region:exists(faimon.faimonBoss, 1) then
+		faimonBossF() end
+	if image.friendsReps_region:exists(image.friendsReps) then
+    	local t = image.friendsReps_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x-15,y+15,w-10,h+15)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	if image.StartBattle_region:exists(image.StartBattle) then
+    	local t = image.StartBattle_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	end 
+    end
+    elseif mtSizChecked == 0 then
+    	if image.mtSizBoss_region:exists(image.mtSizBoss, 1) then
+    		mtSizBossF() end
+    	if image.StartBattle_region:exists(image.StartBattle) then
+    	local t = image.StartBattle_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	end 
     end
 end
 
@@ -820,7 +1167,7 @@ function gameGuardianF()
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     end
     if gameGuardian.gameGuardianFileLocation_region:exists(gameGuardian.gameGuardianFileLocation, 10) then
-		local scriptLocation = ("/sdcard/jpaulRerollv11.lua")
+		local scriptLocation = ("/sdcard/jpaulRerollv14.lua")
 		type(scriptLocation)
     end
     if gameGuardian.gameGuardianExecuteInitScript_region:exists(gameGuardian.gameGuardianExecuteInitScript, 10) then
@@ -831,19 +1178,20 @@ function gameGuardianF()
     	local hl = tl:getH()
     	local Area = Region(xl,yl,wl,hl)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	ggAlreadyRunning = true
     end
-    
+    ggAlreadyRunning = true
 end
 
 function faimonBossF()
-	if faimon.durandHelp_region:exists(faimon.durandHelp) then
+	if image.friendsReps_region:exists(image.friendsReps) then
 		faiBs = 1
-			local t = faimon.durandHelp_region:getLastMatch()
+			local t = image.friendsReps_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
     		local w = t:getW()
     		local h = t:getH()
-    		local Area = Region(x,y-40,w,h)
+    		local Area = Region(x-30,y+30,w-15,h+15)
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	if image.StartBattle_region:exists(image.StartBattle) then
     	local t = image.StartBattle_region:getLastMatch()
@@ -858,7 +1206,7 @@ function faimonBossF()
 end
 
 function trashCheck()
-	if image.Close_region:exists(image.Close, 0) then
+    	if image.Close_region:exists(image.Close, 0) then  if showInfoM == true then showInfo("Close") end
     	local t = image.Close_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -867,7 +1215,18 @@ function trashCheck()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
-    	elseif image.XbtnADs_region:exists(image.XbtnADs, 0) then
+    	end 
+    	if image.okBTN_region:exists(image.okBTN, 0) then  if showInfoM == true then showInfo("okBTN") end
+    	local t = image.okBTN_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
+    	end 
+    	if image.XbtnADs_region:exists(image.XbtnADs, 0) then  if showInfoM == true then showInfo("XbtnADs") end
     	local t = image.XbtnADs_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -876,7 +1235,8 @@ function trashCheck()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
-    	elseif image.COMPS_region:exists(image.YesINBOX, 0) then
+    	end 
+    	if image.COMPS_region:exists(image.YesINBOX, 0) then  if showInfoM == true then showInfo("YesINBOX") end
     	local t = image.COMPS_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -885,7 +1245,8 @@ function trashCheck()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
-        elseif image.COMPS_region:exists(image.NObtnINBOX, 0) then
+        end 
+        if image.COMPS_region:exists(image.NObtnINBOX, 0) then  if showInfoM == true then showInfo("NObtnINBOX") end
     	local t = image.COMPS_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -894,7 +1255,8 @@ function trashCheck()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
-    	elseif image.challX_region:exists(image.challX, 0) then
+    	end 
+    	if image.challX_region:exists(image.challX, 0) then  if showInfoM == true then showInfo("challX") end
     	local t = image.challX_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -903,7 +1265,8 @@ function trashCheck()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
-        elseif image.later_region:exists(image.later, 0) then
+        end 
+        if image.later_region:exists(image.later, 0) then  if showInfoM == true then showInfo("later") end
     	local t = image.later_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -912,9 +1275,17 @@ function trashCheck()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
-    	else click(Location(math.random(800, 810),math.random(0, 1))) 
-    			usePreviousSnap(false)
-        end
+    	end 
+    	if image.revive_region:exists(image.revive, 0) then  if showInfoM == true then showInfo("revive") end
+    	local t = image.revive_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
+    	end
 end
 
 function WhereIAm()
@@ -1029,11 +1400,10 @@ function WhereIAm()
 end
 
 function start()
-	 imAt = WhereIAm()
-	 currentTime = os.time()
-	 diffTimeFromBeg = os.difftime(currentTime, startTime )
-	 minFromBeg = SecondsToClock(diffTimeFromBeg)
-	--toast(imAt)
+	imAt = WhereIAm()
+	currentTime = os.time()
+	diffTimeFromBeg = os.difftime(currentTime, startTime )
+	minFromBeg = SecondsToClock(diffTimeFromBeg)
 	if showInfoM == true then
 	showInfo("t.me/swscripts")
 	end
@@ -1056,7 +1426,13 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
    		gameGuardianInit = gameGuardianInit + 1
-    	if ggAlreadyRunning == false and gameGuardianInit >= 2  then gameGuardianF() end
+    	if ggClearing == true then 
+    		if ggAlreadyRunning == false then
+    			if gameGuardianInit >= 2  then 
+    				gameGuardianF() 
+    			end
+    		end
+    	end
  	elseif imAt == "enemyFound" then
  		local t = image.Enemy_region:getLastMatch()
     	local x = t:getX()
@@ -1164,12 +1540,16 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     elseif imAt == "startBattle" then
-
-    	if faimon.faimonBoss_region:exists(faimon.faimonBoss, 0.5) then
+    	if frClearing == true then 
+    	if faimon.faimonBoss_region:exists(faimon.faimonBoss, 1) then
     		faimonBossF() 
-    	elseif image.SelectMobsScr_region:exists(image.SelectMobsScr, 0) then
+    	elseif image.mtSizBoss_region:exists(image.mtSizBoss, 1) then
+    		mtSizBossF()
+    	elseif image.SelectMobsScr_region:exists(image.SelectMobsScr, 0.5) then
     		selectMobsF() 
-    	elseif not faimon.faimonBoss_region:exists(faimon.faimonBoss, 0) and image.StartBattle_region:exists(image.StartBattle, 0) then
+    	elseif image.slotForReps_region:exists(image.slotForReps, 1) then
+    		selectFriendsRepsF()
+    	elseif not faimon.faimonBoss_region:exists(faimon.faimonBoss, 0) and not image.slotForReps_region:exists(image.slotForReps, 1) and image.StartBattle_region:exists(image.StartBattle, 0) then
     	local t = image.StartBattle_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -1177,7 +1557,26 @@ function start()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    end
+    	end
+        elseif ggClearing == true then
+        if faimon.faimonBoss_region:exists(faimon.faimonBoss, 1) then
+    		faimonBossF() 
+    	elseif  lapisCollected == false and image.SelectMobsScr_region:exists(image.SelectMobsScr, 1) then
+    		selectMobsF()
+    	elseif  lapisCollected == true and lapisSelected == 0 and unselectedMobsReturn == false then
+    		unselectMobs()
+    	elseif lapisCollected == true and lapisSelected == 0 and image.SelectMobsScr_region:exists(image.SelectMobsScr, 1) then
+    		selectMobsF()
+    	elseif not faimon.faimonBoss_region:exists(faimon.faimonBoss, 0) and not image.SelectMobsScr_region:exists(image.SelectMobsScr, 1) and image.StartBattle_region:exists(image.StartBattle, 0) then
+    	local t = image.StartBattle_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	end
+    	end
     elseif imAt == "OKbtnAP" then
     	local t = image.OKbtnAutoBattle_region:getLastMatch()
     	local x = t:getX()
@@ -1244,7 +1643,7 @@ function start()
     	--infoText:highlightOff()
     	if image.Close_region:exists(image.Close, 0) then end
     	usePreviousSnap(true)
-    	if image.Close_region:exists(image.Close, 0) then
+    	if image.Close_region:exists(image.Close, 0) then  if showInfoM == true then showInfo("Close") end
     	local t = image.Close_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -1253,7 +1652,16 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
-    	elseif image.XbtnADs_region:exists(image.XbtnADs, 0) then
+    	elseif image.okBTN_region:exists(image.okBTN, 0) then  if showInfoM == true then showInfo("okBTN") end
+    	local t = image.okBTN_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
+    	elseif image.XbtnADs_region:exists(image.XbtnADs, 0) then  if showInfoM == true then showInfo("XbtnADs") end
     	local t = image.XbtnADs_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -1262,7 +1670,7 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
-    	elseif image.COMPS_region:exists(image.YesINBOX, 0) then
+    	elseif image.COMPS_region:exists(image.YesINBOX, 0) then  if showInfoM == true then showInfo("YesINBOX") end
     	local t = image.COMPS_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -1271,7 +1679,7 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
-        elseif image.COMPS_region:exists(image.NObtnINBOX, 0) then
+        elseif image.COMPS_region:exists(image.NObtnINBOX, 0) then  if showInfoM == true then showInfo("NObtnINBOX") end
     	local t = image.COMPS_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -1280,7 +1688,7 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
-    	elseif image.challX_region:exists(image.challX, 0) then
+    	elseif image.challX_region:exists(image.challX, 0) then  if showInfoM == true then showInfo("challX") end
     	local t = image.challX_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -1289,8 +1697,17 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
-        elseif image.later_region:exists(image.later, 0) then
+        elseif image.later_region:exists(image.later, 0) then  if showInfoM == true then showInfo("later") end
     	local t = image.later_region:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
+    	elseif image.revive_region:exists(image.revive, 0) then  if showInfoM == true then showInfo("revive") end
+    	local t = image.revive_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
     	local w = t:getW()
@@ -1313,31 +1730,31 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 12.5")
+    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 17.5")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
     newRow()
-    addTextView("     ")addRadioGroup("rgIndex", 1)   
-    addRadioButton(" ☄ Random Name Generator", 1) 
-    addRadioButton(" ☄ Custom Name     ⬇", 2)
-    newRow()
-    addTextView("                                 ")
-    addEditText("customName", "Insert Custom Name") 
+    addTextView("     ")addRadioGroup("rqIndex", 1)   
+    addRadioButton(" ☄ Clearing Stages Using GameGuardian     ➡   Faster Around 40m Reseting Time - Can Get Acc Banned", 1) 
+    addRadioButton(" ☄ Clearing Stages Using Friends Reps        ➡   Slower Request To Have 5 Friends - Safe From Bans", 2)
     newRow() 
-    addTextView("     ")
-    addCheckBox("needReset", "⚡ Start With Reseting                         ", false) 
+    addTextView("              ")addTextView("               ")addTextView("               ")addTextView("               ")addTextView("               ")
+    addCheckBox("needReset", "⚡ Start With Reseting                                 ", false) 
     addCheckBox("showInfoM", "⚡ Show Informations On Screen", true)
     newRow() 
-    addTextView("     ")
-    addCheckBox("powerSaving", "⚡ Power Saving Mode ", false)
-    addEditNumber("customDelay", 0.8) 
-    addTextView("              ")
-    addCheckBox("ggAlreadyRunning", "⚡ GG Script Already Executed ", false)
-    newRow() 
-    addTextView("     ")
-    addCheckBox("powerOff", "⚡ Power Off Everything After N. Times (coming soon):    ", false)
+    addTextView("           ")
+    addEditText("customName", "Insert Custom Name ")
+    addTextView("           ")
+    addCheckBox("powerOff", "⚡ Power Off After N. Resets: ", false)
     addEditNumber("nTimes", 10)
+     addTextView("           ")
+    addCheckBox("powerSaving", "⚡ Power Saving Mode ", false)
+  	addEditNumber("customDelay", 0.8)
+    newRow() 
+    addTextView("     ")addRadioGroup("rgIndex", 2)   
+    addRadioButton(" ☄ Custom Name     ⬆", 1) 
+    addRadioButton(" ☄ Random Name Generator", 2)   
     newRow() 
     addTextView("                                                                                 ________________________________________________________")
     newRow()
@@ -1345,15 +1762,42 @@ function RerollDialog()
     dialogShowFullScreen("                                                                       HEADQUARTERS") 
 
     if rgIndex == 1 then 
-      randomNameV = true
-    elseif rgIndex == 2 then
       customNameV = true
+    elseif rgIndex == 2 then
+      randomNameV = true
     end
+    if rqIndex == 1 then 
+      ggClearing = true
+      RerollDialogGG()
+    elseif rqIndex == 2 then
+      frClearing = true
+    end
+end 
+
+function RerollDialogGG() 
+    dialogInit() 
+    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 17.5")
+    addSeparator() 
+    newRow( )
+    newRow() 
+    addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
+    newRow() 
+    newRow() 
+    addTextView("     ")
+    addCheckBox("elfCollected", "⚡ Elf Already Collected                         ", false) 
+    addCheckBox("lapisCollected", "⚡ Lapis Already Collected               ", false)
+    addCheckBox("ggAlreadyRunning", "⚡ GG Script Already Executed    ", false)  
+    newRow() 
+    addTextView("                                                                                 ________________________________________________________")
+    newRow()
+    addTextView("                                                                                         ⚜ The Game Must Be On English Language ⚜")
+    dialogShowFullScreen("                                                                       HEADQUARTERS") 
 end 
 
 function debug()
 	while true do
-			local t = map.mapS_region:getLastMatch()
+
+			--[[local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
     		local w = t:getW()
@@ -1392,13 +1836,33 @@ function debug()
     			wait(2) 
     			return false
     		end
-    		wait(5)
+    		wait(5)]]
     end
 end
 
 function debugT()
-	
+	while true do
+		if image.selectedMobsTr_region:exists(image.selectedMob) then
+			local t = image.selectedMobsTr_region:getLastMatch()
+			local x = t:getX()
+	    		local y = t:getY()
+	    		local w = t:getW()
+	    		local h = t:getH()
+	    		local Area = Region(x+15,y+30,w,h)
+	    		Area:highlight(400) end
+	while image.selectedMobsTr_region:exists(image.selectedMob) do
+			local t = image.selectedMobsTr_region:getLastMatch()
+	    		local x = t:getX()
+	    		local y = t:getY()
+	    		local w = t:getW()
+	    		local h = t:getH()
+	    		local Area = Region(x+30,y+30,w,h)
+	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
+	    		wait(1)
+	    end
+	end
 end
 RunEverything() 
 --debug()
+--debugT()
 
