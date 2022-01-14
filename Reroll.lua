@@ -119,7 +119,7 @@ image = {
 	fairy = Pattern("fairy.png"):similar(0.90),
 	slotForReps_region = Region(245, 328, 153, 72),
 	slotForReps = Pattern("slotForReps.png"):similar(0.7),
-	friendsReps_region = Region(176, 552, 120, 61),
+	friendsReps_region = Region(80, 552, 120, 61),
 	friendsReps = Pattern("friendsReps.png"):similar(0.7),
 	challX_region = Region(1214, 0, 61, 46),
 	challX = Pattern("challX.png"):similar(0.90),
@@ -881,7 +881,7 @@ function mapF()
     					usePreviousSnap(false)
     					break
     			elseif frClearing == true then
-    				toast("frClearing")
+    				
     					local t = map.mapS_region:getLastMatch()
     					local x = t:getX()
     					local y = t:getY()
@@ -1110,7 +1110,7 @@ function mtSizBossF()
     	local y = t:getY()
     	local w = t:getW()
     	local h = t:getH()
-    	local Area = Region(x-15,y+15,w-10,h+15)
+    	local Area = Region(x-5,y+50,w-10,h+15)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	if image.StartBattle_region:exists(image.StartBattle) then
     	local t = image.StartBattle_region:getLastMatch()
@@ -1148,7 +1148,7 @@ function selectFriendsRepsF()
     	local y = t:getY()
     	local w = t:getW()
     	local h = t:getH()
-    	local Area = Region(x-15,y+15,w-10,h+15)
+    	local Area = Region(x-5,y+50,w-10,h+15)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	if image.StartBattle_region:exists(image.StartBattle) then
     	local t = image.StartBattle_region:getLastMatch()
@@ -1230,7 +1230,7 @@ function faimonBossF()
     		local y = t:getY()
     		local w = t:getW()
     		local h = t:getH()
-    		local Area = Region(x-30,y+30,w-15,h+15)
+    		local Area = Region(x-5,y+50,w-10,h+15)
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	if image.StartBattle_region:exists(image.StartBattle) then
     	local t = image.StartBattle_region:getLastMatch()
@@ -1785,7 +1785,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 18.1")
+    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 18.3")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
