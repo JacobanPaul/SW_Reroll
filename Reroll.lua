@@ -1010,7 +1010,7 @@ function mapF()
 end
 
 function selectMobsF()
-	if lapisCollected == false then
+	if lapisCollected ~= true  then
 		while image.SelectMobsScr_region:exists(image.SelectMobsScr) do
 			if fairySelected == 0 then
 			if image.fairy_region:exists(image.fairy) then
@@ -1730,7 +1730,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 17.5")
+    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 17.7")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
