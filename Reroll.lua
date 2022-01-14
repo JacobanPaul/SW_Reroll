@@ -2,6 +2,7 @@ Settings:setCompareDimension(true, 1280)
 Settings:setScriptDimension(true, 1280) 
 Settings:set("MinSimilarity", 0.7)
 setImagePath(scriptPath() .. "images")
+local _execute = os.execute
 --needReset = 0
 resetsTotal = 0
 startTime = os.time()
@@ -98,6 +99,7 @@ map = {
 	mapS_region = Region(230, 75, 900, 630),
 }
 
+
 image = {
 	mtSizBoss_region = Region(858, 225, 198, 55),
 	mtSizBoss = Pattern("mtSizBoss.png"):similar(0.90),
@@ -147,7 +149,7 @@ image = {
 	EnterNameOK  = Pattern("EnterNameOK.png"):similar(0.90),
 	EnterNameScr_region = Region(250, 76, 59, 48),
 	EnterNameScr = Pattern("EnterNameScr.png"):similar(0.90),
-	enterNameScr2_region = Region(250, 269, 64, 44),
+	enterNameScr2_region = Region(250, 269, 64, 200),
 	enterNameScr2 = Pattern("enterNameScr2.png"):similar(0.90),
 	fairyMob_region = Region(30, 473, 83, 36),
 	GreenArrowTUT_region = Region(588, 366, 69, 76),
@@ -221,6 +223,30 @@ function SecondsToClock(seconds)
     secs = string.format("%02.f", math.floor(seconds - hours*3600 - mins *60));
     return hours..":"..mins..":"..secs
   end
+end
+
+function mobScreenShotF()
+	mkdir(scriptPath() .. "/mobScreenshots/")
+	setImagePath(scriptPath() .. "/mobScreenshots/")
+	screen = getAppUsableScreenSize()
+	reg = Region(0, 0, screen:getX(), screen:getY())
+	if output ~= nil then
+		reg:save(tostring(output.. ".png"))
+    else 
+    	local upperCaseS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		local lowerCaseS = "abcdefghijklmnopqrstuvwxyz"
+		local numbersS = "0123456789"
+		local specCharS = "._-"
+		local characterSetS = upperCaseS .. lowerCaseS .. numbersS .. specCharS
+		local keyLengthS = 14
+		local outputS = ""
+		for	i = 1, keyLengthS do
+			local randS = math.random(#characterSetS)
+			outputS = outputS .. string.sub(characterSetS, randS, randS)
+		end
+    	reg:save(tostring(outputS.. ".png"))
+    end
+	setImagePath(scriptPath() .. "/images/")
 end
 
 function summonLDF()
@@ -297,6 +323,7 @@ function summonLDF()
 	starsMob = numberOCR(summoning.starMobs_region, "star")
 	wait(1)
 	if starsMob == 111 then 
+	mobScreenShotF()
 	toast("3 Star Mob Better Luck Next Time")
 	needReset = true 
 	faiBs = 0
@@ -314,6 +341,7 @@ function summonLDF()
 	fairySelected = 0
 	lapisSelected = 0
 	elseif starsMob == 1111 then toast("4 Star Mob SO CLOSE")
+	mobScreenShotF()
 	needReset = true
 	faiBs = 0
 	collectedLD = 0 
@@ -330,8 +358,10 @@ function summonLDF()
 	fairySelected = 0
 	lapisSelected = 0
 	elseif starsMob == 11111 then toast("5 Star Mob NO FUCKING WAY GZ")
+		mobScreenShotF()
 		scriptExit("5 Star Mob NO FUCKING WAY GZ") 
 	elseif starsMob == nil then toast("Something is wrong")
+		mobScreenShotF()
 		scriptExit("Something is wrong")
 	end
     end
@@ -542,6 +572,15 @@ function nameF()
 		local rand = math.random(#characterSet)
 		output = output .. string.sub(characterSet, rand, rand)
 	end
+	if image.EnterNameOK_region:exists(image.EnterNameOK) then
+	local t = image.EnterNameOK_region:getLastMatch()
+    local x = t:getX()
+    local y = t:getY()
+    local w = t:getW()
+    local h = t:getH()
+    local Area = Region(x-400,y,w,h)
+    click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    end
 	if randomNameV then
 	type(output)
 	elseif customNameV then
@@ -1367,6 +1406,9 @@ function WhereIAm()
     elseif image.NextStage_region:exists(image.NextStage, 0) then
     	usePreviousSnap(false) 
     	return "nextStage"
+    elseif image.collectInbox_region:exists(image.collectInbox, 0) then
+    	usePreviousSnap(false)
+    	return "inboxScr"
     elseif faimon.faimonBoss_region:exists(faimon.faimonBoss, 0) then
     	usePreviousSnap(false) 
     	return "faimonBossStage"
@@ -1638,6 +1680,19 @@ function start()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    elseif imAt == "inboxScr" then
+    	if summoning.lootRegion:exists(image.miniElf, 5) then
+    		local t = summoning.lootRegion:getLastMatch()
+    		local x = t:getX()
+    		local y = t:getY()
+    		local w = t:getW()
+    		local h = t:getH()
+    		local Area = Region(x+250,y,w,h)
+    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    		elfCollected = true
+    		wait(2)
+    	end
+
     ---------------------------------------------------------------------------------------------------------
     elseif imAt == "chilling nothing to do" then
     	--infoText:highlightOff()
@@ -1730,17 +1785,17 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 17.7")
+    addTextView("                                                                               ❣ REROLL MADE FOR T.ME/SWSCRIPTS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 18.1")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
     newRow()
     addTextView("     ")addRadioGroup("rqIndex", 1)   
     addRadioButton(" ☄ Clearing Stages Using GameGuardian     ➡   Faster Around 40m Reseting Time - Can Get Acc Banned", 1) 
-    addRadioButton(" ☄ Clearing Stages Using Friends Reps        ➡   Slower Request To Have 5 Friends - Safe From Bans", 2)
+    addRadioButton(" ☄ Clearing Stages Using Friends Reps         ➡   Slower Request To Have 5 Friends - Safe From Bans", 2)
     newRow() 
-    addTextView("              ")addTextView("               ")addTextView("               ")addTextView("               ")addTextView("               ")
-    addCheckBox("needReset", "⚡ Start With Reseting                                 ", false) 
+    addTextView("            ")addTextView("             ")addTextView("              ")addTextView("              ")addTextView("               ")
+    addCheckBox("needReset", "⚡ Start With Reseting                                ", false) 
     addCheckBox("showInfoM", "⚡ Show Informations On Screen", true)
     newRow() 
     addTextView("           ")
@@ -1794,8 +1849,33 @@ function RerollDialogGG()
     dialogShowFullScreen("                                                                       HEADQUARTERS") 
 end 
 
+function mkdir(p) 
+	return _execute('mkdir -p "' .. p .. '"') == 0 
+end
+
 function debug()
-	while true do
+	--while true do
+	mkdir(scriptPath() .. "/mobScreenshots/")
+	setImagePath(scriptPath() .. "/mobScreenshots/")
+	screen = getAppUsableScreenSize()
+	reg = Region(0, 0, screen:getX(), screen:getY())
+	if output ~= nil then
+		reg:save(tostring(output.. ".png"))
+    else 
+    	local upperCaseS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		local lowerCaseS = "abcdefghijklmnopqrstuvwxyz"
+		local numbersS = "0123456789"
+		local specCharS = "._-"
+		local characterSetS = upperCaseS .. lowerCaseS .. numbersS .. specCharS
+		local keyLengthS = 14
+		local outputS = ""
+		for	i = 1, keyLengthS do
+			local randS = math.random(#characterSetS)
+			outputS = outputS .. string.sub(characterSetS, randS, randS)
+		end
+    	reg:save(tostring(outputS.. ".png"))
+    end
+	setImagePath(scriptPath() .. "/images/")
 
 			--[[local t = map.mapS_region:getLastMatch()
     		local x = t:getX()
@@ -1837,7 +1917,7 @@ function debug()
     			return false
     		end
     		wait(5)]]
-    end
+    --end
 end
 
 function debugT()
