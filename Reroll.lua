@@ -339,6 +339,7 @@ function summonLDF()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) end
     end
+    if summoning.LDscrollMaiusc_region:exists(summoning.LDscrollMaiusc, 5) then
     if summoning.finalSummon_region:exists(summoning.finalSummon, 5) then
 	 	local t = summoning.finalSummon_region:getLastMatch()
     	local x = t:getX()
@@ -347,7 +348,8 @@ function summonLDF()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    end
+    end 
+	end
 	if image.AfterSummOK_region:exists(image.AfterSummOK, 15) then
 		wait(2)
 	starsMob = numberOCR(summoning.starMobs_region, "star")
@@ -791,10 +793,9 @@ function battleMapF()
 		local  swipRandx2 = math.random(1000,1010) 
 		local  swipRandy2 = math.random(620,630)
 		swipe(Location(swipRandx2, swipRandy2),  Location(swipRandx1, swipRandy1), 2)
-		wait(0.5)
 		swipe(Location(swipRandx2, swipRandy2),  Location(swipRandx1, swipRandy1), 2)
-		wait(2)
-		if image.Battle_region3:exists(image.Battle, 1) then
+		wait(0.5)
+		if image.Battle_region3:exists(image.Battle, 0) then
 			local t = image.Battle_region3:getLastMatch()
 	    	local x = t:getX()
 	    	local y = t:getY()
@@ -802,7 +803,7 @@ function battleMapF()
 	    	local h = t:getH()
 	    	local Area = Region(x,y,w,h)
 	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    elseif image.Battle_region2:exists(image.Battle, 1) then
+	    elseif image.Battle_region2:exists(image.Battle, 0) then
 			local t = image.Battle_region2:getLastMatch()
 	    	local x = t:getX()
 	    	local y = t:getY()
@@ -810,7 +811,7 @@ function battleMapF()
 	    	local h = t:getH()
 	    	local Area = Region(x,y,w,h)
 	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    elseif image.Battle_region1:exists(image.Battle, 1) then
+	    elseif image.Battle_region1:exists(image.Battle, 0) then
 			local t = image.Battle_region1:getLastMatch()
 	    	local x = t:getX()
 	    	local y = t:getY()
@@ -818,7 +819,7 @@ function battleMapF()
 	    	local h = t:getH()
 	    	local Area = Region(x,y,w,h)
 	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    elseif image.Battle_region:exists(image.Battle, 1) then
+	    elseif image.Battle_region:exists(image.Battle, 0) then
 			local t = image.Battle_region:getLastMatch()
 	    	local x = t:getX()
 	    	local y = t:getY()
@@ -828,11 +829,10 @@ function battleMapF()
 	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
 	    else
 			swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
-			wait(0.5)
 			swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
-			wait(2)
+			wait(0.5)
 		end
-		if image.Battle_region3:exists(image.Battle, 1) then
+		if image.Battle_region3:exists(image.Battle, 0) then
 			local t = image.Battle_region3:getLastMatch()
 	    	local x = t:getX()
 	    	local y = t:getY()
@@ -840,7 +840,7 @@ function battleMapF()
 	    	local h = t:getH()
 	    	local Area = Region(x,y,w,h)
 	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    elseif image.Battle_region2:exists(image.Battle, 1) then
+	    elseif image.Battle_region2:exists(image.Battle, 0) then
 			local t = image.Battle_region2:getLastMatch()
 	    	local x = t:getX()
 	    	local y = t:getY()
@@ -848,7 +848,7 @@ function battleMapF()
 	    	local h = t:getH()
 	    	local Area = Region(x,y,w,h)
 	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    elseif image.Battle_region1:exists(image.Battle, 1) then
+	    elseif image.Battle_region1:exists(image.Battle, 0) then
 			local t = image.Battle_region1:getLastMatch()
 	    	local x = t:getX()
 	    	local y = t:getY()
@@ -856,7 +856,7 @@ function battleMapF()
 	    	local h = t:getH()
 	    	local Area = Region(x,y,w,h)
 	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    elseif image.Battle_region:exists(image.Battle, 1) then
+	    elseif image.Battle_region:exists(image.Battle, 0) then
 			local t = image.Battle_region:getLastMatch()
 	    	local x = t:getX()
 	    	local y = t:getY()
@@ -2140,7 +2140,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.02.05")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.03.01")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
@@ -2186,7 +2186,7 @@ end
 
 function RerollDialogGG() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vBeta 19.9")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                       ")
     addSeparator() 
     newRow( )
     newRow() 
