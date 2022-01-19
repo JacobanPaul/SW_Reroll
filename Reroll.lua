@@ -25,6 +25,7 @@ tamorDesertChecked = 0
 hydeniRuinsChecked = 0
 vrofagusRuinsChecked = 0
 faimonVolcanoChecked = 0
+ggRestarted = 0
 minResetingTime = tostring("00:00:00")
 setHighlightTextStyle(0xb0140030, 0xf9ffffff, 13)
 infoText = Region(130, 5, 270, 270)
@@ -50,15 +51,15 @@ summoning = {
 
 gameGuardian = {
 	gameGuardianFileLocation_region = Region(250, 150, 200, 100),
-	gameGuardianFileLocation = Pattern("gameGuardianFileLocation.png"):similar(0.90),
+	gameGuardianFileLocation = Pattern("gameGuardianFileLocation.png"):similar(0.80),
 	gameGuardianSearchIcon_region = Region(448, 12, 40, 41),
-	gameGuardianSearchIcon = Pattern("gameGuardianSearchIcon.png"):similar(0.90),
+	gameGuardianSearchIcon = Pattern("gameGuardianSearchIcon.png"):similar(0.80),
 	gameGuardianExecScript_region = Region(1238, 128, 24, 26),
-	gameGuardianExecScript = Pattern("gameGuardianExecScript.png"):similar(0.90),
+	gameGuardianExecScript = Pattern("gameGuardianExecScript.png"):similar(0.80),
 	gameGuardianExecuteInitScript_region = Region(850, 50, 150, 550),
-	gameGuardianExecuteInitScript = Pattern("gameGuardianExecuteInitScript.png"):similar(0.90),
+	gameGuardianExecuteInitScript = Pattern("gameGuardianExecuteInitScript.png"):similar(0.80),
 	gameGuardianIcon_region = Region(0, 514, 95, 153),
-	gameGuardianIcon = Pattern("gameGuardianIcon.png"):similar(0.90),
+	gameGuardianIcon = Pattern("gameGuardianIcon.png"):similar(0.80),
 }
 
 reset = {
@@ -133,8 +134,11 @@ image = {
 	--Arrows_region = Region(210, 13, 917, 107),
 	AutoPlay_region = Region(192, 630, 89, 84),
 	AutoPlay = Pattern("AutoPlay.png"):similar(0.98),
-	Battle_region = Region(1136, 260, 85, 33),
-	Battle = Pattern("Battle.png"):similar(0.90),
+	Battle_region = Region(1120, 200, 120, 120),
+	Battle_region1 = Region(1120, 325, 120, 120),
+	Battle_region2 = Region(1120, 450, 120, 120),
+	Battle_region3 = Region(1120, 575, 120, 120),
+	Battle = Pattern("Battle.png"):similar(0.80),
 	Close_region = Region(595, 570, 85, 42),
 	Close = Pattern("Close.png"):similar(0.90),
 	COMPS_region = Region(9, 8, 1253, 697),
@@ -158,8 +162,8 @@ image = {
 	GreenArrowTUT_region = Region(588, 366, 69, 76),
 	hellhoundMob_region = Region(139, 477, 81, 27),
 	Mob_region = Region(18, 437, 28, 27),
-	Mob = Pattern("Mob.png"):similar(0.80),
-	MobRegion_region = Region(12, 430, 400, 50),
+	Mob = Pattern("Mob.png"):similar(0.75),
+	MobRegion_region = Region(12, 430, 300, 50),
 	NextStage_region = Region(757, 387, 82, 18),
 	NextStage = Pattern("NextStage.png"):similar(0.90),
 	NObtnINBOX_region = Region(723, 415, 55, 43),
@@ -218,7 +222,12 @@ image = {
     phoneLauncher = Region(15, 15, 1270, 2000),
     closeEvents_region = Region(110, 625, 80, 75),
     closeEvents = Pattern("closeEvents.png"):similar(0.9),
+    ggRestart  = Pattern("ggRestart.png"):similar(0.7),
+}
 
+trashCck = {
+	XbtnADs  = Pattern("XbtnADs.png"):similar(0.80),
+	Xrewads = Pattern("Xrewads.png"):similar(0.80),
 }
 
 function SecondsToClock(seconds)
@@ -233,6 +242,15 @@ function SecondsToClock(seconds)
     secs = string.format("%02.f", math.floor(seconds - hours*3600 - mins *60));
     return hours..":"..mins..":"..secs
   end
+end
+
+function  existsMultiMax(target, region)
+    for i, t in pairs(target) do
+        if (region: exists(t, 0.2)) then 
+        local cl = region:getLastMatch():getCenter()
+        click(Location(cl.x + math.random(0, 20), cl.y + math.random(0, 20)))
+        end
+    end
 end
 
 function mobScreenShotF()
@@ -767,6 +785,88 @@ function collectElf()
     end
 end
 
+function battleMapF()
+		local  swipRandx1 = math.random(1000,1010) 
+		local  swipRandy1 = math.random(250,260)
+		local  swipRandx2 = math.random(1000,1010) 
+		local  swipRandy2 = math.random(620,630)
+		swipe(Location(swipRandx2, swipRandy2),  Location(swipRandx1, swipRandy1), 2)
+		wait(0.5)
+		swipe(Location(swipRandx2, swipRandy2),  Location(swipRandx1, swipRandy1), 2)
+		wait(2)
+		if image.Battle_region3:exists(image.Battle, 1) then
+			local t = image.Battle_region3:getLastMatch()
+	    	local x = t:getX()
+	    	local y = t:getY()
+	    	local w = t:getW()
+	    	local h = t:getH()
+	    	local Area = Region(x,y,w,h)
+	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	    elseif image.Battle_region2:exists(image.Battle, 1) then
+			local t = image.Battle_region2:getLastMatch()
+	    	local x = t:getX()
+	    	local y = t:getY()
+	    	local w = t:getW()
+	    	local h = t:getH()
+	    	local Area = Region(x,y,w,h)
+	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	    elseif image.Battle_region1:exists(image.Battle, 1) then
+			local t = image.Battle_region1:getLastMatch()
+	    	local x = t:getX()
+	    	local y = t:getY()
+	    	local w = t:getW()
+	    	local h = t:getH()
+	    	local Area = Region(x,y,w,h)
+	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	    elseif image.Battle_region:exists(image.Battle, 1) then
+			local t = image.Battle_region:getLastMatch()
+	    	local x = t:getX()
+	    	local y = t:getY()
+	    	local w = t:getW()
+	    	local h = t:getH()
+	    	local Area = Region(x,y,w,h)
+	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	    else
+			swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
+			wait(0.5)
+			swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
+			wait(2)
+		end
+		if image.Battle_region3:exists(image.Battle, 1) then
+			local t = image.Battle_region3:getLastMatch()
+	    	local x = t:getX()
+	    	local y = t:getY()
+	    	local w = t:getW()
+	    	local h = t:getH()
+	    	local Area = Region(x,y,w,h)
+	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	    elseif image.Battle_region2:exists(image.Battle, 1) then
+			local t = image.Battle_region2:getLastMatch()
+	    	local x = t:getX()
+	    	local y = t:getY()
+	    	local w = t:getW()
+	    	local h = t:getH()
+	    	local Area = Region(x,y,w,h)
+	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	    elseif image.Battle_region1:exists(image.Battle, 1) then
+			local t = image.Battle_region1:getLastMatch()
+	    	local x = t:getX()
+	    	local y = t:getY()
+	    	local w = t:getW()
+	    	local h = t:getH()
+	    	local Area = Region(x,y,w,h)
+	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	    elseif image.Battle_region:exists(image.Battle, 1) then
+			local t = image.Battle_region:getLastMatch()
+	    	local x = t:getX()
+	    	local y = t:getY()
+	    	local w = t:getW()
+	    	local h = t:getH()
+	    	local Area = Region(x,y,w,h)
+	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
+	    end
+end
+
 function collectLapis()
 	if showInfoM == true then showInfo("collectLapis") end
 	while not reset.Profile_region:exists(reset.Profile) do
@@ -930,7 +1030,9 @@ function mapF()
     	   		 	usePreviousSnap(false) 
     	   		 	mtSizChecked = 1 
     	   		end
-    	    	
+    	    	if ggRestarted == 1 then
+    	    		gameGuardianF() 
+    	    		ggRestarted = 0 end
     	    end
     	elseif kabirRuinsChecked == 0 and map.mapS_region:exists(map.kabirRuins) then
     		if showInfoM == true then showInfo("checking kabirRuins") end
@@ -1358,6 +1460,7 @@ function selectFriendsRepsF()
 end
 
 function gameGuardianF()
+	infoText:highlightOff()
 	ggAlreadyRunning = true 
 	createScript()
 	if gameGuardian.gameGuardianIcon_region:exists(gameGuardian.gameGuardianIcon, 10) then
@@ -1368,8 +1471,10 @@ function gameGuardianF()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	wait(1)
     else while not gameGuardian.gameGuardianIcon_region:exists(gameGuardian.gameGuardianIcon, 10) do
     	toast("NOT FOUND GG ICON!!") end end
+    	click(Location(450,2)) click(Location(450,2)) click(Location(450,2))
     if gameGuardian.gameGuardianSearchIcon_region:exists(gameGuardian.gameGuardianSearchIcon, 10) then
 		local t = gameGuardian.gameGuardianSearchIcon_region:getLastMatch()
     	local x = t:getX()
@@ -1449,6 +1554,7 @@ function trashCheck()
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
     	end 
+    	local match =  existsMultiMax(trashCck, image.XbtnADs_region) 
     	if image.XbtnADs_region:exists(image.XbtnADs, 0) then  if showInfoM == true then showInfo("XbtnADs") end
     	local t = image.XbtnADs_region:getLastMatch()
     	local x = t:getX()
@@ -1851,14 +1957,7 @@ function start()
     elseif imAt == "mapScreenScr" then
     	mapF()
     elseif imAt == "battleMap" then
-    	local t = image.Battle_region:getLastMatch()
-    	local x = t:getX()
-    	local y = t:getY()
-    	local w = t:getW()
-    	local h = t:getH()
-    	local Area = Region(x,y,w,h)
-    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    	wait(1)
+    	battleMapF()
     elseif imAt == "selectMobs" then
     	selectMobsF()
     elseif imAt == "faimonBossStage" then
@@ -1999,7 +2098,7 @@ function start()
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	usePreviousSnap(false)
     	end
-    elseif image.moveBTN_region:exists(image.moveBTN, 0) then  if showInfoM == true then showInfo("moveBTN") end
+    	elseif image.moveBTN_region:exists(image.moveBTN, 0) then  if showInfoM == true then showInfo("moveBTN") end
         local  swipRandx1 = math.random(450,460) 
 		local  swipRandy1 = math.random(100,110)
 		local  swipRandx2 = math.random(450,460) 
@@ -2007,7 +2106,25 @@ function start()
 		swipe(Location(swipRandx1, swipRandy2),  Location(swipRandx2, swipRandy1), 2)
 		wait(1)
     	usePreviousSnap(false)
-
+    	elseif image.phoneLauncher:exists(image.ggRestart, 0) then if showInfoM == true then showInfo("ggRestart") end
+    	local t = image.phoneLauncher:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	ggRestarted = 1
+    	garenForestChecked = 0
+		mtSizChecked = 0
+		kabirRuinsChecked = 0
+		mtWhiteChecked = 0
+		telainForestChecked = 0
+		tamorDesertChecked = 0
+		hydeniRuinsChecked = 0
+		vrofagusRuinsChecked = 0
+		faimonVolcanoChecked = 0
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
     	else click(Location(math.random(500, 510),math.random(718, 719))) 
     			usePreviousSnap(false)
         end
@@ -2023,7 +2140,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.01.07")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.02.03")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
