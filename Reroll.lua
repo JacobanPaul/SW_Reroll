@@ -222,7 +222,7 @@ image = {
     phoneLauncher = Region(15, 15, 1270, 2000),
     closeEvents_region = Region(110, 625, 80, 75),
     closeEvents = Pattern("closeEvents.png"):similar(0.9),
-    ggRestart  = Pattern("ggRestart.png"):similar(0.7),
+    ggRestart  = Pattern("ggRestart.png"):similar(0.8),
 }
 
 trashCck = {
@@ -2140,7 +2140,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.02.03")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.02.05")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
