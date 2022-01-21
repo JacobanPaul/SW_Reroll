@@ -167,7 +167,7 @@ image = {
 	enterNameScr2_region = Region(250, 200, 64, 280),
 	enterNameScr2 = Pattern("enterNameScr2.png"):similar(0.90),
 	enterNameScrRight_region = Region(960, 200, 64, 280),
-	enterNameScrRight = Pattern("enterNameScrRight.png"):similar(0.90),
+	enterNameScrRight = Pattern("EnterNameScrRight.png"):similar(0.90),
 	fairyMob_region = Region(30, 473, 83, 36),
 	GreenArrowTUT_region = Region(588, 366, 69, 76),
 	hellhoundMob_region = Region(139, 477, 81, 27),
@@ -369,6 +369,7 @@ function summonLDF()
 	wait(1)
 	if starsMob == 111 then
 	info_3Star = info_3Star + 1 
+	showInfo("-_-")
 	mobScreenShotF()
 	toast("3 Star Mob Better Luck Next Time")
 	needReset = true 
@@ -388,6 +389,7 @@ function summonLDF()
 	lapisSelected = 0
 	elseif starsMob == 1111 then toast("4 Star Mob SO CLOSE")
 	info_4Star = info_4Star + 1 
+	showInfo("-_-'")
 	mobScreenShotF()
 	needReset = true
 	faiBs = 0
@@ -405,6 +407,7 @@ function summonLDF()
 	fairySelected = 0
 	lapisSelected = 0
 	elseif starsMob == 11111 then toast("5 Star Mob GZ")
+		showInfo("^O^")
 		mobScreenShotF()
 		scriptExit("5 Star Mob GZ") 
 	elseif starsMob == nil then toast("Something is wrong")
@@ -1477,7 +1480,7 @@ function gameGuardianF()
 	infoText:highlightOff()
 	ggAlreadyRunning = true 
 	createScript()
-	if gameGuardian.gameGuardianIcon_region:exists(gameGuardian.gameGuardianIcon, 10) or gameGuardian.gameGuardianIcon_region:exists(gameGuardian.gameGuardianIconMini, 10) then
+	if gameGuardian.gameGuardianIcon_region:exists(gameGuardian.gameGuardianIconMini, 10) or gameGuardian.gameGuardianIcon_region:exists(gameGuardian.gameGuardianIcon, 10)  then
 		local t = gameGuardian.gameGuardianIcon_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -1486,8 +1489,8 @@ function gameGuardianF()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	wait(1)
-    else while not gameGuardian.gameGuardianIcon_region:exists(gameGuardian.gameGuardianIcon, 10) do
-    	toast("NOT FOUND GG ICON!!") end end
+    else toast("GG ICON NOT FOUND")
+    end
     	click(Location(450,2)) click(Location(450,2)) click(Location(450,2))
     if gameGuardian.gameGuardianSearchIcon_region:exists(gameGuardian.gameGuardianSearchIcon, 10) then
 		local t = gameGuardian.gameGuardianSearchIcon_region:getLastMatch()
@@ -2098,6 +2101,17 @@ function start()
     	local w = t:getW()
     	local h = t:getH()
     	local Area = Region(x,y,w,h)
+    	local Area3 = Region(x-25,y-100,w+100,h+50)
+    	if Area3:exists(image.ggRestart, 1) or Area3:exists(image.ggRestart2, 1) then
+    		local ta = Area3:getLastMatch()
+	    	local xa = ta:getX()
+	    	local ya = ta:getY()
+	    	local wa = ta:getW()
+	    	local ha = ta:getH()
+	    	local AreaN = Region(xa,ya,wa,ha)
+	    	click(Location(AreaN:getX() + math.random(0, AreaN:getW()), AreaN:getY() + math.random(0, AreaN:getH())))
+	    else 
+	    click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) end
     	ggRestarted = 1
     	garenForestChecked = 0
 		mtSizChecked = 0
@@ -2160,7 +2174,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.03.03")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.03.07")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
