@@ -6,6 +6,8 @@ screen = getAppUsableScreenSize()
 reg = Region(0, 0, screen:getX(), screen:getY())
 local _execute = os.execute
 --needReset = 0
+info_3Star = 0
+info_4Star = 0
 resetsTotal = 0
 startTime = os.time()
 fairySelected = 0
@@ -27,8 +29,8 @@ vrofagusRuinsChecked = 0
 faimonVolcanoChecked = 0
 ggRestarted = 0
 minResetingTime = tostring("00:00:00")
-setHighlightTextStyle(0xb0140030, 0xf9ffffff, 13)
-infoText = Region(130, 5, 270, 270)
+setHighlightTextStyle(0xb0140030, 0xf9ffffff, 11)
+infoText = Region(150, 2, 240, 270)
 
 summoning = {
 	starMobs_region = Region(868, 180, 316, 54),
@@ -47,20 +49,24 @@ summoning = {
 	LDscroll_region = Region(758, 226, 56, 53),
 	LDscroll = Pattern("LDscroll.png"):similar(0.80),
 	lootRegion = Region(737, 197, 88, 457),
+	ldScrollSlot_region = Region(294, 55, 128, 131),
+	ldScrollSlot  = Pattern("ldScrollSlot.png"):similar(0.85),
 }
 
 gameGuardian = {
-	gameGuardianFileLocation_region = Region(250, 150, 200, 100),
-	gameGuardianFileLocation = Pattern("gameGuardianFileLocation.png"):similar(0.80),
-	gameGuardianSearchIcon_region = Region(448, 12, 40, 41),
-	gameGuardianSearchIcon = Pattern("gameGuardianSearchIcon.png"):similar(0.80),
-	gameGuardianExecScript_region = Region(1238, 128, 24, 26),
-	gameGuardianExecScript = Pattern("gameGuardianExecScript.png"):similar(0.80),
-	gameGuardianExecuteInitScript_region = Region(850, 50, 150, 550),
-	gameGuardianExecuteInitScript = Pattern("gameGuardianExecuteInitScript.png"):similar(0.80),
+	gameGuardianFileLocation_region = Region(250, 100, 200, 150),
+	gameGuardianFileLocation = Pattern("gameGuardianFileLocation.png"):similar(0.70),
+	gameGuardianSearchIcon_region = Region(440, 10, 60, 60),
+	gameGuardianSearchIcon = Pattern("gameGuardianSearchIcon.png"):similar(0.70),
+	gameGuardianExecScript_region = Region(1210, 110, 100, 100),
+	gameGuardianExecScript = Pattern("gameGuardianExecScript.png"):similar(0.70),
+	gameGuardianExecuteInitScript_region = Region(850, 50, 150, 600),
+	gameGuardianExecuteInitScript = Pattern("gameGuardianExecuteInitScript.png"):similar(0.70),
 	gameGuardianIcon_region = Region(0, 514, 95, 153),
-	gameGuardianIcon = Pattern("gameGuardianIcon.png"):similar(0.80),
+	gameGuardianIcon = Pattern("gameGuardianIcon.png"):similar(0.70),
+	gameGuardianIconMini = Pattern("gameGuardianIconMini.png"):similar(0.70),
 }
+
 
 reset = {
 	Profile_region = Region(87, 94, 52, 15),
@@ -101,6 +107,8 @@ map = {
 	faimonVolcano = Pattern("faimonVolcano.png"):similar(0.8),
 	mapS_region = Region(230, 75, 1000, 630),
 }
+
+
 
 image = {
 	moveBTN_region = Region(1152, 614, 120, 78),
@@ -156,8 +164,10 @@ image = {
 	EnterNameOK  = Pattern("EnterNameOK.png"):similar(0.90),
 	EnterNameScr_region = Region(250, 76, 59, 48),
 	EnterNameScr = Pattern("EnterNameScr.png"):similar(0.90),
-	enterNameScr2_region = Region(250, 269, 64, 200),
+	enterNameScr2_region = Region(250, 200, 64, 280),
 	enterNameScr2 = Pattern("enterNameScr2.png"):similar(0.90),
+	enterNameScrRight_region = Region(960, 200, 64, 280),
+	enterNameScrRight = Pattern("enterNameScrRight.png"):similar(0.90),
 	fairyMob_region = Region(30, 473, 83, 36),
 	GreenArrowTUT_region = Region(588, 366, 69, 76),
 	hellhoundMob_region = Region(139, 477, 81, 27),
@@ -222,7 +232,8 @@ image = {
     phoneLauncher = Region(15, 15, 1270, 2000),
     closeEvents_region = Region(110, 625, 80, 75),
     closeEvents = Pattern("closeEvents.png"):similar(0.9),
-    ggRestart  = Pattern("ggRestart.png"):similar(0.8),
+    ggRestart  = Pattern("ggRestart.png"):similar(0.9),
+    ggRestart2  = Pattern("ggRestart2.png"):similar(0.9),
 }
 
 trashCck = {
@@ -339,8 +350,10 @@ function summonLDF()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) end
     end
-    if summoning.LDscrollMaiusc_region:exists(summoning.LDscrollMaiusc, 5) then
-    if summoning.finalSummon_region:exists(summoning.finalSummon, 5) then
+    infoText:highlightOff()
+    if summoning.ldScrollSlot_region:exists(summoning.ldScrollSlot, 5) then
+    	showInfo("Good Luck")
+    if summoning.finalSummon_region:exists(summoning.finalSummon, 5) then 
 	 	local t = summoning.finalSummon_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -351,10 +364,11 @@ function summonLDF()
     end 
 	end
 	if image.AfterSummOK_region:exists(image.AfterSummOK, 15) then
-		wait(2)
+	wait(1)
 	starsMob = numberOCR(summoning.starMobs_region, "star")
 	wait(1)
-	if starsMob == 111 then 
+	if starsMob == 111 then
+	info_3Star = info_3Star + 1 
 	mobScreenShotF()
 	toast("3 Star Mob Better Luck Next Time")
 	needReset = true 
@@ -373,6 +387,7 @@ function summonLDF()
 	fairySelected = 0
 	lapisSelected = 0
 	elseif starsMob == 1111 then toast("4 Star Mob SO CLOSE")
+	info_4Star = info_4Star + 1 
 	mobScreenShotF()
 	needReset = true
 	faiBs = 0
@@ -389,9 +404,9 @@ function summonLDF()
 	faimonVolcanoChecked = 0
 	fairySelected = 0
 	lapisSelected = 0
-	elseif starsMob == 11111 then toast("5 Star Mob NO FUCKING WAY GZ")
+	elseif starsMob == 11111 then toast("5 Star Mob GZ")
 		mobScreenShotF()
-		scriptExit("5 Star Mob NO FUCKING WAY GZ") 
+		scriptExit("5 Star Mob GZ") 
 	elseif starsMob == nil then toast("Something is wrong")
 		mobScreenShotF()
 		scriptExit("Something is wrong")
@@ -462,11 +477,9 @@ function colorExists(obj, time)
     local r, g, b
     obj.diff = obj.diff or { 0, 0, 0 }
 
-
     if not obj.color or not obj.location or not is_table(obj.color) or not is_table(obj.diff) then
         print_r(obj) scriptExit("colorExists: Obj bad format")
     end
-
 
     while not is_timeout(timer, time) do
 
@@ -499,12 +512,12 @@ function colorExistsRegion(table_obj, time, range)
             end
         end
     end
-return false
+	return false
 end
 
 function showInfo(text)
     infoText:highlightOff() 
-    _defaultText ="\n".."What Im Doing  " .. "\n".. "\n".. tostring(imAt) .. "\n".. "\n" .."Time Passed From The Start ".. "\n"..tostring(minFromBeg).."\n".."Last Reset Clearing Time ".. "\n"..tostring(minResetingTime).."\n".."How Many Resets: "..tostring(resetsTotal)
+    _defaultText ="\n".."What Im Doing  ".. "\n".. tostring(imAt) .. "\n" .. "\n".."  4*" .."     |       3*" .. "\n"   .. tostring(info_4Star)  .. "       |       " .. tostring(info_3Star)  .. "\n".."\n" .."Time Passed From The Start ".. "\n"..tostring(minFromBeg).."\n".."Last Reset Clearing Time ".. "\n"..tostring(minResetingTime).."\n".."How Many Resets: "..tostring(resetsTotal)
     _text = _defaultText .. "\n".. "______________" .. "\n".. "Reroll made by JPaul" .. "\n" .. text
    infoText:highlight(_text)
 end
@@ -987,6 +1000,9 @@ function mapF()
     	   		 	usePreviousSnap(false) 
     	   		 	garenForestChecked = 1 
     	   		end
+    	   		if ggRestarted == 1 then
+    	    		gameGuardianF() 
+    	    		ggRestarted = 0 end
     	    end
     	elseif mtSizChecked == 0 and map.mapS_region:exists(map.mtSiz) then
     		if showInfoM == true then showInfo("checking mtSiz") end 
@@ -1030,9 +1046,7 @@ function mapF()
     	   		 	usePreviousSnap(false) 
     	   		 	mtSizChecked = 1 
     	   		end
-    	    	if ggRestarted == 1 then
-    	    		gameGuardianF() 
-    	    		ggRestarted = 0 end
+    	    	
     	    end
     	elseif kabirRuinsChecked == 0 and map.mapS_region:exists(map.kabirRuins) then
     		if showInfoM == true then showInfo("checking kabirRuins") end
@@ -1327,7 +1341,7 @@ function mapF()
               trashCheck()
     	end 
     end 
-    wait(2)
+    wait(0.5)
 end
 
 function selectMobsF()
@@ -1463,7 +1477,7 @@ function gameGuardianF()
 	infoText:highlightOff()
 	ggAlreadyRunning = true 
 	createScript()
-	if gameGuardian.gameGuardianIcon_region:exists(gameGuardian.gameGuardianIcon, 10) then
+	if gameGuardian.gameGuardianIcon_region:exists(gameGuardian.gameGuardianIcon, 10) or gameGuardian.gameGuardianIcon_region:exists(gameGuardian.gameGuardianIconMini, 10) then
 		local t = gameGuardian.gameGuardianIcon_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -1636,7 +1650,9 @@ function WhereIAm()
     elseif reset.Profile_region:exists(reset.Profile, 0) and needReset == true then
     	usePreviousSnap(false) 
     	return "needReset"
-    elseif image.enterNameScr2_region:exists(image.enterNameScr2, 0) then
+    elseif image.enterNameScrRight_region:exists(image.enterNameScrRight, 0) 
+    	--or image.enterNameScr2_region:exists(image.enterNameScr2, 0) 
+    	then
     	usePreviousSnap(false) 
     	return "imputName"
     elseif image.AfterSummOK_region:exists(image.AfterSummOK, 0) then
@@ -1830,6 +1846,7 @@ function start()
     	local Area = Region(x,y,w,h)
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     elseif imAt == "okRewards2" then
+    	trashCheck()
     	local t = image.Xrewads_region:getLastMatch()
     	local x = t:getX()
     	local y = t:getY()
@@ -1950,8 +1967,10 @@ function start()
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     	wait(1)
     	elseif collectedLD == 0 then
+    	 showInfo("Collecting LD scroll")
     	 summoningF() 
     	elseif collectedLD == 1 then
+    	 showInfo("Summoning LD scroll")
     	 summonLDF() 
     	end
     elseif imAt == "mapScreenScr" then
@@ -2072,6 +2091,25 @@ function start()
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     		usePreviousSnap(false)
     		end
+    	elseif image.phoneLauncher:exists(image.ggRestart, 0) or image.phoneLauncher:exists(image.ggRestart2, 0) then if showInfoM == true then showInfo("ggRestart") end
+    	local t = image.phoneLauncher:getLastMatch()
+    	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	ggRestarted = 1
+    	garenForestChecked = 0
+		mtSizChecked = 0
+		kabirRuinsChecked = 0
+		mtWhiteChecked = 0
+		telainForestChecked = 0
+		tamorDesertChecked = 0
+		hydeniRuinsChecked = 0
+		vrofagusRuinsChecked = 0
+		faimonVolcanoChecked = 0
+    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+    	usePreviousSnap(false)
     	elseif not reset.Profile_region:exists(reset.Profile, 0) and image.phoneLauncher:exists(image.swIcon, 0) then  if showInfoM == true then showInfo("swIcon") end
     	trashCheck()
     	wait(2)
@@ -2106,25 +2144,7 @@ function start()
 		swipe(Location(swipRandx1, swipRandy2),  Location(swipRandx2, swipRandy1), 2)
 		wait(1)
     	usePreviousSnap(false)
-    	elseif image.phoneLauncher:exists(image.ggRestart, 0) then if showInfoM == true then showInfo("ggRestart") end
-    	local t = image.phoneLauncher:getLastMatch()
-    	local x = t:getX()
-    	local y = t:getY()
-    	local w = t:getW()
-    	local h = t:getH()
-    	local Area = Region(x,y,w,h)
-    	ggRestarted = 1
-    	garenForestChecked = 0
-		mtSizChecked = 0
-		kabirRuinsChecked = 0
-		mtWhiteChecked = 0
-		telainForestChecked = 0
-		tamorDesertChecked = 0
-		hydeniRuinsChecked = 0
-		vrofagusRuinsChecked = 0
-		faimonVolcanoChecked = 0
-    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    	usePreviousSnap(false)
+    	
     	else click(Location(math.random(500, 510),math.random(718, 719))) 
     			usePreviousSnap(false)
         end
@@ -2140,7 +2160,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.03.01")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.03.03")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
