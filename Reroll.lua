@@ -420,11 +420,14 @@ function summonLDF()
 	faimonVolcanoChecked = 0
 	fairySelected = 0
 	lapisSelected = 0
-	elseif starsMob == 11111 then toast("5 Star Mob GZ")
+	if stopFourStar == true then
+		scriptExit("4 Star Mob") 
+	end
+	elseif starsMob == 11111 then toast("5 Star Mob BIG GZ ")
 		showInfo("5*  ^O^")
 		wait(1)
 		mobScreenShotF()
-		scriptExit("5 Star Mob GZ") 
+		scriptExit("5 Star Mob BIG GZ") 
 	elseif starsMob == nil then toast("Something is wrong")
 		mobScreenShotF()
 		scriptExit("Something is wrong")
@@ -1080,7 +1083,13 @@ function mapF()
 	    	   		end
 	    	   		if ggRestarted == 1 then
 	    	    		gameGuardianF() 
-	    	    		ggRestarted = 0 end
+	    	    		ggRestarted = 0 
+	    	    	end
+	    	    	if ggWithFriend == true then
+	    	    		if ggAlreadyRunning == false then
+	    	    			gameGuardianF()
+	    	    		end
+	    	    	end
 	    	    end
 	    	elseif mtSizChecked == 0 and map.mapS_region:exists(map.mtSiz) then
 	    		if showInfoM == true then showInfo("checking mtSiz") end 
@@ -2302,30 +2311,37 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.04.08")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.05.00")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
     newRow()
-    addTextView("     ")addRadioGroup("rqIndex", 1)   
+    addTextView("\t\t")addRadioGroup("rqIndex", 1)   
     addRadioButton(" ☄ Clearing Stages Using GameGuardian     ➡   Faster Around 40m Reseting Time - Can Get Acc Banned", 1) 
     addRadioButton(" ☄ Clearing Stages Using Friends Reps         ➡   Slower Request To Have 5 Friends - Safe From Bans", 2)
     newRow() 
-    addTextView("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t")
-    addCheckBox("needReset", "⚡ Start With Reseting                                ", false) 
-    addCheckBox("showInfoM", "⚡ Show Informations On Screen", true)
-    newRow() 
-    addTextView("\t  \t  ")
-    addEditText("customName", "Insert Custom Name ")
-    addTextView("           ")
-    addCheckBox("powerOff", "⚡ Power Off After N. Resets: ", false)
-    addEditNumber("nTimes", 10)
-     addTextView("           ")
-    addCheckBox("powerSaving", "⚡ Power Saving Mode ", false)
+    addTextView("\t\t\t")
+    addCheckBox("ggWithFriend", "⚡ Use GG Script With Friend Rep", false)
+    addTextView("\t\t\t")
+    addCheckBox("needReset", "⚡ Start With Reseting", false)
+    addTextView("\t\t\t")
+    addCheckBox("powerSaving", "⚡ Power Saving Mode:", false)
+    addTextView("\t\t\t\t")
   	addEditNumber("customDelay", 0.8)
     newRow() 
-    addTextView("     ")addRadioGroup("rgIndex", 2)   
-    addRadioButton(" ☄ Custom Name     ⬆", 1) 
+    addTextView("\t\t\t")
+    addCheckBox("showInfoM", "⚡ Show Informations On Screen", true)
+    addTextView("\t\t\t")
+    addCheckBox("stopFourStar", "⚡ Stop If Got Four Star", false)
+    addTextView("\t\t\t")
+    addCheckBox("powerOff", "⚡ Power Off After N. Resets: ", false)
+    addTextView("\t")
+    addEditNumber("nTimes", 10)
+    newRow() 
+    addTextView("\t\t")
+    --addEditText("customName", "Insert Custom Name")
+    addRadioGroup("rgIndex", 2)   
+    addRadioButton(" ☄ Custom Name", 1) 
     addRadioButton(" ☄ Random Name Generator", 2)   
     newRow() 
     addTextView("                                                                                 ________________________________________________________")
@@ -2335,6 +2351,7 @@ function RerollDialog()
 
     if rgIndex == 1 then 
       customNameV = true
+      customNameDialog()
     elseif rgIndex == 2 then
       randomNameV = true
     end
@@ -2344,7 +2361,28 @@ function RerollDialog()
     elseif rqIndex == 2 then
       frClearing = true
     end
+    if ggWithFriend == true then
+    	RerollDialogGG()
+    end
 end 
+
+function customNameDialog()
+	dialogInit() 
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                       ")
+    addSeparator() 
+    newRow( )
+    newRow() 
+    addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
+    newRow() 
+    newRow() 
+    addTextView("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t")
+    addEditText("customName", "Insert Custom Name")
+    newRow() 
+    addTextView("                                                                                 ________________________________________________________")
+    newRow()
+    addTextView("                                                                                         ⚜ The Game Must Be On English Language ⚜")
+    dialogShowFullScreen("                                                                       HEADQUARTERS") 
+end
 
 function RerollDialogGG() 
     dialogInit() 
@@ -2355,7 +2393,7 @@ function RerollDialogGG()
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
     newRow() 
     newRow() 
-    addTextView("     ")
+    addTextView("\t\t\t\t")
     addCheckBox("elfCollected", "⚡ Elf Already Collected                         ", false) 
     addCheckBox("lapisCollected", "⚡ Lapis Already Collected               ", false)
     addCheckBox("ggAlreadyRunning", "⚡ GG Script Already Executed    ", false)  
