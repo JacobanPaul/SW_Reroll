@@ -184,7 +184,7 @@ image = {
 	GreenArrowTUT_region = Region(588, 366, 69, 76),
 	hellhoundMob_region = Region(139, 477, 81, 27),
 	Mob_region = Region(18, 437, 28, 27),
-	Mob = Pattern("Mob.png"):similar(0.75),
+	Mob = Pattern("Mob.png"):similar(0.7),
 	MobRegion_region = Region(12, 430, 300, 50),
 	NextStage_region = Region(757, 387, 82, 18),
 	NextStage = Pattern("NextStage.png"):similar(0.90),
@@ -821,83 +821,103 @@ function collectElf()
 end
 
 function battleMapF()
-		local  swipRandx1 = math.random(1000,1010) 
-		local  swipRandy1 = math.random(250,260)
-		local  swipRandx2 = math.random(1000,1010) 
-		local  swipRandy2 = math.random(620,630)
-		swipe(Location(swipRandx2, swipRandy2),  Location(swipRandx1, swipRandy1), 2)
-		swipe(Location(swipRandx2, swipRandy2),  Location(swipRandx1, swipRandy1), 2)
-		wait(0.5)
-		if image.Battle_region3:exists(image.Battle, 0) then
-			local t = image.Battle_region3:getLastMatch()
-	    	local x = t:getX()
-	    	local y = t:getY()
-	    	local w = t:getW()
-	    	local h = t:getH()
-	    	local Area = Region(x,y,w,h)
-	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    elseif image.Battle_region2:exists(image.Battle, 0) then
-			local t = image.Battle_region2:getLastMatch()
-	    	local x = t:getX()
-	    	local y = t:getY()
-	    	local w = t:getW()
-	    	local h = t:getH()
-	    	local Area = Region(x,y,w,h)
-	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    elseif image.Battle_region1:exists(image.Battle, 0) then
-			local t = image.Battle_region1:getLastMatch()
-	    	local x = t:getX()
-	    	local y = t:getY()
-	    	local w = t:getW()
-	    	local h = t:getH()
-	    	local Area = Region(x,y,w,h)
-	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    elseif image.Battle_region:exists(image.Battle, 0) then
-			local t = image.Battle_region:getLastMatch()
-	    	local x = t:getX()
-	    	local y = t:getY()
-	    	local w = t:getW()
-	    	local h = t:getH()
-	    	local Area = Region(x,y,w,h)
-	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    else
-			swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
-			swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
+	if image.Battle_region3:exists(image.Battle, 0) or image.Battle_region2:exists(image.Battle, 0) then 
+			local  swipRandx1 = math.random(1000,1010) 
+			local  swipRandy1 = math.random(250,260)
+			local  swipRandx2 = math.random(1000,1010) 
+			local  swipRandy2 = math.random(620,630)
+			swipe(Location(swipRandx2, swipRandy2),  Location(swipRandx1, swipRandy1), 2)
+			swipe(Location(swipRandx2, swipRandy2),  Location(swipRandx1, swipRandy1), 2)
 			wait(0.5)
-		end
-		if image.Battle_region3:exists(image.Battle, 0) then
-			local t = image.Battle_region3:getLastMatch()
-	    	local x = t:getX()
-	    	local y = t:getY()
-	    	local w = t:getW()
-	    	local h = t:getH()
-	    	local Area = Region(x,y,w,h)
-	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    elseif image.Battle_region2:exists(image.Battle, 0) then
-			local t = image.Battle_region2:getLastMatch()
-	    	local x = t:getX()
-	    	local y = t:getY()
-	    	local w = t:getW()
-	    	local h = t:getH()
-	    	local Area = Region(x,y,w,h)
-	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    elseif image.Battle_region1:exists(image.Battle, 0) then
-			local t = image.Battle_region1:getLastMatch()
-	    	local x = t:getX()
-	    	local y = t:getY()
-	    	local w = t:getW()
-	    	local h = t:getH()
-	    	local Area = Region(x,y,w,h)
-	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    elseif image.Battle_region:exists(image.Battle, 0) then
-			local t = image.Battle_region:getLastMatch()
-	    	local x = t:getX()
-	    	local y = t:getY()
-	    	local w = t:getW()
-	    	local h = t:getH()
-	    	local Area = Region(x,y,w,h)
-	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
-	    end
+			if image.Battle_region3:exists(image.Battle, 0) then
+				local t = image.Battle_region3:getLastMatch()
+		    	local x = t:getX()
+		    	local y = t:getY()
+		    	local w = t:getW()
+		    	local h = t:getH()
+		    	local Area = Region(x,y,w,h)
+		    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+		    elseif image.Battle_region2:exists(image.Battle, 0) then
+				local t = image.Battle_region2:getLastMatch()
+		    	local x = t:getX()
+		    	local y = t:getY()
+		    	local w = t:getW()
+		    	local h = t:getH()
+		    	local Area = Region(x,y,w,h)
+		    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+		    elseif image.Battle_region1:exists(image.Battle, 0) then
+				local t = image.Battle_region1:getLastMatch()
+		    	local x = t:getX()
+		    	local y = t:getY()
+		    	local w = t:getW()
+		    	local h = t:getH()
+		    	local Area = Region(x,y,w,h)
+		    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+		    elseif image.Battle_region:exists(image.Battle, 0) then
+				local t = image.Battle_region:getLastMatch()
+		    	local x = t:getX()
+		    	local y = t:getY()
+		    	local w = t:getW()
+		    	local h = t:getH()
+		    	local Area = Region(x,y,w,h)
+		    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+		    else
+				swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
+				swipe(Location(swipRandx1, swipRandy1),  Location(swipRandx2, swipRandy2), 2)
+				wait(0.5)
+			end
+			if image.Battle_region3:exists(image.Battle, 0) then
+				local t = image.Battle_region3:getLastMatch()
+		    	local x = t:getX()
+		    	local y = t:getY()
+		    	local w = t:getW()
+		    	local h = t:getH()
+		    	local Area = Region(x,y,w,h)
+		    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+		    elseif image.Battle_region2:exists(image.Battle, 0) then
+				local t = image.Battle_region2:getLastMatch()
+		    	local x = t:getX()
+		    	local y = t:getY()
+		    	local w = t:getW()
+		    	local h = t:getH()
+		    	local Area = Region(x,y,w,h)
+		    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+		    elseif image.Battle_region1:exists(image.Battle, 0) then
+				local t = image.Battle_region1:getLastMatch()
+		    	local x = t:getX()
+		    	local y = t:getY()
+		    	local w = t:getW()
+		    	local h = t:getH()
+		    	local Area = Region(x,y,w,h)
+		    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+		    elseif image.Battle_region:exists(image.Battle, 0) then
+				local t = image.Battle_region:getLastMatch()
+		    	local x = t:getX()
+		    	local y = t:getY()
+		    	local w = t:getW()
+		    	local h = t:getH()
+		    	local Area = Region(x,y,w,h)
+		    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
+		    end
+	elseif not image.Battle_region3:exists(image.Battle, 0) or image.Battle_region2:exists(image.Battle, 0) then
+				if image.Battle_region1:exists(image.Battle, 0) then
+				local t = image.Battle_region1:getLastMatch()
+		    	local x = t:getX()
+		    	local y = t:getY()
+		    	local w = t:getW()
+		    	local h = t:getH()
+		    	local Area = Region(x,y,w,h)
+		    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+		    elseif image.Battle_region:exists(image.Battle, 0) then
+				local t = image.Battle_region:getLastMatch()
+		    	local x = t:getX()
+		    	local y = t:getY()
+		    	local w = t:getW()
+		    	local h = t:getH()
+		    	local Area = Region(x,y,w,h)
+		    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
+		    end
+	end
 end
 
 function searchRegionF()
@@ -1450,6 +1470,7 @@ function selectMobsF()
 		while image.SelectMobsScr_region:exists(image.SelectMobsScr) do
 			wait(1)
 			if fairySelected == 0 then
+				showInfo("selecting fairy")
 				if image.fairy_region:exists(image.fairy) then
 					local t = image.fairy_region:getLastMatch()
 		    		local x = t:getX()
@@ -1461,7 +1482,7 @@ function selectMobsF()
 			    	fairySelected = 1
 			    	wait(1)
 		    	end
-	    	end
+	    	end showInfo("selecting mobs")
 			if image.MobRegion_region:exists(image.Mob) then 
 	    		local t = image.MobRegion_region:getLastMatch() 
 	    		local x = t:getX() 
@@ -2311,7 +2332,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.05.00")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.05.03")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
