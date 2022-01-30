@@ -1469,6 +1469,16 @@ function selectMobsF()
 	if lapisCollected ~= true then
 		while image.SelectMobsScr_region:exists(image.SelectMobsScr) do
 			wait(1)
+			if image.COMPS_region:exists(image.COMPS, 1) then 
+	    		local t = image.COMPS_region:getLastMatch()
+			    local x = t:getX()
+			    local y = t:getY()
+			    local w = t:getW()
+			    local h = t:getH()
+			    local Area = Region(x+30,y+ 90,w-25,h-20)
+			    click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+			    wait(0.5) break
+	    	end
 			if fairySelected == 0 then
 				showInfo("selecting fairy")
 				if image.fairy_region:exists(image.fairy) then
@@ -1490,7 +1500,8 @@ function selectMobsF()
 	    		local w = t:getW() 
 	    		local h = t:getH() 
 	    		local Area = Region(x+20,y+20,w,h) 
-	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))  
+	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	    		wait(0.5)  
 	    	end 
 	    	if image.COMPS_region:exists(image.COMPS, 1) then 
 	    		local t = image.COMPS_region:getLastMatch()
@@ -1500,6 +1511,7 @@ function selectMobsF()
 			    local h = t:getH()
 			    local Area = Region(x+30,y+ 90,w-25,h-20)
 			    click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+			    wait(0.5)
 	    	end
 	    end
 	elseif lapisCollected == true then
@@ -1514,6 +1526,7 @@ function selectMobsF()
 		    		local Area = Region(x+20,y+20,w-50,h)
 		    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
 		    	lapisSelected = 1
+		    	wait(0.5)
 		    	end
 	    	end
 			if image.MobRegion_region:exists(image.Mob) then 
@@ -1524,6 +1537,7 @@ function selectMobsF()
 	    		local h = t:getH()
 	    		local Area = Region(x+20,y+20,w,h)
 	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH()))) 
+	    		wait(0.5)
 	    	end
 	    	if image.COMPS_region:exists(image.COMPS, 1) then 
 	    		local t = image.COMPS_region:getLastMatch()
@@ -1533,6 +1547,7 @@ function selectMobsF()
 			    local h = t:getH()
 			    local Area = Region(x+30,y+ 90,w-25,h-20)
 			    click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+			    wait(0.5)
 	    	end
 	    end
 	end
@@ -2332,7 +2347,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.05.03")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.05.05")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
