@@ -1,6 +1,6 @@
-# SW_Reroll
+# SW_Reroll vStable 1.05.06
 Selling this product will result in LEGAL PROSECUTION
-
+\n
 
 
 License
