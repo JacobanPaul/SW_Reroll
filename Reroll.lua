@@ -721,7 +721,7 @@ function dialogsFDX()
 end
 
 function tutF()
-	while image.COMPS_region:exists(image.COMPS, 2) do
+	while image.COMPS_region:exists(image.COMPS, 1) do
 	local t = image.COMPS_region:getLastMatch()
     local x = t:getX()
     local y = t:getY()
@@ -1469,7 +1469,7 @@ function selectMobsF()
 	if lapisCollected ~= true then
 		while image.SelectMobsScr_region:exists(image.SelectMobsScr) do
 			wait(1)
-			if image.COMPS_region:exists(image.COMPS, 1) then 
+			while image.COMPS_region:exists(image.COMPS, 1) do
 	    		local t = image.COMPS_region:getLastMatch()
 			    local x = t:getX()
 			    local y = t:getY()
@@ -1477,7 +1477,7 @@ function selectMobsF()
 			    local h = t:getH()
 			    local Area = Region(x+30,y+ 90,w-25,h-20)
 			    click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-			    wait(0.5) break
+			    wait(0.5)
 	    	end
 			if fairySelected == 0 then
 				showInfo("selecting fairy")
@@ -2347,7 +2347,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.05.05")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/swscriptS COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.05.06")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
