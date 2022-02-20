@@ -2894,8 +2894,7 @@ function debug()
     end
 end
 
-addMentorsF()
---RunEverything() 
+RunEverything() 
 --debug() 
 
 
