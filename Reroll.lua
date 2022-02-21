@@ -10,7 +10,8 @@ counterStart = 0
 info_3Star = 0
 info_4Star = 0
 resetsTotal = 0
-
+elfCollected = false
+lapisCollected = false
 fairySelected = 0
 lapisSelected = 0
 gameGuardianInit = 0
@@ -281,7 +282,7 @@ customChannel = {
 	channel_region = Region(1008, 15, 130, 73),
 	channel = Pattern("channel.png"):similar(0.80),
 	done_region = Region(1041, 0, 100, 69),
-	done = Pattern("done.png"):similar(0.80),
+	done = Pattern("Done.png"):similar(0.80),
 }
 
 
@@ -341,6 +342,7 @@ end
 
 
 function summonLDF()
+	  if showInfoM == true then showInfo("Summoning LD scroll") end
 	if summonChannel == true then
 		summonChannelF()
 		wait(2)
@@ -452,6 +454,8 @@ function summonLDF()
 	faimonVolcanoChecked = 0
 	fairySelected = 0
 	lapisSelected = 0
+	elfCollected = false
+	lapisCollected = false
 	trashCheck()
 	trashCheck()
 	elseif starsMob == 1111 then
@@ -476,6 +480,8 @@ function summonLDF()
 	faimonVolcanoChecked = 0
 	fairySelected = 0
 	lapisSelected = 0
+	elfCollected = false
+	lapisCollected = false
 	trashCheck()
 	trashCheck()
 	if stopFourStar == true then
@@ -508,6 +514,7 @@ function resetTime()
 end
 
 function summoningF()
+	 if showInfoM == true then showInfo("Collecting LD scroll") end
 	trashCheck()
 	wait(0.5)
 	if summoning.inboxLoot_region:exists(summoning.inboxLoot, 5) then
@@ -554,7 +561,6 @@ function summoningF()
     	break
     end
     end
-    trashCheck()
 end
 
 function colorExists(obj, time)
@@ -1883,10 +1889,8 @@ function addMentorsF()
 			    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
 	end
     while mentors.addMentorBTN_region:exists(mentors.addMentorBTN) do
-    	showInfo("addMentorBTN_region")
     	wait(1)
     	if mentors.addMentorBTN_region:exists(mentors.addMentorBTN) then
-    		showInfo("addMentorBTN")
     		local t = mentors.addMentorBTN_region:getLastMatch()
     		local x = t:getX()
     		local y = t:getY()
@@ -2039,7 +2043,7 @@ end
 function WhereIAm()
 	if powerSaving == true then
 	wait(customDelay)
-	else wait(0.3)
+	--else wait(0.3)
 	end
 	rengarBestJG = rengarBestJG + 1
 	--infoText:highlightOff()
@@ -2604,9 +2608,7 @@ function start()
 		    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
 	    		end
 	    	end
-
 	    end
-    	trashCheck()
     	trashCheck()
     elseif imAt == "Start Quest" then
     	searchRegionF()
@@ -2773,6 +2775,7 @@ function start()
 end
 
 function RunEverything()
+	licenseDialog()
 	RerollDialog()
 	while true do 
 		start()
@@ -2781,7 +2784,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.06.02")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.06.03")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )
@@ -2838,6 +2841,7 @@ function RerollDialog()
     if showInfoM == true then
 	startTime = os.time()
 	end
+
 end 
 
 function additionalDialog()
@@ -2869,6 +2873,27 @@ function additionalDialog()
     	toast("let me on island or map screen in order to start the spammer")
     	spammerF()
     end
+end
+
+function licenseDialog()
+	dialogInit() 
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                       ")
+    addSeparator() 
+    newRow( )
+    newRow() 
+    addTextView("           LICENSE GPL v3.0\n          ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )  
+    newRow() 
+    newRow() 
+    addTextView("\t\t\t\t")
+    addTextView("Selling this product will result in LEGAL PROSECUTION\nThe source code must be made public whenever a distribution of the software is made. Modifications of the software must be released under the same license. Changes made to the source code must be documented. If patented material was used in the creation of the software, it grants the right for users to use it. If the user sues anyone over the use of the patented material, they lose the right to use the software.")
+    newRow()
+    addTextView("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t")
+    addTextView("More information at https://github.com/JacobanPaul/SW_Reroll")
+    newRow() 
+    addTextView("                                                                                 ________________________________________________________")
+    newRow()
+    addTextView("                                                                                         ⚜ The Game Must Be On English Language ⚜")
+    dialogShowFullScreen("                                                                       HEADQUARTERS") 
 end
 
 function customNameDialog()
