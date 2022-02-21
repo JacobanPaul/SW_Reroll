@@ -2041,9 +2041,10 @@ function trashCheck()
 end
 
 function WhereIAm()
-	if powerSaving == true then
-	wait(customDelay)
-	--else wait(0.3)
+	if ultrafast == true then
+	elseif powerSaving == true then
+		wait(customDelay)
+	else wait(0.3)
 	end
 	rengarBestJG = rengarBestJG + 1
 	--infoText:highlightOff()
@@ -2864,6 +2865,10 @@ function additionalDialog()
     addTextView("\t\t\t\t")
     addCheckBox("spammer", "Spam In-game Chat Asking For Friends", false)
     newRow() 
+    newRow() 
+    addTextView("\t\t\t\t")
+    addCheckBox("ultrafast", "Ultra Fast - Will Remove Any Delay Useful When Running Multiple Instances of The Bot\n\t\t\t\t\t might cause errors, if you enabled this and errors occurs don't ask me for help thanks", false)
+    newRow()
     newRow() 
     addTextView("                                                                                 ________________________________________________________")
     newRow()
