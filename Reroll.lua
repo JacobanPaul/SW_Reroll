@@ -554,6 +554,7 @@ function summoningF()
     	break
     end
     end
+    trashCheck()
 end
 
 function colorExists(obj, time)
@@ -1863,6 +1864,24 @@ function addMentorsF()
     		local Area = Region(x,y,w,h)
     		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     end
+    if image.OKbtnAutoBattle_region:exists(mentors.mentorOK, 0) then
+					local t = image.OKbtnAutoBattle_region:getLastMatch()
+			    	local x = t:getX()
+			    	local y = t:getY()
+			    	local w = t:getW()
+			    	local h = t:getH()
+			    	local Area = Region(x,y,w,h)
+			    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	end
+	if image.OKbtnAutoBattle_region:exists(image.okBTN, 0) then
+					local t = image.OKbtnAutoBattle_region:getLastMatch()
+			    	local x = t:getX()
+			    	local y = t:getY()
+			    	local w = t:getW()
+			    	local h = t:getH()
+			    	local Area = Region(x,y,w,h)
+			    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	end
     while mentors.addMentorBTN_region:exists(mentors.addMentorBTN) do
     	showInfo("addMentorBTN_region")
     	wait(1)
@@ -2575,16 +2594,17 @@ function start()
 	    		local Area = Region(x+250,y,w,h)
 	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
 	    		elfCollected = true
+	    		if image.AfterSummOK_region:exists(image.AfterSummOK, 15) then
+		    		local t = image.AfterSummOK_region:getLastMatch()
+		    		local x = t:getX()
+		    		local y = t:getY()
+		    		local w = t:getW()
+		    		local h = t:getH()
+		    		local Area = Region(x,y,w,h)
+		    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	    		end
 	    	end
-	    	if image.AfterSummOK_region:exists(image.AfterSummOK, 15) then
-	    		local t = image.AfterSummOK_region:getLastMatch()
-	    		local x = t:getX()
-	    		local y = t:getY()
-	    		local w = t:getW()
-	    		local h = t:getH()
-	    		local Area = Region(x,y,w,h)
-	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-	    	end
+
 	    end
     	trashCheck()
     	trashCheck()
@@ -2761,7 +2781,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.06.00")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.06.02")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )
