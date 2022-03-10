@@ -1910,8 +1910,7 @@ function addMentorsF()
 	    		local Area = Region(x+20,y+20,w-40,h-40)
 	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
 	    	end
-	    	if mentors.addMentorMobs_region:exists(mentors.mob_1) 
-	    		--or mentors.addMentorMobs_region:exists(mentors.mob_2) or mentors.addMentorMobs_region:exists(mentors.mob_3) or mentors.addMentorMobs_region:exists(mentors.mob_4) 
+	    	if mentors.addMentorMobs_region:exists(mentors.mob_1) or mentors.addMentorMobs_region:exists(mentors.mob_2) or mentors.addMentorMobs_region:exists(mentors.mob_3) or mentors.addMentorMobs_region:exists(mentors.mob_4) 
 	    		then
 	    		local t = mentors.addMentorMobs_region:getLastMatch()
 	    		local x = t:getX()
@@ -2950,5 +2949,5 @@ end
 RunEverything() 
 --debug() 
 
--- TODO 1914
+
 
