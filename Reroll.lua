@@ -2,6 +2,8 @@ Settings:setCompareDimension(true, 1280)
 Settings:setScriptDimension(true, 1280) 
 Settings:set("MinSimilarity", 0.7)
 setImagePath(scriptPath() .. "images")
+
+
 screen = getAppUsableScreenSize()
 reg = Region(0, 0, screen:getX(), screen:getY())
 local _execute = os.execute
@@ -142,7 +144,8 @@ image = {
 	revive_region = Region(510, 451, 49, 41),
 	revive = Pattern("revive.png"):similar(0.90),
 	fairy_region = Region(14, 492, 54, 60),
-	fairy = Pattern("fairy.png"):similar(0.90),
+	fairy = Pattern("fairy.png"):similar(0.80),
+	fairy2 = Pattern("fairy2.png"):similar(0.80),
 	slotForReps_region = Region(245, 328, 153, 72),
 	slotForReps = Pattern("slotForReps.png"):similar(0.7),
 	friendsReps_region = Region(80, 552, 120, 61),
@@ -277,14 +280,13 @@ addMentorsAsFriend = {
 customChannel = {
 	openChat_region = Region(370, 11, 272, 91),
 	openChat = Pattern("openChat.png"):similar(0.80),
-	imputMessage_region = Region(93, 620, 146, 70),
+	imputMessage_region = Region(93, 620, 246, 70),
 	imputMessage = Pattern("imputMessage.png"):similar(0.80),
 	channel_region = Region(1008, 15, 130, 73),
 	channel = Pattern("channel.png"):similar(0.80),
 	done_region = Region(1041, 0, 100, 69),
 	done = Pattern("Done.png"):similar(0.80),
 }
-
 
 trashCck = {
 	XbtnADs  = Pattern("XbtnADs.png"):similar(0.80),
@@ -314,6 +316,10 @@ function  existsMultiMax(target, region)
     end
 end
 
+function mkdir(p) 
+	return _execute('mkdir -p "' .. p .. '"') == 0 
+end
+
 function mobScreenShotF()
 	mkdir(scriptPath() .. "/mobScreenshots/")
 	setImagePath(scriptPath() .. "/mobScreenshots/")
@@ -335,11 +341,6 @@ function mobScreenShotF()
     end
 	setImagePath(scriptPath() .. "/images/")
 end
-
-function mkdir(p) 
-	return _execute('mkdir -p "' .. p .. '"') == 0 
-end
-
 
 function summonLDF()
 	  if showInfoM == true then showInfo("Summoning LD scroll") end
@@ -806,9 +807,9 @@ function tutF()
 end
 
 function createScript()
-	local script = io.open("/sdcard/jpaulRerollv18.lua")
-	if script~=nil then io.close(script) else  local script = io.open("/sdcard/jpaulRerollv18.lua", "a+")
-	script:write("gg.setVisible(false)firstRun=0;function getAccID()gg.searchNumber('10602;1065353216;1502;1507::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,-1)local a=gg.getResults(gg.getResultsCount())memInit=a[1].address-0xFFFFFF;memFin=a[1].address+0xFFFFFF;tacc={}tacc[1]={}tacc[1].address=a[1].address-addOfss;tacc[1].flags=gg.TYPE_DWORD;tacc=gg.getValues(tacc)AccID=tacc[1].value;gg.sleep(500)end;function skillChanger()gg.sleep(500)savedList=gg.getListItems()gg.removeListItems(savedList)gg.sleep(1500)gg.searchNumber(AccID..';10602;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,3)gg.sleep(500)local b=gg.getResults(gg.getResultsCount())gg.sleep(500)for c,d in ipairs(b)do if d.value==1065353216 then local e={}for c=1,8 do e[c]={}e[c].flags=gg.TYPE_DWORD;e[c].freeze=true;e[c].freezeType=gg.FREEZE_NORMAL end;e[1].address=d.address+fstSkOfss;e[1].value=101412;e[2].address=d.address+fstSkPROfss;e[2].value=5;e[3].address=d.address+sndSkOfss;e[3].value=7813;e[4].address=d.address+sndSkPROfss;e[4].value=5;e[5].address=d.address+trdSkOfss;e[5].value=10515;e[6].address=d.address+trdSkPROfss;e[6].value=5;e[7].address=d.address+fthSkOfss;e[7].value=13633;e[8].address=d.address+fthSkPROfss;e[8].value=5;gg.sleep(500)gg.setValues(e)gg.addListItems(e)gg.clearResults()end end;gg.searchNumber(AccID..';10101;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,3)gg.sleep(500)local f=gg.getResults(gg.getResultsCount())gg.sleep(500)for c,d in ipairs(f)do if d.value==1065353216 then local g={}for c=1,8 do g[c]={}g[c].flags=gg.TYPE_DWORD;g[c].freeze=true;g[c].freezeType=gg.FREEZE_NORMAL end;g[1].address=d.address+fstSkOfss;g[1].value=103006;g[2].address=d.address+fstSkPROfss;g[2].value=5;g[3].address=d.address+sndSkOfss;g[3].value=10915;g[4].address=d.address+sndSkPROfss;g[4].value=5;g[5].address=d.address+trdSkOfss;g[5].value=107026;g[6].address=d.address+trdSkPROfss;g[6].value=5;g[7].address=d.address+fthSkOfss;g[7].value=13618;g[8].address=d.address+fthSkPROfss;g[8].value=5;gg.sleep(500)gg.setValues(g)gg.addListItems(g)gg.clearResults()end end;gg.searchNumber(AccID..';15203;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,3)gg.sleep(500)local h=gg.getResults(gg.getResultsCount())gg.sleep(500)for c,d in ipairs(h)do if d.value==1065353216 then local i={}for c=1,8 do i[c]={}i[c].flags=gg.TYPE_DWORD;i[c].freeze=true;i[c].freezeType=gg.FREEZE_NORMAL end;i[1].address=d.address+fstSkOfss;i[1].value=100505;i[2].address=d.address+fstSkPROfss;i[2].value=5;i[3].address=d.address+sndSkOfss;i[3].value=10915;i[4].address=d.address+sndSkPROfss;i[4].value=5;i[5].address=d.address+trdSkOfss;i[5].value=104205;i[6].address=d.address+trdSkPROfss;i[6].value=5;i[7].address=d.address+fthSkOfss;i[7].value=13618;i[8].address=d.address+fthSkPROfss;i[8].value=5;gg.sleep(500)gg.setValues(i)gg.addListItems(i)gg.clearResults()end end;gg.searchNumber(AccID..';19801;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,3)gg.sleep(500)local f=gg.getResults(gg.getResultsCount())gg.sleep(500)for c,d in ipairs(f)do if d.value==1065353216 then local g={}for c=1,8 do g[c]={}g[c].flags=gg.TYPE_DWORD;g[c].freeze=true;g[c].freezeType=gg.FREEZE_NORMAL end;g[1].address=d.address+fstSkOfss;g[1].value=101412;g[2].address=d.address+fstSkPROfss;g[2].value=5;g[3].address=d.address+sndSkOfss;g[3].value=7813;g[4].address=d.address+sndSkPROfss;g[4].value=5;g[5].address=d.address+trdSkOfss;g[5].value=10515;g[6].address=d.address+trdSkPROfss;g[6].value=5;g[7].address=d.address+fthSkOfss;g[7].value=13633;g[8].address=d.address+fthSkPROfss;g[8].value=5;gg.sleep(500)gg.setValues(g)gg.addListItems(g)gg.clearResults()end end;gg.searchNumber(AccID..';20904;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,3)gg.sleep(500)local f=gg.getResults(gg.getResultsCount())gg.sleep(500)for c,d in ipairs(f)do if d.value==1065353216 then local g={}for c=1,8 do g[c]={}g[c].flags=gg.TYPE_DWORD;g[c].freeze=true;g[c].freezeType=gg.FREEZE_NORMAL end;g[1].address=d.address+fstSkOfss;g[1].value=100505;g[2].address=d.address+fstSkPROfss;g[2].value=5;g[3].address=d.address+sndSkOfss;g[3].value=10915;g[4].address=d.address+sndSkPROfss;g[4].value=5;g[5].address=d.address+trdSkOfss;g[5].value=104205;g[6].address=d.address+trdSkPROfss;g[6].value=5;g[7].address=d.address+fthSkOfss;g[7].value=13618;g[8].address=d.address+fthSkPROfss;g[8].value=5;gg.sleep(500)gg.setValues(g)gg.addListItems(g)gg.clearResults()end end;gg.setVisible(false)firstRun=1 end;startTime=os.time()function start()currentTime=os.time()diffTime=os.difftime(currentTime,startTime)if diffTime<=120 and firstRun==0 then skillChanger()gg.sleep(61000)elseif diffTime<=120 and firstRun==1 then gg.sleep(61000)elseif diffTime>=120 then firstRun=0;startTime=os.time()end end;function init()gg.setVisible(false)getAccID()while true do start()end end;local j=gg.getTargetInfo()if j==nil then print('Cant retrieve information about the process')else if j.x64 then addOfss=0x8;fstSkOfss=0x1C;sndSkOfss=0x2C;trdSkOfss=0x3C;fthSkOfss=0x4C;fstSkPROfss=0x24;sndSkPROfss=0x34;trdSkPROfss=0x44;fthSkPROfss=0x54 else addOfss=0x4;fstSkOfss=0x10;sndSkOfss=0x18;trdSkOfss=0x20;fthSkOfss=0x28;fstSkPROfss=0x14;sndSkPROfss=0x1C;trdSkPROfss=0x24;fthSkPROfss=0x2C end end;init()")
+	local script = io.open("/sdcard/jpaulRerollv19.lua")
+	if script~=nil then io.close(script) else  local script = io.open("/sdcard/jpaulRerollv19.lua", "a+")
+	script:write("gg.setVisible(false)firstRun=0;function getAccID()gg.searchNumber('10101;1065353216;1101;1106::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,-1)local a=gg.getResults(gg.getResultsCount())tacc={}tacc[1]={}tacc[1].address=a[1].address-addOfss;tacc[1].flags=gg.TYPE_DWORD;tacc=gg.getValues(tacc)AccID=tacc[1].value;gg.sleep(500)end;function skillChangerHell()gg.clearResults()gg.sleep(500)gg.searchNumber(AccID..';10602;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,-1,3)gg.sleep(500)local b=gg.getResults(gg.getResultsCount())gg.sleep(500)if b~=nil then for c,d in ipairs(b)do if d.value==1065353216 then local e={}for c=1,8 do e[c]={}e[c].flags=gg.TYPE_DWORD;e[c].freeze=true;e[c].freezeType=gg.FREEZE_NORMAL end;e[1].address=d.address+fstSkOfss;e[1].value=104201;e[2].address=d.address+fstSkPROfss;e[2].value=5;e[3].address=d.address+sndSkOfss;e[3].value=7813;e[4].address=d.address+sndSkPROfss;e[4].value=5;e[5].address=d.address+trdSkOfss;e[5].value=1000002;e[6].address=d.address+trdSkPROfss;e[6].value=5;e[7].address=d.address+fthSkOfss;e[7].value=13633;e[8].address=d.address+fthSkPROfss;e[8].value=5;gg.sleep(500)gg.setValues(e)gg.addListItems(e)end end end end;function skillChangerVag()gg.clearResults()gg.sleep(500)gg.searchNumber(AccID..';15203;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,-1,3)gg.sleep(500)local f=gg.getResults(gg.getResultsCount())gg.sleep(500)if f~=nil then for c,d in ipairs(f)do if d.value==1065353216 then local g={}for c=1,8 do g[c]={}g[c].flags=gg.TYPE_DWORD;g[c].freeze=true;g[c].freezeType=gg.FREEZE_NORMAL end;g[1].address=d.address+fstSkOfss;g[1].value=100505;g[2].address=d.address+fstSkPROfss;g[2].value=5;g[3].address=d.address+sndSkOfss;g[3].value=10915;g[4].address=d.address+sndSkPROfss;g[4].value=5;g[5].address=d.address+trdSkOfss;g[5].value=104205;g[6].address=d.address+trdSkPROfss;g[6].value=5;g[7].address=d.address+fthSkOfss;g[7].value=13618;g[8].address=d.address+fthSkPROfss;g[8].value=5;gg.sleep(500)gg.setValues(g)gg.addListItems(g)end end end end;function skillChangerFai()gg.clearResults()gg.sleep(500)gg.searchNumber(AccID..';10101;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,0,-1,3)gg.sleep(500)local h=gg.getResults(gg.getResultsCount())gg.sleep(500)memV=gg.getResultsCount()if memV>1 then memInit=h[1].address-0xFFFFF end;if h~=nil then for c,d in ipairs(h)do if d.value==1065353216 then local i={}for c=1,8 do i[c]={}i[c].flags=gg.TYPE_DWORD;i[c].freeze=true;i[c].freezeType=gg.FREEZE_NORMAL end;i[1].address=d.address+fstSkOfss;i[1].value=103006;i[2].address=d.address+fstSkPROfss;i[2].value=5;i[3].address=d.address+sndSkOfss;i[3].value=104305;i[4].address=d.address+sndSkPROfss;i[4].value=5;i[5].address=d.address+trdSkOfss;i[5].value=107026;i[6].address=d.address+trdSkPROfss;i[6].value=5;i[7].address=d.address+fthSkOfss;i[7].value=13618;i[8].address=d.address+fthSkPROfss;i[8].value=5;gg.sleep(500)gg.setValues(i)gg.addListItems(i)end;if d.value==10101 then local j={}for c=1,1 do j[c]={}j[c].flags=gg.TYPE_DWORD;j[c].freeze=true;j[c].freezeType=gg.FREEZE_NORMAL end;j[1].address=d.address;j[1].value=16112;gg.sleep(500)gg.setValues(j)gg.addListItems(j)end end end end;function skillChangerLap()gg.clearResults()gg.sleep(500)gg.searchNumber(AccID..';19801;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,-1,3)gg.sleep(500)local k=gg.getResults(gg.getResultsCount())gg.sleep(500)if k~=nil then for c,d in ipairs(k)do if d.value==1065353216 then local l={}for c=1,8 do l[c]={}l[c].flags=gg.TYPE_DWORD;l[c].freeze=true;l[c].freezeType=gg.FREEZE_NORMAL end;l[1].address=d.address+fstSkOfss;l[1].value=104201;l[2].address=d.address+fstSkPROfss;l[2].value=5;l[3].address=d.address+sndSkOfss;l[3].value=7813;l[4].address=d.address+sndSkPROfss;l[4].value=5;l[5].address=d.address+trdSkOfss;l[5].value=1000002;l[6].address=d.address+trdSkPROfss;l[6].value=5;l[7].address=d.address+fthSkOfss;l[7].value=13633;l[8].address=d.address+fthSkPROfss;l[8].value=5;gg.sleep(500)gg.setValues(l)gg.addListItems(l)end end end end;function skillChangerElf()gg.clearResults()gg.sleep(500)gg.searchNumber(AccID..';20904;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,-1,3)gg.sleep(500)local m=gg.getResults(gg.getResultsCount())gg.sleep(500)if m~=nil then for c,d in ipairs(m)do if d.value==1065353216 then local n={}for c=1,8 do n[c]={}n[c].flags=gg.TYPE_DWORD;n[c].freeze=true;n[c].freezeType=gg.FREEZE_NORMAL end;n[1].address=d.address+fstSkOfss;n[1].value=100505;n[2].address=d.address+fstSkPROfss;n[2].value=5;n[3].address=d.address+sndSkOfss;n[3].value=10915;n[4].address=d.address+sndSkPROfss;n[4].value=5;n[5].address=d.address+trdSkOfss;n[5].value=104205;n[6].address=d.address+trdSkPROfss;n[6].value=5;n[7].address=d.address+fthSkOfss;n[7].value=13618;n[8].address=d.address+fthSkPROfss;n[8].value=5;gg.sleep(500)gg.setValues(n)gg.addListItems(n)end end end end;function skillChangerRic()gg.clearResults()gg.sleep(500)gg.searchNumber(AccID..';16112;1065353216::',gg.TYPE_DWORD,false,gg.SIGN_EQUAL,memInit,-1,3)gg.sleep(500)local o=gg.getResults(gg.getResultsCount())gg.sleep(500)if o~=nil then for c,d in ipairs(o)do if d.value==1065353216 then local p={}for c=1,8 do p[c]={}p[c].flags=gg.TYPE_DWORD;p[c].freeze=true;p[c].freezeType=gg.FREEZE_NORMAL end;p[1].address=d.address+fstSkOfss;p[1].value=103006;p[2].address=d.address+fstSkPROfss;p[2].value=5;p[3].address=d.address+sndSkOfss;p[3].value=104305;p[4].address=d.address+sndSkPROfss;p[4].value=5;p[5].address=d.address+trdSkOfss;p[5].value=107026;p[6].address=d.address+trdSkPROfss;p[6].value=5;p[7].address=d.address+fthSkOfss;p[7].value=13618;p[8].address=d.address+fthSkPROfss;p[8].value=5;gg.sleep(500)gg.setValues(p)gg.addListItems(p)end end end end;startTime=os.time()function start()currentTime=os.time()diffTime=os.difftime(currentTime,startTime)if diffTime<=120 and firstRun==0 then savedList=gg.getListItems()gg.removeListItems(savedList)skillChangerFai()skillChangerHell()skillChangerVag()skillChangerElf()skillChangerLap()skillChangerRic()gg.sleep(61000)gg.setVisible(false)firstRun=1 elseif diffTime<=120 and firstRun==1 then gg.sleep(61000)elseif diffTime>=120 then firstRun=0;startTime=os.time()end end;function init()gg.setVisible(false)getAccID()while true do start()end end;local q=gg.getTargetInfo()if q==nil then print('Cant retrieve information about the process')else if q.x64 then addOfss=0x8;fstSkOfss=0x1C;sndSkOfss=0x2C;trdSkOfss=0x3C;fthSkOfss=0x4C;fstSkPROfss=0x24;sndSkPROfss=0x34;trdSkPROfss=0x44;fthSkPROfss=0x54 else addOfss=0x4;fstSkOfss=0x10;sndSkOfss=0x18;trdSkOfss=0x20;fthSkOfss=0x28;fstSkPROfss=0x14;sndSkPROfss=0x1C;trdSkPROfss=0x24;fthSkPROfss=0x2C end end;init()")
 	io.close(script)
     end
 end
@@ -1549,7 +1550,7 @@ end
 function selectMobsF()
 	if lapisCollected ~= true then
 		while image.SelectMobsScr_region:exists(image.SelectMobsScr) do
-			wait(1)
+			wait(0.5)
 			while image.COMPS_region:exists(image.COMPS, 1) do
 	    		local t = image.COMPS_region:getLastMatch()
 			    local x = t:getX()
@@ -1562,7 +1563,7 @@ function selectMobsF()
 	    	end
 			if fairySelected == 0 then
 				if showInfoM == true then showInfo("selecting fairy") end
-				if image.fairy_region:exists(image.fairy) then
+				if image.fairy_region:exists(image.fairy,1) or image.fairy_region:exists(image.fairy2,1)  then
 					local t = image.fairy_region:getLastMatch()
 		    		local x = t:getX()
 		    		local y = t:getY()
@@ -1740,7 +1741,7 @@ function gameGuardianF()
     	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
     end
     if gameGuardian.gameGuardianFileLocation_region:exists(gameGuardian.gameGuardianFileLocation, 10) then
-		local scriptLocation = ("/sdcard/jpaulRerollv18.lua")
+		local scriptLocation = ("/sdcard/jpaulRerollv19.lua")
 		type(scriptLocation)
     end
     if gameGuardian.gameGuardianExecuteInitScript_region:exists(gameGuardian.gameGuardianExecuteInitScript, 10) then
@@ -1909,7 +1910,9 @@ function addMentorsF()
 	    		local Area = Region(x+20,y+20,w-40,h-40)
 	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
 	    	end
-	    	if mentors.addMentorMobs_region:exists(mentors.mob_1) or mentors.addMentorMobs_region:exists(mentors.mob_2) or mentors.addMentorMobs_region:exists(mentors.mob_3) or mentors.addMentorMobs_region:exists(mentors.mob_4) then
+	    	if mentors.addMentorMobs_region:exists(mentors.mob_1) 
+	    		--or mentors.addMentorMobs_region:exists(mentors.mob_2) or mentors.addMentorMobs_region:exists(mentors.mob_3) or mentors.addMentorMobs_region:exists(mentors.mob_4) 
+	    		then
 	    		local t = mentors.addMentorMobs_region:getLastMatch()
 	    		local x = t:getX()
 	    		local y = t:getY()
@@ -2785,7 +2788,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.06.03")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.06.05")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )
@@ -2947,4 +2950,5 @@ end
 RunEverything() 
 --debug() 
 
+-- TODO 1914
 
