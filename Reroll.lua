@@ -343,34 +343,6 @@ function mobScreenShotF()
 	setImagePath(scriptPath() .. "/images/")
 end
 
-
-
-
-if summoning.finalSPSummon_region:exists(summoning.finalSummon, 5) then
-	local t = summoning.finalSPSummon_region:getLastMatch()
-	local x = t:getX()
-    	local y = t:getY()
-    	local w = t:getW()
-    	local h = t:getH()
-    	local Area = Region(x,y,w,h)
-    	Area:highlight(5)
-    end
-if summoning.finalSummon_region:exists(summoning.finalSummon, 5) then
-	local t = summoning.finalSummon_region:getLastMatch()
-	local x = t:getX()
-    	local y = t:getY()
-    	local w = t:getW()
-    	local h = t:getH()
-    	local Area = Region(x,y,w,h)
-    	Area:highlight(5)
-    end
-
-
-
-
-
-
-
 function summonLDF()
 	  if showInfoM == true then showInfo("Summoning LD scroll") end
 	if summonChannel == true then
@@ -2875,7 +2847,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.07.01")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.07.02")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )
