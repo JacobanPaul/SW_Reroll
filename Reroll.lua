@@ -2875,7 +2875,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.06.06")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.07.01")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )
