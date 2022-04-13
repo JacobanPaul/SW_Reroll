@@ -47,7 +47,8 @@ summoning = {
 	summPlatform = Pattern("summPlatform.png"):similar(0.80),
 	inboxLoot_region = Region(35, 360, 75, 70),
 	inboxLoot = Pattern("inboxLoot.png"):similar(0.80),
-	finalSummon_region = Region(288, 606, 144, 34),
+	finalSPSummon_region = Region(350, 600, 300, 45),
+	finalSummon_region = Region(130, 600, 470, 45),
 	finalSummon = Pattern("finalSummon.png"):similar(0.80),
 	LDscrollMaiusc_region = Region(762, 152, 96, 84),
 	LDscrollMaiusc = Pattern("LDscrollMaiusc.png"):similar(0.80),
@@ -342,6 +343,34 @@ function mobScreenShotF()
 	setImagePath(scriptPath() .. "/images/")
 end
 
+
+
+
+if summoning.finalSPSummon_region:exists(summoning.finalSummon, 5) then
+	local t = summoning.finalSPSummon_region:getLastMatch()
+	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	Area:highlight(5)
+    end
+if summoning.finalSummon_region:exists(summoning.finalSummon, 5) then
+	local t = summoning.finalSummon_region:getLastMatch()
+	local x = t:getX()
+    	local y = t:getY()
+    	local w = t:getW()
+    	local h = t:getH()
+    	local Area = Region(x,y,w,h)
+    	Area:highlight(5)
+    end
+
+
+
+
+
+
+
 function summonLDF()
 	  if showInfoM == true then showInfo("Summoning LD scroll") end
 	if summonChannel == true then
@@ -419,15 +448,34 @@ function summonLDF()
     infoText:highlightOff()
     if summoning.ldScrollSlot_region:exists(summoning.ldScrollSlot, 5) then
     	showInfo("Good Luck")
-    if summoning.finalSummon_region:exists(summoning.finalSummon, 5) then 
-	 	local t = summoning.finalSummon_region:getLastMatch()
-    	local x = t:getX()
-    	local y = t:getY()
-    	local w = t:getW()
-    	local h = t:getH()
-    	local Area = Region(x,y,w,h)
-    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    end 
+    	if summoning.finalSPSummon_region:exists(summoning.finalSummon, 2) then 
+		 	local t = summoning.finalSPSummon_region:getLastMatch()
+	    	local x = t:getX()
+	    	local y = t:getY()
+	    	local w = t:getW()
+	    	local h = t:getH()
+	    	local Area = Region(x,y,w,h)
+	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	    elseif summoning.finalSummon_region:exists(summoning.finalSummon, 5) then 
+		 	local t = summoning.finalSummon_region:getLastMatch()
+	    	local x = t:getX()
+	    	local y = t:getY()
+	    	local w = t:getW()
+	    	local h = t:getH()
+	    	local Area = Region(x,y,w,h)
+	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	    end 
+	end
+	if ultrafast == true then
+		if image.skipSumm_region:exists(image.skipSumm, 5) then
+	    			local t = image.skipSumm_region:getLastMatch()
+			    	local x = t:getX()
+			    	local y = t:getY()
+			    	local w = t:getW()
+			    	local h = t:getH()
+			    	local Area = Region(x,y,w,h)
+			    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+		end
 	end
 	if image.AfterSummOK_region:exists(image.AfterSummOK, 15) then
 	wait(1)
@@ -1975,7 +2023,7 @@ function addMentorsF()
 end
 
 function trashCheck()
-    	local match =  existsMultiMax(trashCck, image.XbtnADs_region) 
+    	local match = existsMultiMax(trashCck, image.XbtnADs_region) 
     	if image.XbtnADs_region:exists(image.XbtnADs, 0) then  if showInfoM == true then showInfo("XbtnADs") end
     	local t = image.XbtnADs_region:getLastMatch()
     	local x = t:getX()
@@ -2474,24 +2522,47 @@ function start()
 	    	if mtSizChecked == 1 then
 	    		selectFriendsRepsF()
 	    	elseif mtSizChecked == 0 then
-				if image.mtSizBoss_region:exists(image.mtSizBoss, 1) then
-		    		mtSizBossF()
-		    	elseif image.SelectMobsScr_region:exists(image.SelectMobsScr, 1) then
-		    		selectMobsF()
-		    	--elseif image.slotForReps_region:exists(image.slotForReps, 1) then
-		    	--	selectFriendsRepsF()
-		    	elseif not image.mtSizBoss_region:exists(image.mtSizBoss, 1) 
-		    		   and not image.SelectMobsScr_region:exists(image.SelectMobsScr, 1) 
-		    		-- and not image.slotForReps_region:exists(image.slotForReps, 1)
-		    	 	   and image.StartBattle_region:exists(image.StartBattle, 0) then
-			    	local t = image.StartBattle_region:getLastMatch()
-			    	local x = t:getX()
-			    	local y = t:getY()
-			    	local w = t:getW()
-			    	local h = t:getH()
-			    	local Area = Region(x,y,w,h)
-			    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-		   		end
+	    		if ultrafast == true then
+					if image.mtSizBoss_region:exists(image.mtSizBoss, 0) then
+			    		mtSizBossF()
+			    	elseif image.SelectMobsScr_region:exists(image.SelectMobsScr, 0) then
+			    		selectMobsF()
+			    	--elseif image.slotForReps_region:exists(image.slotForReps, 1) then
+			    	--	selectFriendsRepsF()
+			    	elseif 
+			    		-- not image.mtSizBoss_region:exists(image.mtSizBoss, 0) 
+			    		-- and not image.SelectMobsScr_region:exists(image.SelectMobsScr, 0) 
+			    		-- and not image.slotForReps_region:exists(image.slotForReps, 1)
+			    	 	-- and 
+			    	 	image.StartBattle_region:exists(image.StartBattle, 0) then
+				    	local t = image.StartBattle_region:getLastMatch()
+				    	local x = t:getX()
+				    	local y = t:getY()
+				    	local w = t:getW()
+				    	local h = t:getH()
+				    	local Area = Region(x,y,w,h)
+				    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+			   		end
+			   	else 
+			   		if image.mtSizBoss_region:exists(image.mtSizBoss, 1) then 
+			    		mtSizBossF() 
+			    	elseif image.SelectMobsScr_region:exists(image.SelectMobsScr, 1) then 
+			    		selectMobsF() 
+			    	--elseif image.slotForReps_region:exists(image.slotForReps, 1) then 
+			    	--	selectFriendsRepsF() 
+			    	elseif not image.mtSizBoss_region:exists(image.mtSizBoss, 1) 
+			    		   and not image.SelectMobsScr_region:exists(image.SelectMobsScr, 1) 
+			    		-- and not image.slotForReps_region:exists(image.slotForReps, 1)
+			    	 	   and image.StartBattle_region:exists(image.StartBattle, 0) then
+				    	local t = image.StartBattle_region:getLastMatch()
+				    	local x = t:getX()
+				    	local y = t:getY()
+				    	local w = t:getW()
+				    	local h = t:getH()
+				    	local Area = Region(x,y,w,h)
+				    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+			   		end
+			   	end
 			end
         elseif ggClearing == true then
         	if vrofagusRuinsChecked == 1 then
@@ -2559,20 +2630,28 @@ function start()
     elseif imAt == "goToMap" then
     	trashCheck()
     	if faiBs == 0 then
-    	local t = image.battleBTNisland_region:getLastMatch()
-    	local x = t:getX()
-    	local y = t:getY()
-    	local w = t:getW()
-    	local h = t:getH()
-    	local Area = Region(x,y,w,h)
-    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
-    	wait(0.5)
+	    	local t = image.battleBTNisland_region:getLastMatch()
+	    	local x = t:getX()
+	    	local y = t:getY()
+	    	local w = t:getW()
+	    	local h = t:getH()
+	    	local Area = Region(x,y,w,h)
+	    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+	    	wait(0.5)
     	elseif collectedLD == 0 then
-    	 if showInfoM == true then showInfo("Collecting LD scroll") end
-    	 summoningF() 
+    		if ultrafast == true then
+		    	if showInfoM == true then showInfo("Collecting LD scroll") end
+		    	 summoningF() 
+		    	 trashCheck()
+		    	 trashCheck()
+		    	 summonLDF() 
+		    elseif ultrafast == false then 
+		    	if showInfoM == true then showInfo("Collecting LD scroll") end
+		    	 summoningF() 
+		    end
     	elseif collectedLD == 1 then
-    	 if showInfoM == true then showInfo("Summoning LD scroll") end
-    	 summonLDF() 
+	    	if showInfoM == true then showInfo("Summoning LD scroll") end
+	    	 summonLDF() 
     	end
     elseif imAt == "Map Screen" then
     	mapF()
@@ -2601,6 +2680,15 @@ function start()
 	    		local Area = Region(x+250,y,w,h)
 	    		click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
 	    		elfCollected = true
+	    		if image.skipSumm_region:exists(image.skipSumm, 5) then
+	    			local t = image.skipSumm_region:getLastMatch()
+			    	local x = t:getX()
+			    	local y = t:getY()
+			    	local w = t:getW()
+			    	local h = t:getH()
+			    	local Area = Region(x,y,w,h)
+			    	click(Location(Area:getX() + math.random(0, Area:getW()), Area:getY() + math.random(0, Area:getH())))
+			    end
 	    		if image.AfterSummOK_region:exists(image.AfterSummOK, 15) then
 		    		local t = image.AfterSummOK_region:getLastMatch()
 		    		local x = t:getX()
@@ -2787,7 +2875,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.06.05")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.06.06")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )
