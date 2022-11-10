@@ -1,4 +1,4 @@
-# SW_Reroll vStable 1.07.02
+# SW_Reroll vStable 1.07.03
 Selling this product will result in LEGAL PROSECUTION
 
 
