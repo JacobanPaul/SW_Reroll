@@ -50,7 +50,7 @@ summoning = {
 	finalSPSummon_region = Region(350, 600, 300, 45),
 	finalSummon_region = Region(130, 600, 470, 45),
 	finalSummon = Pattern("finalSummon.png"):similar(0.80),
-	LDscrollMaiusc_region = Region(762, 152, 96, 84),
+	LDscrollMaiusc_region = Region(762, 152, 96, 250),
 	LDscrollMaiusc = Pattern("LDscrollMaiusc.png"):similar(0.80),
 	LDscroll_region = Region(758, 226, 56, 53),
 	LDscroll = Pattern("LDscroll.png"):similar(0.80),
@@ -2847,7 +2847,7 @@ end
 
 function RerollDialog() 
     dialogInit() 
-    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.07.02")
+    addTextView("                                                                               ❣ REROLL MADE FOR t.me/cheatsForSW COMMUNITY ❣\n                                                                                                                                                                                                                        vStable 1.07.03")
     addSeparator() 
     newRow( )
     addTextView("             Select Preferences\n           ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯" )
